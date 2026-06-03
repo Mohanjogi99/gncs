@@ -15,7 +15,7 @@ export default function Administration() {
 
   const janbhagidari = [
     { nameEn: "Shri Rajesh Patel", nameHi: "श्री राजेश पटेल", roleEn: "President (Janbhagidari)", roleHi: "अध्यक्ष (जनभागीदारी समिति)" },
-    { nameEn: "Dr. S. K. Sharma", nameHi: "डॉ. एस. के. शर्मा", roleEn: "Ex-Officio Member Secretary", roleHi: "पदेन सदस्य सचिव (प्राचार्य)" },
+    { nameEn: "Prof. B. K. Patel", nameHi: "प्रो. बी. के. पटेल", roleEn: "Ex-Officio Member Secretary", roleHi: "पदेन सदस्य सचिव (प्राचार्य)" },
     { nameEn: "Shri Santosh Kumar", nameHi: "श्री संतोष कुमार", roleEn: "Donor Member", roleHi: "दाता सदस्य" },
     { nameEn: "Smt. Anita Sahu", nameHi: "श्रीमती अनीता साहू", roleEn: "Public Representative", roleHi: "जनप्रतिनिधि" },
     { nameEn: "Shri Vinod Dewangan", nameHi: "श्री विनोद देवांगन", roleEn: "Teacher Representative", roleHi: "शिक्षक प्रतिनिधि" }
@@ -45,7 +45,7 @@ export default function Administration() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
           <div className="aspect-square max-w-[200px] mx-auto md:mx-0 rounded-2xl overflow-hidden border border-outline-variant shadow-sm bg-surface-container">
             <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"
+              src="/principal.jpg"
               alt="Principal Portrait"
               className="w-full h-full object-cover"
             />
@@ -58,11 +58,11 @@ export default function Administration() {
               </p>
             </div>
             <div className="text-xs sm:text-sm text-on-surface-variant leading-relaxed space-y-2">
-              <p className="font-semibold text-primary">Qualification: Ph.D., M.A. (English Literature)</p>
+              <p className="font-semibold text-primary">Qualification: M.Sc., Assistant Professor</p>
               <p>
                 {language === "hi"
-                  ? "डॉ. एस. के. शर्मा को उच्च शिक्षा प्रशासन और अध्यापन का 25 से अधिक वर्षों का वृहद अनुभव प्राप्त है। उन्होंने छत्तीसगढ़ शासन के विभिन्न प्रतिष्ठित महाविद्यालयों में प्रशासनिक पदों पर कार्य किया है।"
-                  : "Dr. S. K. Sharma has over 25 years of extensive experience in higher education administration and teaching. He has worked in administrative positions at various prestigious government colleges in Chhattisgarh."}
+                  ? "प्रो. बी. के. पटेल को उच्च शिक्षा प्रशासन और अध्यापन का वृहद अनुभव प्राप्त है। उन्होंने छत्तीसगढ़ शासन के विभिन्न प्रतिष्ठित महाविद्यालयों में प्रशासनिक पदों पर कार्य किया है।"
+                  : "Prof. B. K. Patel has extensive experience in higher education administration and teaching. He has worked in administrative positions at various prestigious government colleges in Chhattisgarh."}
               </p>
             </div>
             <div className="flex flex-wrap gap-4 text-xs font-semibold justify-center md:justify-start">

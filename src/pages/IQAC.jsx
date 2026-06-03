@@ -43,7 +43,7 @@ export default function IQAC() {
           <div className="p-4 bg-surface-container-low rounded-2xl border border-outline-variant/60 text-xs sm:text-sm">
             <span className="font-bold text-primary block mb-2">IQAC Committee Structure:</span>
             <ul className="list-disc list-inside space-y-1">
-              <li><span className="font-semibold text-primary">Chairman:</span> Dr. S. K. Sharma (Principal)</li>
+              <li><span className="font-semibold text-primary">Chairman:</span> Prof. B. K. Patel (Principal)</li>
               <li><span className="font-semibold text-primary">Coordinator:</span> Shri Vinod Dewangan (Assistant Professor, Physics)</li>
               <li><span className="font-semibold text-primary">Management Representative:</span> President (Janbhagidari Committee)</li>
               <li><span className="font-semibold text-primary">Faculty Members:</span> Dr. Rajeshwari Patel, Smt. Shweta Soni</li>

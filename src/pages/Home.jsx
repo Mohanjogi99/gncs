@@ -151,8 +151,8 @@ export default function Home() {
         <div className="bg-primary-container text-on-primary rounded-3xl overflow-hidden shadow-md border border-primary/20">
           <div className="aspect-[4/3] sm:aspect-[16/10] lg:aspect-square w-full bg-surface-variant relative overflow-hidden">
             <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"
-              alt="Principal Dr. S. K. Sharma"
+              src="/principal.jpg"
+              alt="Principal Prof. B. K. Patel"
               className="w-full h-full object-cover grayscale-0 hover:scale-105 transition-all duration-500"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-secondary px-6 py-2">

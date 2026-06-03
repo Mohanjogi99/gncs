@@ -3,11 +3,11 @@
 export const initialUsers = [
   {
     id: "user-1",
-    name: "Dr. S. K. Sharma",
+    name: "Prof. B. K. Patel",
     email: "principal@saragaoncollege.in",
     role: "Principal",
     department: "Administration",
-    photoUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM",
+    photoUrl: "/principal.jpg",
     status: "Active",
     createdAt: "2021-07-15"
   },
@@ -369,7 +369,7 @@ export const translations = {
     quickLinks: "Quick Links",
     aboutShortIntro: "Government Naveen College, Saragaon was established in 2021 with the vision to provide accessible higher education to the rural population of the Janjgir-Champa region. Affiliated to Shaheed Nandkumar Patel Vishwavidyalaya, Raigarh, it provides three mainstream undergraduate courses (BA, BSc, BCom) under experienced faculty.",
     principalMessageTitle: "Principal's Message",
-    principalName: "Dr. S. K. Sharma",
+    principalName: "Prof. B. K. Patel",
     principalMessageText: "Welcome to Government Naveen College, Saragaon. Our institution is dedicated to fostering academic excellence, integrity, and social responsibility. We strive to provide an environment that encourages young minds to explore, innovate, and contribute meaningfully to society.",
     coursesOffered: "Courses Offered",
     newsEvents: "News & Events",
@@ -454,7 +454,7 @@ export const translations = {
     quickLinks: "त्वरित लिंक्स",
     aboutShortIntro: "शासकीय नवीन महाविद्यालय, सारागांव की स्थापना वर्ष 2021 में जांजगीर-चांपा क्षेत्र की ग्रामीण आबादी को सुलभ उच्च शिक्षा प्रदान करने के उद्देश्य से की गई थी। शहीद नंदकुमार पटेल विश्वविद्यालय, रायगढ़ से संबद्ध, यह अनुभवी शिक्षकों के मार्गदर्शन में तीन मुख्य स्नातक पाठ्यक्रम (कला, विज्ञान, वाणिज्य) प्रदान करता है।",
     principalMessageTitle: "प्राचार्य का संदेश",
-    principalName: "डॉ. एस. के. शर्मा",
+    principalName: "प्रो. बी. के. पटेल",
     principalMessageText: "शासकीय नवीन महाविद्यालय, सारागांव में आपका स्वागत है। हमारा संस्थान शैक्षणिक उत्कृष्टता, सत्यनिष्ठा और सामाजिक जिम्मेदारी को बढ़ावा देने के लिए समर्पित है। हम एक ऐसा वातावरण प्रदान करने का प्रयास करते हैं जो युवा दिमागों को अन्वेषण, नवाचार करने और समाज में सार्थक योगदान देने के लिए प्रोत्साहित करे।",
     coursesOffered: "संचालित पाठ्यक्रम",
     newsEvents: "समाचार और कार्यक्रम",
