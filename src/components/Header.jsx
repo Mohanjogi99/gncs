@@ -65,9 +65,11 @@ export default function Header() {
         <div className="max-w-container-max mx-auto flex justify-between items-center px-margin-mobile md:px-margin-desktop py-3">
           {/* Logo and Name */}
           <Link to="/" className="flex items-center gap-3 hover:opacity-95">
-            <span className="material-symbols-outlined text-primary text-4xl sm:text-5xl" data-icon="account_balance">
-              account_balance
-            </span>
+            <img
+              src="/logo.png"
+              alt="Government Naveen College Logo"
+              className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
+            />
             <div className="flex flex-col">
               <h1 className="font-hindi text-lg sm:text-xl font-bold text-primary leading-tight">
                 {language === "hi" ? "शासकीय नवीन महाविद्यालय, सारागांव" : "Govt Naveen College, Saragaon"}
