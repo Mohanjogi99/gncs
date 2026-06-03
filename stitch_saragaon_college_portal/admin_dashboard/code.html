@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard | Govt Naveen College, Saragaon</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c5c6cf",
+                    "secondary-fixed": "#ffdcc4",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#e7e8e9",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9fa",
+                    "surface-variant": "#e1e3e4",
+                    "on-secondary-fixed-variant": "#6f3800",
+                    "on-tertiary-fixed": "#002114",
+                    "primary-fixed": "#dae2ff",
+                    "tertiary-fixed-dim": "#95d4b3",
+                    "surface-tint": "#4f5d85",
+                    "on-background": "#191c1d",
+                    "on-primary-container": "#8392bc",
+                    "inverse-on-surface": "#f0f1f2",
+                    "tertiary-fixed": "#b1f0ce",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-container": "#629f81",
+                    "outline": "#75777f",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#1b2a4e",
+                    "on-tertiary-fixed-variant": "#0e5138",
+                    "tertiary-container": "#003321",
+                    "surface-dim": "#d9dadb",
+                    "surface-container-low": "#f3f4f5",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#2f1400",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#ffb780",
+                    "tertiary": "#001c10",
+                    "primary-fixed-dim": "#b7c6f2",
+                    "on-primary-fixed": "#091a3d",
+                    "on-surface": "#191c1d",
+                    "primary": "#041539",
+                    "on-primary-fixed-variant": "#37466b",
+                    "secondary": "#8e4e14",
+                    "surface": "#f8f9fa",
+                    "background": "#f8f9fa",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-surface-variant": "#45464e",
+                    "inverse-primary": "#b7c6f2",
+                    "on-secondary-container": "#783d01",
+                    "secondary-container": "#ffab69"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "2.5rem",
+                    "gutter": "1.5rem",
+                    "container-max": "1280px",
+                    "margin-mobile": "1rem",
+                    "stack-sm": "0.5rem",
+                    "stack-lg": "2rem",
+                    "stack-md": "1rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "caption": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-sidebar-item {
+            background-color: #ffab69; /* secondary-container */
+            color: #783d01; /* on-secondary-container */
+            font-weight: 700;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex">
+<!-- Navigation Drawer (Sidebar) -->
+<aside class="fixed inset-y-0 left-0 z-[60] flex flex-col h-full w-80 bg-surface-container-lowest border-r border-outline-variant shadow-lg">
+<div class="px-6 py-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="account_balance">account_balance</span>
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-primary leading-tight">Admin Portal</h1>
+<p class="font-caption text-caption text-on-surface-variant">Govt College Saragaon</p>
+</div>
+</div>
+<nav class="flex-1 mt-4 space-y-1 px-4 overflow-y-auto">
+<a class="flex items-center gap-4 px-4 py-3 rounded-full bg-secondary-container text-on-secondary-container font-bold transition-all opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-label-md text-label-md">Notices | सूचनाएं</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="photo_library">photo_library</span>
+<span class="font-label-md text-label-md">Gallery | गैलरी</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-md text-label-md">Faculty | संकाय</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+<span class="font-label-md text-label-md">Messages | संदेश</span>
+</a>
+<div class="pt-8 pb-2 px-4 font-label-md text-label-md text-outline uppercase tracking-wider">System</div>
+<a class="flex items-center gap-4 px-4 py-3 rounded-full text-on-surface-variant hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-full text-error hover:bg-error-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</nav>
+<div class="p-6 border-t border-outline-variant bg-surface-container-low">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-bold">Principal Office</p>
+<p class="font-caption text-caption text-on-surface-variant">Admin Access</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-80 flex-1 min-h-screen bg-surface flex flex-col">
+<!-- Top AppBar -->
+<header class="sticky top-0 z-50 flex justify-between items-center px-margin-desktop py-stack-md bg-surface shadow-sm border-b border-outline-variant">
+<h2 class="font-headline-lg text-headline-lg text-primary">Admin Dashboard Overview</h2>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-full">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="font-label-md text-label-md text-on-surface-variant">Server Live</span>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-margin-desktop space-y-stack-lg max-w-container-max mx-auto w-full">
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm border-t-4 border-primary">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary-fixed rounded-lg">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="school">school</span>
+</div>
+<span class="text-green-600 font-bold text-label-md">+12%</span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface-variant">Total Students</h3>
+<p class="font-display-lg text-display-lg text-on-surface mt-2">1,284</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm border-t-4 border-secondary">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-secondary-fixed rounded-lg">
+<span class="material-symbols-outlined text-on-secondary-fixed" data-icon="campaign">campaign</span>
+</div>
+<span class="text-secondary font-bold text-label-md">8 New</span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface-variant">Active Notices</h3>
+<p class="font-display-lg text-display-lg text-on-surface mt-2">24</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm border-t-4 border-tertiary-fixed-dim">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-tertiary-fixed rounded-lg">
+<span class="material-symbols-outlined text-on-tertiary-fixed" data-icon="chat_bubble">chat_bubble</span>
+</div>
+<span class="text-error font-bold text-label-md">Urgent</span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface-variant">Pending Messages</h3>
+<p class="font-display-lg text-display-lg text-on-surface mt-2">15</p>
+</div>
+</section>
+<!-- Main Management Split Layout -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Notice Management Table -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm flex flex-col">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Manage Notices</h3>
+<p class="font-caption text-caption text-on-surface-variant">Recent college updates and circulars</p>
+</div>
+<button class="bg-secondary text-on-secondary px-6 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                            Add New Notice
+                        </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Title</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Category</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Date</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Status</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface">Annual Exam Schedule 2024</td>
+<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md">Academic</span></td>
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface-variant">Oct 24, 2024</td>
+<td class="px-6 py-4"><span class="text-green-600 flex items-center gap-1 font-label-md text-label-md"><span class="w-1.5 h-1.5 rounded-full bg-green-600"></span> Published</span></td>
+<td class="px-6 py-4 flex gap-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface">Independence Day Celebration</td>
+<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-md text-label-md">Events</span></td>
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface-variant">Aug 10, 2024</td>
+<td class="px-6 py-4"><span class="text-on-surface-variant flex items-center gap-1 font-label-md text-label-md"><span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Archived</span></td>
+<td class="px-6 py-4 flex gap-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface">New Faculty Appointment List</td>
+<td class="px-6 py-4"><span class="px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-md text-label-md">Admin</span></td>
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface-variant">Oct 28, 2024</td>
+<td class="px-6 py-4"><span class="text-secondary flex items-center gap-1 font-label-md text-label-md"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> Draft</span></td>
+<td class="px-6 py-4 flex gap-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-container-low flex justify-between items-center">
+<span class="font-caption text-caption text-on-surface-variant">Showing 3 of 24 notices</span>
+<div class="flex gap-2">
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span></button>
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Asset Upload Form -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-6 flex flex-col space-y-6">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Quick Upload</h3>
+<p class="font-caption text-caption text-on-surface-variant">Upload documents or gallery images</p>
+</div>
+<form class="space-y-4">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface">Document Title</label>
+<input class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:ring-2 focus:ring-primary focus:border-primary bg-surface outline-none transition-all" placeholder="e.g. Admission Form 2024" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface">Category</label>
+<select class="w-full px-4 py-3 rounded-lg border border-outline-variant focus:ring-2 focus:ring-primary focus:border-primary bg-surface outline-none transition-all appearance-none">
+<option>Admission PDF</option>
+<option>Notice Circular</option>
+<option>Gallery Image</option>
+<option>Syllabus</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface">File Upload</label>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center space-y-2 hover:border-primary hover:bg-surface-container transition-all cursor-pointer group">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant group-hover:text-primary transition-colors" data-icon="cloud_upload">cloud_upload</span>
+<p class="font-label-md text-label-md text-on-surface-variant">Click or drag &amp; drop</p>
+<p class="font-caption text-caption text-outline">PDF, JPG, PNG (Max 10MB)</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold font-label-md text-label-md hover:opacity-95 active:scale-[0.98] transition-all flex justify-center items-center gap-2" type="button">
+<span class="material-symbols-outlined" data-icon="publish">publish</span>
+                            Upload to Server
+                        </button>
+</form>
+<div class="pt-4 border-t border-outline-variant">
+<h4 class="font-label-md text-label-md text-on-surface mb-3">Recent Uploads</h4>
+<div class="space-y-3">
+<div class="flex items-center gap-3 p-2 rounded-lg bg-surface-container-low border border-outline-variant">
+<div class="w-8 h-8 flex items-center justify-center bg-red-100 text-red-600 rounded">
+<span class="material-symbols-outlined" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-caption text-caption font-bold text-on-surface truncate">admission_2024.pdf</p>
+<p class="font-caption text-caption text-outline">2.4 MB • Just now</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-error" data-icon="close">close</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sticky Footer -->
+<footer class="w-full py-stack-md px-margin-desktop bg-primary text-on-primary mt-auto border-t-4 border-secondary-container">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-body-md text-body-md">© 2024 Government Naveen College, Saragaon. All Rights Reserved.</p>
+<div class="flex gap-6">
+<a class="font-caption text-caption text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors underline" href="#">System Logs</a>
+<a class="font-caption text-caption text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors underline" href="#">Database Backup</a>
+<a class="font-caption text-caption text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors underline" href="#">Support Desk</a>
+</div>
+</div>
+</footer>
+</main>
+<!-- FAB for Quick Actions -->
+<button class="fixed bottom-8 right-8 w-16 h-16 rounded-full bg-secondary text-on-secondary shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-[70] group">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform duration-300" data-icon="add">add</span>
+</button>
+<script>
+        // Micro-interactions and state management
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('click', () => {
+                    // Placeholder for row selection/detail view
+                    console.log('Row clicked');
+                });
+            });
+
+            // Handle sidebar active state (Simulated)
+            const sidebarLinks = document.querySelectorAll('aside nav a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    sidebarLinks.forEach(l => {
+                        l.classList.remove('bg-secondary-container', 'text-on-secondary-container', 'font-bold');
+                        l.classList.add('text-on-surface-variant', 'hover:bg-surface-variant');
+                    });
+                    link.classList.remove('text-on-surface-variant', 'hover:bg-surface-variant');
+                    link.classList.add('bg-secondary-container', 'text-on-secondary-container', 'font-bold');
+                });
+            });
+        });
+    </script>
+</body></html>

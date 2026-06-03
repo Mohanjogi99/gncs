@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .department-gradient-arts { background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); }
+        .department-gradient-science { background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); }
+        .department-gradient-commerce { background: linear-gradient(135deg, #fff9c4 0%, #fbc02d 20%); }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c5c6cf",
+                        "secondary-fixed": "#ffdcc4",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e7e8e9",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9fa",
+                        "surface-variant": "#e1e3e4",
+                        "on-secondary-fixed-variant": "#6f3800",
+                        "on-tertiary-fixed": "#002114",
+                        "primary-fixed": "#dae2ff",
+                        "tertiary-fixed-dim": "#95d4b3",
+                        "surface-tint": "#4f5d85",
+                        "on-background": "#191c1d",
+                        "on-primary-container": "#8392bc",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary-fixed": "#b1f0ce",
+                        "surface-container": "#edeeef",
+                        "on-tertiary-container": "#629f81",
+                        "outline": "#75777f",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#1b2a4e",
+                        "on-tertiary-fixed-variant": "#0e5138",
+                        "tertiary-container": "#003321",
+                        "surface-dim": "#d9dadb",
+                        "surface-container-low": "#f3f4f5",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#2f1400",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#ffb780",
+                        "tertiary": "#001c10",
+                        "primary-fixed-dim": "#b7c6f2",
+                        "on-primary-fixed": "#091a3d",
+                        "on-surface": "#191c1d",
+                        "primary": "#041539",
+                        "on-primary-fixed-variant": "#37466b",
+                        "secondary": "#8e4e14",
+                        "surface": "#f8f9fa",
+                        "background": "#f8f9fa",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-surface-variant": "#45464e",
+                        "inverse-primary": "#b7c6f2",
+                        "on-secondary-container": "#783d01",
+                        "secondary-container": "#ffab69"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "2.5rem",
+                        "gutter": "1.5rem",
+                        "container-max": "1280px",
+                        "margin-mobile": "1rem",
+                        "stack-sm": "0.5rem",
+                        "stack-lg": "2rem",
+                        "stack-md": "1rem"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-sm max-w-container-max mx-auto bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="account_balance">account_balance</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Govt Naveen College, Saragaon</h1>
+</div>
+<div class="hidden md:flex gap-6 items-center">
+<nav class="flex gap-4">
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors px-3 py-2 rounded-lg" href="#">Home</a>
+<a class="font-label-md text-label-md text-primary border-b-2 border-secondary px-3 py-2" href="#">Departments</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors px-3 py-2 rounded-lg" href="#">Admission</a>
+</nav>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-md hover:opacity-90 transition-all">Admin Login</button>
+</div>
+</header>
+<!-- Sidebar Navigation Drawer (Mobile) -->
+<aside class="fixed inset-y-0 left-0 z-[60] flex flex-col h-full w-80 rounded-r-xl bg-surface-container-lowest dark:bg-surface-container shadow-lg transform -translate-x-full transition-transform duration-300 md:hidden" id="mobile-drawer">
+<div class="p-6 border-b border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-primary">College Menu | मेनू</h2>
+</div>
+<nav class="flex-1 py-4 overflow-y-auto">
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md">Home | मुख्य पृष्ठ</span>
+</a>
+<a class="flex items-center gap-4 bg-secondary-container text-on-secondary-container font-bold rounded-full mx-2 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-label-md">Departments | विभाग</span>
+</a>
+<!-- Add other links as needed from JSON -->
+</nav>
+</aside>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Hero Section -->
+<section class="mb-stack-lg">
+<div class="relative h-[300px] md:h-[450px] rounded-3xl overflow-hidden shadow-2xl">
+<img class="w-full h-full object-cover" data-alt="A grand architectural view of a modern government college building in India with large windows and a clean white facade. The lighting is bright and sunny, symbolizing a bright future for students. The atmosphere is academic and dignified, with a pristine campus environment under a clear blue sky." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoZttl17Twsp4rl8BYWXVHTKXSbo4TI2RMy_ufbxura-LjFzvSklhixDk7y6apR3lCdyNQBHZu1CGwyr8qCkRJD6W033sY4zDimR9obfNUiJUW1yNxuUDIoXeAhY2ZIH-pkU8dow8ODhL2QtN8pNs7b47MncOMzm5YLmY8Y12nAQdIoZQmXQa9oN8hG6UGLahKex4Vp7W99MLFoD6PaG7CDlYoJiOsImDg7orYl-Br_GG49rX_wdeNTuIluY6SbWbBeggLh5tYYO0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-8 md:p-12">
+<div class="text-on-primary">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-2">Academic Departments</h2>
+<p class="font-body-lg text-body-lg opacity-90">शैक्षणिक विभाग - Empowering Excellence Across Disciplines</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Departments -->
+<section class="mb-stack-lg">
+<div class="bento-grid">
+<!-- Arts Department -->
+<div class="col-span-12 md:col-span-8 glass-card rounded-3xl p-8 border-t-4 border-secondary overflow-hidden relative group">
+<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[120px]" data-icon="palette">palette</span>
+</div>
+<div class="relative z-10">
+<span class="inline-block px-3 py-1 rounded-full bg-secondary/10 text-secondary font-label-md mb-4 uppercase tracking-wider">Faculty of Arts</span>
+<h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-4 text-primary">Department of Arts (कला विभाग)</h3>
+<p class="font-body-md text-on-surface-variant max-w-2xl mb-6">
+                            Dedicated to understanding the human experience through literature, history, and social sciences. Our faculty nurtures critical thinking and creative expression.
+                        </p>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant hover:border-secondary transition-colors">
+<p class="font-label-md font-bold text-primary">Hindi (हिन्दी)</p>
+<p class="text-caption text-on-surface-variant">Language &amp; Literature</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant hover:border-secondary transition-colors">
+<p class="font-label-md font-bold text-primary">English (अंग्रेजी)</p>
+<p class="text-caption text-on-surface-variant">Global Communication</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant hover:border-secondary transition-colors">
+<p class="font-label-md font-bold text-primary">Geography (भूगोल)</p>
+<p class="text-caption text-on-surface-variant">Physical &amp; Human</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant hover:border-secondary transition-colors">
+<p class="font-label-md font-bold text-primary">History (इतिहास)</p>
+<p class="text-caption text-on-surface-variant">Indian &amp; World</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant hover:border-secondary transition-colors">
+<p class="font-label-md font-bold text-primary">Pol. Science (राज. विज्ञान)</p>
+<p class="text-caption text-on-surface-variant">Governance &amp; Policy</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant hover:border-secondary transition-colors">
+<p class="font-label-md font-bold text-primary">Sociology (समाजशास्त्र)</p>
+<p class="text-caption text-on-surface-variant">Social Structures</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Faculty Spotlight (Arts) -->
+<div class="col-span-12 md:col-span-4 bg-primary text-on-primary rounded-3xl p-8 flex flex-col justify-between">
+<div>
+<h4 class="font-headline-md mb-4">Faculty Heads (विभागाध्यक्ष)</h4>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center border border-on-primary-container">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div>
+<p class="font-label-md font-bold">Dr. Rajesh Kumar</p>
+<p class="text-caption opacity-80 text-secondary-fixed">Head, Arts Department</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center border border-on-primary-container">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div>
+<p class="font-label-md font-bold">Prof. Meena Sahu</p>
+<p class="text-caption opacity-80 text-secondary-fixed">Senior Faculty, Hindi</p>
+</div>
+</div>
+</div>
+</div>
+<button class="mt-8 flex items-center gap-2 text-secondary-fixed hover:gap-4 transition-all">
+<span class="font-label-md">View Full Directory</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Science Department -->
+<div class="col-span-12 md:col-span-6 glass-card rounded-3xl p-8 border-t-4 border-primary overflow-hidden relative">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="inline-block px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md mb-2 uppercase tracking-wider">Faculty of Science</span>
+<h3 class="font-headline-md text-primary">Science (विज्ञान विभाग)</h3>
+</div>
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="science">science</span>
+</div>
+<div class="space-y-4 mb-6">
+<div class="flex justify-between items-center p-3 rounded-lg bg-surface-container-high">
+<span class="font-body-md">Physics (भौतिक विज्ञान)</span>
+<span class="material-symbols-outlined text-primary" data-icon="biotech">biotech</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-lg bg-surface-container-high">
+<span class="font-body-md">Chemistry (रसायन विज्ञान)</span>
+<span class="material-symbols-outlined text-primary" data-icon="experiment">experiment</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-lg bg-surface-container-high">
+<span class="font-body-md">Botany (वनस्पति विज्ञान)</span>
+<span class="material-symbols-outlined text-primary" data-icon="eco">eco</span>
+</div>
+<div class="flex justify-between items-center p-3 rounded-lg bg-surface-container-high">
+<span class="font-body-md">Zoology (प्राणी विज्ञान)</span>
+<span class="material-symbols-outlined text-primary" data-icon="pets">pets</span>
+</div>
+</div>
+<p class="text-caption text-on-surface-variant italic">Cutting-edge laboratories and research-focused pedagogy.</p>
+</div>
+<!-- Commerce Department -->
+<div class="col-span-12 md:col-span-6 glass-card rounded-3xl p-8 border-t-4 border-secondary-container overflow-hidden relative">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="inline-block px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md mb-2 uppercase tracking-wider">Faculty of Commerce</span>
+<h3 class="font-headline-md text-primary">Commerce (वाणिज्य विभाग)</h3>
+</div>
+<span class="material-symbols-outlined text-secondary text-4xl" data-icon="payments">payments</span>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<div class="p-4 rounded-xl border border-outline-variant bg-white shadow-sm flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary" data-icon="monitoring">monitoring</span>
+<div>
+<p class="font-label-md font-bold">Business Management</p>
+<p class="text-caption text-on-surface-variant">Core business and administration strategies.</p>
+</div>
+</div>
+<div class="p-4 rounded-xl border border-outline-variant bg-white shadow-sm flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary" data-icon="account_balance_wallet">account_balance_wallet</span>
+<div>
+<p class="font-label-md font-bold">Accountancy &amp; Finance</p>
+<p class="text-caption text-on-surface-variant">Financial accounting and taxation systems.</p>
+</div>
+</div>
+</div>
+<div class="mt-6 p-4 rounded-xl bg-secondary/5 border border-secondary/20">
+<p class="font-label-md text-secondary font-bold">Career Pathways</p>
+<p class="text-caption text-on-surface-variant">CA, Banking, Financial Analysis, and Entrepreneurship.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Infrastructure & Labs -->
+<section class="mb-stack-lg bg-surface-container-low rounded-3xl p-8 md:p-12">
+<div class="flex flex-col md:flex-row gap-12 items-center">
+<div class="flex-1">
+<h2 class="font-headline-lg text-primary mb-6">Department Infrastructure (विभाग अधोसंरचना)</h2>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-md border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="science">science</span>
+</div>
+<div>
+<h4 class="font-label-md font-bold text-primary">Advanced Science Labs</h4>
+<p class="text-body-md text-on-surface-variant">Well-equipped labs for Physics, Chemistry, and Biological sciences with modern safety protocols.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-md border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="computer">computer</span>
+</div>
+<div>
+<h4 class="font-label-md font-bold text-primary">ICT Enabled Classrooms</h4>
+<p class="text-body-md text-on-surface-variant">Digital learning environments with high-speed internet and multimedia projectors for interactive sessions.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-md border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="library_books">library_books</span>
+</div>
+<div>
+<h4 class="font-label-md font-bold text-primary">Departmental Libraries</h4>
+<p class="text-body-md text-on-surface-variant">In addition to the central library, each department maintains a collection of specialized reference books.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 w-full">
+<div class="grid grid-cols-2 gap-4">
+<img class="rounded-2xl shadow-lg w-full h-48 object-cover" data-alt="A brightly lit, modern science laboratory in a university setting. It features clean white benches, advanced microscopes, and glass beakers. The lighting is sterile yet inviting, with professional academic vibes. Students in lab coats can be seen blurred in the background, focusing on experiments." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi_LS66sVutVi0aOvFoPgnl7Ss2FETNQHWJ6y90p4RQZJk2WyZaED7FG5MLn3wew1Qbj_ea-fUxN-MW2J3OhVXP99o_0JKW-4xByvTpjgoXgBkl-34sejTuVAGDWF-fBL-pAZKaqY6iZ_Qdl2PoTHikoTOTe25-kKiB2hjr-MS5z707UDr9fQ0x_a_mRmqsvW0v3ZExfr3njygweiquBhf58pKL5fJNB4Q8QwB29XgdXROueSOR_SpyD7CJ2OakTTwjkh-yRqVlm4"/>
+<img class="rounded-2xl shadow-lg w-full h-48 object-cover mt-8" data-alt="A peaceful and well-organized academic library with tall wooden bookshelves filled with books. There are warm reading lights and comfortable chairs for students. The atmosphere is quiet, studious, and deeply intellectual, emphasizing the college's focus on research and self-study." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj-YJTMhNutmsWAe927JGA4cPPTifEEMiNaxYjoCNE3GcfrbGjFWxvGruQ8FlGZ_6DqT43h4Wr086O6n1hc80Azq2-SDl-DePaoilGv1xSNImUpbaQCcXF5husTwFp9FEnc61T_DeeGIXkvNifjzSsogURfey2cWmTRploxNUM70Mcs9UqArn4O98iVicBoBxYv1VYgC1Sz5eaA8l0haiys09tFKIx8ol3hujZ7rM0tG7rfQOJncstrCzyBYE4UnoIeFOnHGgrngc"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Department Events / Notices -->
+<section>
+<div class="bg-secondary-container rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 border-l-8 border-secondary">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-secondary-container text-4xl animate-pulse" data-icon="notification_important">notification_important</span>
+<div>
+<h4 class="font-headline-md text-on-secondary-container">Upcoming Departmental Seminars</h4>
+<p class="font-body-md text-on-secondary-container opacity-80">राष्ट्रीय संगोष्ठी - 'Modern Trends in Social Sciences' - Dec 15, 2024</p>
+</div>
+</div>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-label-md hover:scale-105 transition-transform">Register Now</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-margin-mobile md:px-margin-desktop bg-primary text-on-primary mt-auto border-t-4 border-secondary-container">
+<div class="max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+<div class="col-span-1 md:col-span-2">
+<h2 class="font-headline-md text-headline-md text-on-primary mb-4">Government Naveen College, Saragaon</h2>
+<p class="font-body-md opacity-80 max-w-md">Dedicated to excellence in higher education and the holistic development of students in the region of Saragaon, Chhattisgarh.</p>
+</div>
+<div>
+<h3 class="font-label-md font-bold mb-4">Quick Links</h3>
+<ul class="space-y-2">
+<li><a class="text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors" href="#">Affiliation Details</a></li>
+<li><a class="text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors" href="#">Student Corner</a></li>
+<li><a class="text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors" href="#">Downloads</a></li>
+<li><a class="text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors" href="#">Gallery</a></li>
+</ul>
+</div>
+<div>
+<h3 class="font-label-md font-bold mb-4">Contact Info</h3>
+<p class="text-caption opacity-80">Saragaon, Dist. Janjgir-Champa<br/>Chhattisgarh, India<br/>Email: gnc.saragaon@gmail.com</p>
+<div class="flex gap-4 mt-4">
+<span class="material-symbols-outlined opacity-80 cursor-pointer hover:text-secondary-fixed" data-icon="facebook">social_leaderboard</span>
+<span class="material-symbols-outlined opacity-80 cursor-pointer hover:text-secondary-fixed" data-icon="alternate_email">alternate_email</span>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-on-primary/10 flex flex-col md:flex-row justify-between items-center gap-4 text-center">
+<p class="font-caption">© 2024 Government Naveen College, Saragaon. All Rights Reserved. Affiliated to Atal Bihari Vajpayee Vishwavidyalaya.</p>
+<p class="font-caption text-secondary-fixed-dim underline">Designed by NIC</p>
+</div>
+</div>
+</footer>
+<script>
+        // Simple drawer toggle logic
+        const drawer = document.getElementById('mobile-drawer');
+        let drawerOpen = false;
+
+        function toggleDrawer() {
+            if (drawerOpen) {
+                drawer.classList.add('-translate-x-full');
+            } else {
+                drawer.classList.remove('-translate-x-full');
+            }
+            drawerOpen = !drawerOpen;
+        }
+
+        // Add a hamburger button for mobile view in TopAppBar
+        const appBar = document.querySelector('header');
+        const menuBtn = document.createElement('button');
+        menuBtn.className = 'md:hidden text-primary';
+        menuBtn.innerHTML = '<span class="material-symbols-outlined" data-icon="menu">menu</span>';
+        menuBtn.onclick = toggleDrawer;
+        appBar.prepend(menuBtn);
+    </script>
+</body></html>

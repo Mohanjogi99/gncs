@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c5c6cf",
+                    "secondary-fixed": "#ffdcc4",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#e7e8e9",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9fa",
+                    "surface-variant": "#e1e3e4",
+                    "on-secondary-fixed-variant": "#6f3800",
+                    "on-tertiary-fixed": "#002114",
+                    "primary-fixed": "#dae2ff",
+                    "tertiary-fixed-dim": "#95d4b3",
+                    "surface-tint": "#4f5d85",
+                    "on-background": "#191c1d",
+                    "on-primary-container": "#8392bc",
+                    "inverse-on-surface": "#f0f1f2",
+                    "tertiary-fixed": "#b1f0ce",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-container": "#629f81",
+                    "outline": "#75777f",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#1b2a4e",
+                    "on-tertiary-fixed-variant": "#0e5138",
+                    "tertiary-container": "#003321",
+                    "surface-dim": "#d9dadb",
+                    "surface-container-low": "#f3f4f5",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#2f1400",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#ffb780",
+                    "tertiary": "#001c10",
+                    "primary-fixed-dim": "#b7c6f2",
+                    "on-primary-fixed": "#091a3d",
+                    "on-surface": "#191c1d",
+                    "primary": "#041539",
+                    "on-primary-fixed-variant": "#37466b",
+                    "secondary": "#8e4e14",
+                    "surface": "#f8f9fa",
+                    "background": "#f8f9fa",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-surface-variant": "#45464e",
+                    "inverse-primary": "#b7c6f2",
+                    "on-secondary-container": "#783d01",
+                    "secondary-container": "#ffab69"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "2.5rem",
+                    "gutter": "1.5rem",
+                    "container-max": "1280px",
+                    "margin-mobile": "1rem",
+                    "stack-sm": "0.5rem",
+                    "stack-lg": "2rem",
+                    "stack-md": "1rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "caption": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-sm max-w-container-max mx-auto bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none w-full">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim text-[32px]" data-icon="account_balance">account_balance</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Govt Naveen College, Saragaon</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-secondary py-2" href="#">Home | मुख्य पृष्ठ</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors px-2 py-2 rounded" href="#">About | परिचय</a>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-md hover:opacity-90 transition-all">Admin Login</button>
+</nav>
+<button class="md:hidden p-2" onclick="toggleDrawer()">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<!-- Navigation Drawer (Mobile) -->
+<div class="fixed inset-y-0 left-0 z-[60] flex flex-col h-full w-80 rounded-r-xl bg-surface-container-lowest dark:bg-surface-container shadow-lg transform -translate-x-full transition-transform duration-300" id="drawer">
+<div class="p-6 border-b border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-primary">College Menu | मेनू</h2>
+</div>
+<nav class="flex-1 py-4 overflow-y-auto">
+<div class="bg-secondary-container text-on-secondary-container font-bold rounded-full mx-2 px-4 py-3 flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home | मुख्य पृष्ठ</span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-label-md text-label-md">About | परिचय</span>
+</div>
+<!-- More items as per JSON... -->
+</nav>
+</div>
+<div class="fixed inset-0 bg-black/50 z-50 hidden" id="overlay" onclick="toggleDrawer()"></div>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg space-y-12">
+<!-- Hero Section / Introduction -->
+<section class="relative overflow-hidden rounded-xl bg-primary-container text-on-primary min-h-[400px] flex items-center p-8 md:p-16">
+<div class="absolute inset-0 opacity-20">
+<img class="w-full h-full object-cover" data-alt="A grand architectural view of a historic university campus building with classical columns and red brick facade. The image is captured in golden hour light, reflecting a sense of institutional pride and established academic excellence. Soft lighting highlights the intricate details of the stone carvings against a clear blue sky, evoking a feeling of serenity and high-end educational tradition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3hfXBbU9mBNMCV7UM0zE_0yCffni5JDOV1-E1HjLA2NkCFJ3rbwnmtWhvYcvLlsF_dHKIcN67tsgQ5pEu3oDFoQI8dwzMi-voNNuT2wMxpYANCV0doj1XwPzx5u-JSxT3J-fn7D1xhp27j2sjPunEpN4sMQnlL5K_Es8pnm90URnxa3upRuV994-Xb5c5uGUOBPNDZIBK8wEXbQyi7UKT8sXfX_d7LkqHMWxxyfkUcor0TGPsUuXd22mxMkSjWrm9dAdKXLHrmAU"/>
+</div>
+<div class="relative z-10 max-w-3xl space-y-6">
+<span class="inline-block px-4 py-1 rounded-full bg-secondary text-on-secondary font-label-md">Established 2012</span>
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg">History &amp; Heritage | इतिहास और विरासत</h2>
+<p class="font-body-lg text-body-lg text-on-primary-container leading-relaxed">
+                    Government Naveen College, Saragaon, is a premier higher education institution dedicated to academic excellence and rural empowerment. Founded with a vision to bring quality education to the heart of Chhattisgarh, the college has evolved into a hub of learning and innovation over the last decade.
+                </p>
+<p class="font-body-md text-body-md opacity-80">
+                    शासकीय नवीन महाविद्यालय, सारागांव, शैक्षणिक उत्कृष्टता और ग्रामीण सशक्तिकरण के लिए समर्पित एक प्रमुख उच्च शिक्षा संस्थान है। छत्तीसगढ़ के हृदय स्थल में गुणवत्तापूर्ण शिक्षा लाने के दृष्टिकोण के साथ स्थापित, महाविद्यालय पिछले एक दशक में सीखने और नवाचार के केंद्र के रूप में विकसित हुआ है।
+                </p>
+</div>
+</section>
+<!-- Institutional Stats Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-all border-t-4 border-primary">
+<span class="material-symbols-outlined text-primary text-4xl mb-2" data-icon="calendar_today">calendar_today</span>
+<h3 class="text-label-md font-bold text-on-surface-variant">Founded</h3>
+<p class="text-headline-md font-bold text-primary">2012</p>
+<p class="text-caption">Educational Excellence</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-all border-t-4 border-secondary">
+<span class="material-symbols-outlined text-secondary text-4xl mb-2" data-icon="groups">groups</span>
+<h3 class="text-label-md font-bold text-on-surface-variant">Student Body</h3>
+<p class="text-headline-md font-bold text-secondary">800+</p>
+<p class="text-caption">Diverse Rural Talent</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-all border-t-4 border-tertiary-container">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-4xl mb-2" data-icon="landscape">landscape</span>
+<h3 class="text-label-md font-bold text-on-surface-variant">Campus Size</h3>
+<p class="text-headline-md font-bold text-primary">15 Acres</p>
+<p class="text-caption">Modern Infrastructure</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-all border-t-4 border-primary">
+<span class="material-symbols-outlined text-primary text-4xl mb-2" data-icon="verified">verified</span>
+<h3 class="text-label-md font-bold text-on-surface-variant">Affiliation</h3>
+<p class="text-headline-md font-bold text-primary">ABVV Bilaspur</p>
+<p class="text-caption">State Accredited</p>
+</div>
+</section>
+<!-- Vision & Mission (Asymmetric Layout) -->
+<section class="flex flex-col lg:flex-row gap-8">
+<div class="flex-1 bg-surface-bright p-8 rounded-2xl border border-outline-variant relative overflow-hidden group">
+<div class="absolute -right-12 -top-12 opacity-5 text-primary scale-[5] material-symbols-outlined" data-icon="visibility">visibility</div>
+<div class="relative z-10 space-y-4">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-4xl" data-icon="visibility" style="font-variation-settings: 'FILL' 1;">visibility</span>
+<h2 class="font-headline-lg text-headline-lg">Our Vision | हमारा दृष्टिकोण</h2>
+</div>
+<p class="text-body-lg text-on-surface-variant italic border-l-4 border-secondary pl-4">
+                        "To be a beacon of intellectual light, fostering a culture of curiosity and character-building that enables students from all backgrounds to lead with integrity and knowledge."
+                    </p>
+<p class="text-body-md text-on-surface-variant opacity-75">
+                        "बौद्धिक प्रकाश का एक स्तंभ बनना, जिज्ञासा और चरित्र निर्माण की संस्कृति को बढ़ावा देना जो सभी पृष्ठभूमि के छात्रों को अखंडता और ज्ञान के साथ नेतृत्व करने में सक्षम बनाता है।"
+                    </p>
+</div>
+</div>
+<div class="flex-1 bg-primary-container text-on-primary p-8 rounded-2xl relative overflow-hidden group">
+<div class="absolute -right-12 -top-12 opacity-10 text-on-primary-container scale-[5] material-symbols-outlined" data-icon="target">target</div>
+<div class="relative z-10 space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-4xl text-secondary-container" data-icon="flag" style="font-variation-settings: 'FILL' 1;">flag</span>
+<h2 class="font-headline-lg text-headline-lg">Our Mission | हमारा लक्ष्य</h2>
+</div>
+<ul class="space-y-4 text-body-md">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary-container mt-1">check_circle</span>
+<span>Deliver high-quality academic instruction through modern pedagogies. <br/><small class="opacity-70">आधुनिक शिक्षण पद्धतियों के माध्यम से उच्च गुणवत्ता वाली शैक्षणिक शिक्षा प्रदान करना।</small></span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary-container mt-1">check_circle</span>
+<span>Nurture holistic development via sports and cultural activities. <br/><small class="opacity-70">खेल और सांस्कृतिक गतिविधियों के माध्यम से समग्र विकास को बढ़ावा देना।</small></span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary-container mt-1">check_circle</span>
+<span>Bridge the digital divide for rural student communities. <br/><small class="opacity-70">ग्रामीण छात्र समुदायों के लिए डिजिटल विभाजन को कम करना।</small></span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Core Objectives (Modern Cards) -->
+<section class="space-y-8">
+<div class="text-center max-w-2xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-primary">Core Objectives | मुख्य उद्देश्य</h2>
+<div class="h-1 w-20 bg-secondary mx-auto mt-2"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-6 rounded-xl bg-white border border-outline-variant hover:border-primary transition-colors text-center group">
+<div class="w-16 h-16 bg-surface-container flex items-center justify-center rounded-full mx-auto mb-4 group-hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined text-3xl text-primary group-hover:text-on-primary" data-icon="school">school</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-2">Academic Rigor</h4>
+<p class="text-label-md text-on-surface-variant">Upholding high standards of teaching and evaluation processes.</p>
+</div>
+<div class="p-6 rounded-xl bg-white border border-outline-variant hover:border-secondary transition-colors text-center group">
+<div class="w-16 h-16 bg-surface-container flex items-center justify-center rounded-full mx-auto mb-4 group-hover:bg-secondary-container transition-all">
+<span class="material-symbols-outlined text-3xl text-secondary group-hover:text-on-secondary" data-icon="psychology">psychology</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-2">Social Awareness</h4>
+<p class="text-label-md text-on-surface-variant">Instilling values of social responsibility and civic engagement.</p>
+</div>
+<div class="p-6 rounded-xl bg-white border border-outline-variant hover:border-tertiary-container transition-colors text-center group">
+<div class="w-16 h-16 bg-surface-container flex items-center justify-center rounded-full mx-auto mb-4 group-hover:bg-tertiary-container transition-all">
+<span class="material-symbols-outlined text-3xl text-on-tertiary-container group-hover:text-on-tertiary" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-2">Future Ready</h4>
+<p class="text-label-md text-on-surface-variant">Equipping students with skills required for the 21st-century job market.</p>
+</div>
+</div>
+</section>
+<!-- Location Section -->
+<section class="bg-surface-container-low rounded-2xl overflow-hidden flex flex-col md:flex-row border border-outline-variant">
+<div class="flex-1 p-8 md:p-12 space-y-6">
+<div class="space-y-2">
+<h2 class="font-headline-lg text-headline-lg text-primary">Visit Our Campus | हमारे परिसर में आएं</h2>
+<p class="text-body-md text-on-surface-variant">Located in the serene town of Saragaon, our campus offers an ideal environment for quiet study and intellectual growth.</p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div>
+<p class="font-bold">Saragaon, Chhattisgarh</p>
+<p class="text-caption">Janjgir-Champa District</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<p class="font-bold">gncsaragaon@gmail.com</p>
+<p class="text-caption">Official Correspondence</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 min-h-[300px] relative">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="A stylized, clean aerial view of a campus map with minimalist design elements. The map uses a palette of navy blues and neutral greys to indicate academic buildings, green spaces, and pathways. Soft lighting effect over the image highlights the organized layout of the institution, reflecting a modern and professional administrative environment." data-location="Saragaon, Janjgir-Champa, Chhattisgarh" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfoe36d5O6k5VMXn24y3DD9ucKeh8FTCLDft0hhMFNbEd4WfdMh7B_E7uHbz2oYgCRFIbWclR15CfJz75Y7uLWqf3QkGh1CYIHUfGsfPG_gG0pQpeNIqp7rfb5Cc6_o4VHiGohaLzfdUQLBw7jPCMNYvLfrWkBpENeMNG6WOK6t5HTHyTE8z3zhceoaZthTuf9dLGEzcz7mN5tHJwlKTfZEpWbKswN4dcaf39ikYCjggcbBrTV4_sS1xtx4LCs02G9pTbnHH3S88c"/>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-margin-mobile md:px-margin-desktop bg-primary text-on-primary mt-auto border-t-4 border-secondary-container">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="col-span-1 md:col-span-2 space-y-4">
+<h2 class="font-headline-md text-headline-md text-on-primary">Govt Naveen College, Saragaon</h2>
+<p class="font-body-md text-body-md text-on-primary-fixed-variant opacity-80">Empowering rural youth through quality education and value-driven academic excellence.</p>
+<div class="flex gap-4">
+<a class="w-8 h-8 rounded-full bg-on-primary/10 flex items-center justify-center hover:bg-secondary transition-colors" href="#"><span class="material-symbols-outlined text-sm">public</span></a>
+<a class="w-8 h-8 rounded-full bg-on-primary/10 flex items-center justify-center hover:bg-secondary transition-colors" href="#"><span class="material-symbols-outlined text-sm">alternate_email</span></a>
+</div>
+</div>
+<div class="space-y-4">
+<h3 class="font-label-md text-label-md font-bold uppercase tracking-wider text-secondary-fixed-dim">Quick Links</h3>
+<ul class="space-y-2 font-body-md text-on-primary-fixed-variant opacity-80">
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">Admission Details</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">Academic Calendar</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">Affiliation Details</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">Photo Gallery</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h3 class="font-label-md text-label-md font-bold uppercase tracking-wider text-secondary-fixed-dim">Contact Info</h3>
+<ul class="space-y-2 font-body-md text-on-primary-fixed-variant opacity-80">
+<li>Saragaon, Dist. Janjgir-Champa</li>
+<li>Chhattisgarh - 495686</li>
+<li>Email: gncsaragaon@gmail.com</li>
+</ul>
+</div>
+</div>
+<div class="max-w-container-max mx-auto mt-12 pt-8 border-t border-on-primary/10 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-caption text-caption text-on-primary-fixed-variant opacity-80">© 2024 Government Naveen College, Saragaon. All Rights Reserved. Affiliated to Atal Bihari Vajpayee Vishwavidyalaya.</p>
+<p class="font-caption text-caption text-on-primary-fixed-variant opacity-80">Designed by NIC</p>
+</div>
+</footer>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('overlay');
+            drawer.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        // Simple scroll reveal effect
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

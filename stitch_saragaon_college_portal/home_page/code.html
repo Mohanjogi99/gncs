@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Govt Naveen College, Saragaon</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c5c6cf",
+                    "secondary-fixed": "#ffdcc4",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#e7e8e9",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9fa",
+                    "surface-variant": "#e1e3e4",
+                    "on-secondary-fixed-variant": "#6f3800",
+                    "on-tertiary-fixed": "#002114",
+                    "primary-fixed": "#dae2ff",
+                    "tertiary-fixed-dim": "#95d4b3",
+                    "surface-tint": "#4f5d85",
+                    "on-background": "#191c1d",
+                    "on-primary-container": "#8392bc",
+                    "inverse-on-surface": "#f0f1f2",
+                    "tertiary-fixed": "#b1f0ce",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-container": "#629f81",
+                    "outline": "#75777f",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#1b2a4e",
+                    "on-tertiary-fixed-variant": "#0e5138",
+                    "tertiary-container": "#003321",
+                    "surface-dim": "#d9dadb",
+                    "surface-container-low": "#f3f4f5",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#2f1400",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#ffb780",
+                    "tertiary": "#001c10",
+                    "primary-fixed-dim": "#b7c6f2",
+                    "on-primary-fixed": "#091a3d",
+                    "on-surface": "#191c1d",
+                    "primary": "#041539",
+                    "on-primary-fixed-variant": "#37466b",
+                    "secondary": "#8e4e14",
+                    "surface": "#f8f9fa",
+                    "background": "#f8f9fa",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-surface-variant": "#45464e",
+                    "inverse-primary": "#b7c6f2",
+                    "on-secondary-container": "#783d01",
+                    "secondary-container": "#ffab69"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "2.5rem",
+                    "gutter": "1.5rem",
+                    "container-max": "1280px",
+                    "margin-mobile": "1rem",
+                    "stack-sm": "0.5rem",
+                    "stack-lg": "2rem",
+                    "stack-md": "1rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "caption": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-scroll {
+            animation: scroll 25s linear infinite;
+        }
+        .animate-scroll:hover {
+            animation-play-state: paused;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-sm max-w-container-max mx-auto bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim text-4xl" data-icon="account_balance">account_balance</span>
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim leading-none">Govt Naveen College, Saragaon</h1>
+<p class="font-label-md text-label-md text-secondary mt-1">शारदा ज्ञान मंदिर, सरगांव</p>
+</div>
+</div>
+<nav class="hidden md:flex gap-gutter items-center">
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-secondary px-2 py-1" href="#">Home | मुख्य पृष्ठ</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors px-2 py-1 rounded" href="#">Admission | प्रवेश</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors px-2 py-1 rounded" href="#">Departments | विभाग</a>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="login">login</span>
+                Admin Login
+            </button>
+</nav>
+<button class="md:hidden p-2 text-primary" id="mobileMenuBtn">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</header>
+<!-- Mobile Drawer -->
+<div class="fixed inset-0 bg-black/50 z-[55] hidden transition-opacity duration-300" id="drawerOverlay"></div>
+<aside class="fixed inset-y-0 left-0 z-[60] flex flex-col h-full w-80 rounded-r-xl bg-surface-container-lowest dark:bg-surface-container shadow-lg transform -translate-x-full transition-transform duration-300" id="navDrawer">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary">College Menu | मेनू</h2>
+<button id="closeDrawerBtn"><span class="material-symbols-outlined" data-icon="close">close</span></button>
+</div>
+<nav class="flex-1 overflow-y-auto py-stack-md flex flex-col gap-2">
+<a class="bg-secondary-container text-on-secondary-container font-bold rounded-full mx-2 px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span> Home | मुख्य पृष्ठ
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span> Admission | प्रवेश
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span> Student Corner | छात्र कोना
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span> Departments | विभाग
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="photo_library">photo_library</span> Gallery | गैलरी
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span> Contact | संपर्क
+            </a>
+</nav>
+</aside>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop space-y-stack-lg py-stack-md">
+<!-- Important Notice Ticker -->
+<div class="bg-secondary-container text-on-secondary-container py-2 overflow-hidden rounded-xl shadow-sm border border-secondary/20 relative">
+<div class="absolute left-0 top-0 bottom-0 bg-secondary px-4 z-10 flex items-center shadow-lg">
+<span class="material-symbols-outlined text-white mr-2" data-icon="campaign">campaign</span>
+<span class="font-label-md text-white whitespace-nowrap font-bold">Latest | नवीनतम:</span>
+</div>
+<div class="animate-scroll whitespace-nowrap pl-[150px]">
+<span class="font-label-md mx-8">Admission Open for Session 2024-25 | 2024-25 के लिए प्रवेश खुला है</span>
+<span class="font-label-md mx-8">Examination forms for UG Part 1 starting from next week | यूजी भाग 1 के लिए परीक्षा फॉर्म अगले सप्ताह से शुरू हो रहे हैं</span>
+<span class="font-label-md mx-8">Last date for Scholarship applications: Oct 30, 2024 | छात्रवृत्ति आवेदनों की अंतिम तिथि: 30 अक्टूबर, 2024</span>
+</div>
+</div>
+<!-- Hero Section -->
+<section class="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-xl group">
+<img alt="College Main Building" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A grand white neoclassical government college building with large columns and a central dome, set against a clear blue sky. Lush green lawns and vibrant flower beds surround the entrance, creating a dignified and welcoming atmosphere. The lighting is bright morning sun, reflecting the institutional pride and authoritative tone of the primary navy blue and gold college palette. Professional architectural photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA72eXokI1lfD95EVEcAR3osAynjp5wfvMvtugkG0bOK_1g7YRvPOwJ9wt9EJEZ3Y_BmjOJaIOxTaTTAvU5DXyuczs0S2DFGtNUoqki8h5n4vVrke8WF1PhFl1l-JCcRYdRvFwUK4JeXDTYSNJfu3QYoW78eZe6BHq7D86Cz2tSUTBb36y99fbjn7vNRs9HjRIxAKwB-ZVe43KBDGY5iP0Y3NY5TBsYHSzTW-XRE9yDpqIV4ABK9EMBoWzT1uHO4Fi6fYj4KIqe6lg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent flex flex-col justify-end p-margin-mobile md:p-margin-desktop">
+<div class="max-w-2xl text-white">
+<span class="inline-block px-3 py-1 bg-secondary rounded-full font-label-md mb-4 text-on-secondary">Affiliated to ABVV, Bilaspur</span>
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-4">Empowering the Future Leaders of Saragaon</h2>
+<p class="font-body-lg text-body-lg text-white/90 mb-8">Empowering rural youth through quality higher education and technical excellence in an environment of inclusivity and ethics.</p>
+<div class="flex gap-4">
+<button class="bg-secondary text-white px-8 py-4 rounded-full font-label-md hover:scale-105 transition-transform flex items-center gap-2">
+                            Apply Now | अभी आवेदन करें
+                            <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Link Cards (Bento Style) -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<a class="bg-surface p-6 rounded-2xl border-t-4 border-secondary shadow-sm hover:shadow-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4 transition-transform group-hover:scale-110" data-icon="school">school</span>
+<h3 class="font-label-md text-on-surface font-bold">Admission | प्रवेश</h3>
+</a>
+<a class="bg-surface p-6 rounded-2xl border-t-4 border-primary shadow-sm hover:shadow-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-primary text-4xl mb-4 transition-transform group-hover:scale-110" data-icon="event_note">event_note</span>
+<h3 class="font-label-md text-on-surface font-bold">Notice Board | सूचना पटल</h3>
+</a>
+<a class="bg-surface p-6 rounded-2xl border-t-4 border-secondary shadow-sm hover:shadow-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4 transition-transform group-hover:scale-110" data-icon="calendar_month">calendar_month</span>
+<h3 class="font-label-md text-on-surface font-bold">Time Table | समय सारणी</h3>
+</a>
+<a class="bg-surface p-6 rounded-2xl border-t-4 border-primary shadow-sm hover:shadow-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-primary text-4xl mb-4 transition-transform group-hover:scale-110" data-icon="edit_calendar">edit_calendar</span>
+<h3 class="font-label-md text-on-surface font-bold">Exam | परीक्षा</h3>
+</a>
+<a class="bg-surface p-6 rounded-2xl border-t-4 border-secondary shadow-sm hover:shadow-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4 transition-transform group-hover:scale-110" data-icon="task_alt">task_alt</span>
+<h3 class="font-label-md text-on-surface font-bold">Result | परिणाम</h3>
+</a>
+<a class="bg-surface p-6 rounded-2xl border-t-4 border-primary shadow-sm hover:shadow-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-primary text-4xl mb-4 transition-transform group-hover:scale-110" data-icon="payments">payments</span>
+<h3 class="font-label-md text-on-surface font-bold">Scholarship | छात्रवृत्ति</h3>
+</a>
+<a class="bg-surface p-6 rounded-2xl border-t-4 border-secondary shadow-sm hover:shadow-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4 transition-transform group-hover:scale-110" data-icon="download">download</span>
+<h3 class="font-label-md text-on-surface font-bold">Downloads | डाउनलोड</h3>
+</a>
+<a class="bg-surface p-6 rounded-2xl border-t-4 border-primary shadow-sm hover:shadow-lg transition-all group" href="#">
+<span class="material-symbols-outlined text-primary text-4xl mb-4 transition-transform group-hover:scale-110" data-icon="contact_support">contact_support</span>
+<h3 class="font-label-md text-on-surface font-bold">Contact | संपर्क</h3>
+</a>
+</section>
+<!-- Principal & About -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
+<div class="lg:col-span-2 space-y-stack-md">
+<h2 class="font-headline-lg text-headline-lg text-primary flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+                    About Our College | हमारे महाविद्यालय के बारे में
+                </h2>
+<div class="bg-surface p-8 rounded-3xl border border-outline-variant/30 leading-relaxed space-y-4">
+<p class="font-body-md text-on-surface-variant">Government Naveen College, Saragaon was established with the vision to provide accessible higher education to the rural population of the Janjgir-Champa region. Since its inception, the college has been a hub for academic excellence and cultural heritage.</p>
+<p class="font-body-md text-on-surface-variant">शासकीय नवीन महाविद्यालय, सरगांव की स्थापना जांजगीर-चांपा क्षेत्र की ग्रामीण आबादी को सुलभ उच्च शिक्षा प्रदान करने के दृष्टिकोण से की गई थी। अपनी स्थापना के बाद से, महाविद्यालय शैक्षणिक उत्कृष्टता और सांस्कृतिक विरासत का केंद्र रहा है।</p>
+<button class="text-primary font-bold flex items-center gap-2 hover:translate-x-1 transition-transform">
+                        Read More | और पढ़ें <span class="material-symbols-outlined" data-icon="arrow_right_alt">arrow_right_alt</span>
+</button>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary mt-12 flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+                    Courses Offered | संचालित पाठ्यक्रम
+                </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-outline-variant hover:border-secondary transition-colors">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary" data-icon="palette">palette</span>
+</div>
+<h4 class="font-headline-md text-primary mb-2">Arts | कला</h4>
+<p class="text-label-md text-on-surface-variant">Hindi, English, History, Pol. Science, Sociology</p>
+</div>
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-outline-variant hover:border-secondary transition-colors">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary" data-icon="biotech">biotech</span>
+</div>
+<h4 class="font-headline-md text-primary mb-2">Science | विज्ञान</h4>
+<p class="text-label-md text-on-surface-variant">Mathematics, Physics, Chemistry, Biology</p>
+</div>
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-outline-variant hover:border-secondary transition-colors">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<h4 class="font-headline-md text-primary mb-2">Commerce | वाणिज्य</h4>
+<p class="text-label-md text-on-surface-variant">Accounting, Business Studies, Economics</p>
+</div>
+</div>
+</div>
+<div class="bg-primary-container text-on-primary rounded-3xl overflow-hidden shadow-lg border border-primary/20 sticky top-24">
+<div class="aspect-square w-full bg-surface-variant relative overflow-hidden">
+<img alt="Principal" class="w-full h-full object-cover grayscale-0 hover:scale-105 transition-transform duration-500" data-alt="A formal professional portrait of an Indian academic principal in a sophisticated office setting. The individual is wearing a traditional Indian formal suit and has a welcoming, authoritative expression. In the background, there are neatly organized bookshelves and a desk with institutional insignias. The lighting is warm and professional, emphasizing a sense of wisdom, trust, and academic leadership." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"/>
+<div class="absolute bottom-0 left-0 right-0 bg-secondary px-6 py-2">
+<p class="font-bold text-on-secondary">Dr. S.K. Sharma</p>
+</div>
+</div>
+<div class="p-8 space-y-4">
+<h3 class="font-headline-md text-on-primary-container border-b border-on-primary-container/20 pb-2">Principal's Message | प्राचार्य संदेश</h3>
+<p class="italic text-on-primary-container/80 text-body-md">"Welcome to Saragaon College. We are committed to building a brighter future through education, discipline, and innovation."</p>
+<p class="text-on-primary-container/80 text-label-md">"सरगांव कॉलेज में आपका स्वागत है। हम शिक्षा, अनुशासन और नवाचार के माध्यम से एक उज्जवल भविष्य के निर्माण के लिए प्रतिबद्ध हैं।"</p>
+</div>
+</div>
+</section>
+<!-- News & Events Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="bg-surface-container-low p-8 rounded-3xl border border-outline-variant">
+<h3 class="font-headline-lg text-primary mb-6 flex items-center justify-between">
+<span>Latest Notices | सूचनाएं</span>
+<span class="material-symbols-outlined text-secondary" data-icon="notifications_active">notifications_active</span>
+</h3>
+<ul class="space-y-4">
+<li class="flex items-start gap-4 pb-4 border-b border-outline-variant/50">
+<div class="bg-secondary/10 text-secondary p-2 rounded-lg font-bold text-center min-w-[50px]">
+<span class="block text-sm">24</span>
+<span class="block text-xs uppercase">Sep</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface font-bold">New Admission list for B.Sc Part 1 released.</p>
+<p class="text-caption text-on-surface-variant">बी.एससी भाग 1 की नई प्रवेश सूची जारी।</p>
+</div>
+</li>
+<li class="flex items-start gap-4 pb-4 border-b border-outline-variant/50">
+<div class="bg-secondary/10 text-secondary p-2 rounded-lg font-bold text-center min-w-[50px]">
+<span class="block text-sm">20</span>
+<span class="block text-xs uppercase">Sep</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface font-bold">Holiday notification for Dussehra festival.</p>
+<p class="text-caption text-on-surface-variant">दशहरा उत्सव के लिए अवकाश की सूचना।</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<div class="bg-secondary/10 text-secondary p-2 rounded-lg font-bold text-center min-w-[50px]">
+<span class="block text-sm">15</span>
+<span class="block text-xs uppercase">Sep</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface font-bold">Internal assessment schedule for Arts Dept.</p>
+<p class="text-caption text-on-surface-variant">कला विभाग के लिए आंतरिक मूल्यांकन कार्यक्रम।</p>
+</div>
+</li>
+</ul>
+<button class="mt-6 w-full py-3 bg-white border border-primary text-primary rounded-xl font-label-md hover:bg-primary hover:text-white transition-all">View All Notices | सभी सूचनाएं देखें</button>
+</div>
+<div class="bg-surface-container-low p-8 rounded-3xl border border-outline-variant">
+<h3 class="font-headline-lg text-primary mb-6 flex items-center justify-between">
+<span>News &amp; Events | समाचार</span>
+<span class="material-symbols-outlined text-secondary" data-icon="newspaper">newspaper</span>
+</h3>
+<div class="space-y-6">
+<div class="group cursor-pointer">
+<div class="h-32 w-full rounded-2xl overflow-hidden mb-3">
+<img alt="News 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A group of diverse university students in casual attire gathered in a bright campus courtyard, engaged in a cheerful discussion during an event. The sun is shining through autumn trees, creating a warm, vibrant educational atmosphere. The image is high-contrast with professional bokeh and captures the spirit of academic collaboration and community." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg"/>
+</div>
+<p class="font-label-md font-bold group-hover:text-secondary transition-colors">Successful completion of the Annual Tree Plantation drive.</p>
+<p class="text-caption text-on-surface-variant italic">Sept 18, 2024</p>
+</div>
+<div class="group cursor-pointer">
+<div class="h-32 w-full rounded-2xl overflow-hidden mb-3">
+<img alt="News 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A modern seminar hall within a college, featuring a speaker at a podium and an audience of students and faculty members. Professional presentation equipment is visible, and the room is well-lit with high-key corporate lighting. The aesthetic is clean, professional, and intellectually stimulating, aligning with the college's navy blue brand tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPuEzyD9-MfQ_3vvX9oYKPAuZF2ztxx6KyqMbOw4g5Kp_tzqhaRgvwfnwaAn5xs_AnL9UFwhmBudsK-VwNPIX4bLLUdVDiEj0hHOYwGWavpYuBWCQiPthsYp-T84atWK-OgmbS_GrLmBTBFGksC9eHp-h1nN9lSakCYPqU5ZwEX3RRW6KJqidqoUmKkeZVoPPcWXgW10QHjMx8WSJ_j29eSxEvHSHqkfZhABTdGFnTzsq9J7LZyF_WehIO_og89pSMv7fkLLjKjR8"/>
+</div>
+<p class="font-label-md font-bold group-hover:text-secondary transition-colors">National Seminar on Rural Development scheduled for next month.</p>
+<p class="text-caption text-on-surface-variant italic">Sept 12, 2024</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-margin-mobile md:px-margin-desktop bg-primary text-on-primary mt-auto border-t-4 border-secondary-container">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter mb-12">
+<div class="space-y-4">
+<h3 class="font-headline-md text-headline-md text-on-primary">Saragaon College</h3>
+<p class="font-body-md text-on-primary-fixed-variant opacity-80">Empowering rural youth through excellence in education since established.</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 bg-on-primary/10 rounded-full flex items-center justify-center hover:bg-secondary-container transition-colors" href="#"><span class="material-symbols-outlined text-white text-xl" data-icon="facebook">social_leaderboard</span></a>
+<a class="w-10 h-10 bg-on-primary/10 rounded-full flex items-center justify-center hover:bg-secondary-container transition-colors" href="#"><span class="material-symbols-outlined text-white text-xl" data-icon="alternate_email">alternate_email</span></a>
+</div>
+</div>
+<div>
+<h4 class="font-label-md font-bold mb-6 text-secondary-container">Quick Links</h4>
+<ul class="space-y-3 font-body-md text-on-primary-fixed-variant opacity-80">
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">ABVV Bilaspur</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">Govt of Chhattisgarh</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">UGC Website</a></li>
+<li><a class="hover:text-secondary-fixed transition-colors" href="#">N-LIST Portal</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md font-bold mb-6 text-secondary-container">Contact Info</h4>
+<ul class="space-y-4 font-body-md text-on-primary-fixed-variant opacity-80">
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim" data-icon="location_on">location_on</span>
+<span>Saragaon, Janjgir-Champa, Chhattisgarh 495686</span>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim" data-icon="call">call</span>
+<span>+91 7750 - XXXXXX</span>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim" data-icon="mail">mail</span>
+<span>govtcollege.saragaon@gmail.com</span>
+</li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md font-bold mb-6 text-secondary-container">Affiliation</h4>
+<div class="bg-white/10 p-4 rounded-xl border border-white/10">
+<p class="text-caption text-on-primary-fixed-variant">Affiliated to Atal Bihari Vajpayee Vishwavidyalaya, Bilaspur (C.G.)</p>
+<p class="text-caption mt-2 text-on-primary-fixed-variant">Registered under 2(f) and 12(B) of UGC Act.</p>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto border-t border-on-primary-fixed-variant/30 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-caption text-caption text-on-primary-fixed-variant opacity-80 text-center md:text-left">© 2024 Government Naveen College, Saragaon. All Rights Reserved. Affiliated to Atal Bihari Vajpayee Vishwavidyalaya.</p>
+<p class="font-caption text-caption text-on-primary-fixed-variant opacity-80">Designed by NIC | एन.आई.सी. द्वारा डिज़ाइन किया गया</p>
+</div>
+</footer>
+<script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navDrawer = document.getElementById('navDrawer');
+        const drawerOverlay = document.getElementById('drawerOverlay');
+        const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+
+        function toggleDrawer() {
+            navDrawer.classList.toggle('-translate-x-full');
+            drawerOverlay.classList.toggle('hidden');
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleDrawer);
+        closeDrawerBtn.addEventListener('click', toggleDrawer);
+        drawerOverlay.addEventListener('click', toggleDrawer);
+
+        // Language Switcher Mock Logic
+        function toggleLanguage() {
+            const currentLang = document.documentElement.lang;
+            document.documentElement.lang = currentLang === 'en' ? 'hi' : 'en';
+        }
+    </script>
+</body></html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gallery | Govt Naveen College, Saragaon</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c5c6cf",
+                    "secondary-fixed": "#ffdcc4",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#e7e8e9",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9fa",
+                    "surface-variant": "#e1e3e4",
+                    "on-secondary-fixed-variant": "#6f3800",
+                    "on-tertiary-fixed": "#002114",
+                    "primary-fixed": "#dae2ff",
+                    "tertiary-fixed-dim": "#95d4b3",
+                    "surface-tint": "#4f5d85",
+                    "on-background": "#191c1d",
+                    "on-primary-container": "#8392bc",
+                    "inverse-on-surface": "#f0f1f2",
+                    "tertiary-fixed": "#b1f0ce",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-container": "#629f81",
+                    "outline": "#75777f",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#1b2a4e",
+                    "on-tertiary-fixed-variant": "#0e5138",
+                    "tertiary-container": "#003321",
+                    "surface-dim": "#d9dadb",
+                    "surface-container-low": "#f3f4f5",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#2f1400",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#ffb780",
+                    "tertiary": "#001c10",
+                    "primary-fixed-dim": "#b7c6f2",
+                    "on-primary-fixed": "#091a3d",
+                    "on-surface": "#191c1d",
+                    "primary": "#041539",
+                    "on-primary-fixed-variant": "#37466b",
+                    "secondary": "#8e4e14",
+                    "surface": "#f8f9fa",
+                    "background": "#f8f9fa",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-surface-variant": "#45464e",
+                    "inverse-primary": "#b7c6f2",
+                    "on-secondary-container": "#783d01",
+                    "secondary-container": "#ffab69"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "2.5rem",
+                    "gutter": "1.5rem",
+                    "container-max": "1280px",
+                    "margin-mobile": "1rem",
+                    "stack-sm": "0.5rem",
+                    "stack-lg": "2rem",
+                    "stack-md": "1rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "caption": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .gallery-card:hover .overlay { opacity: 1; }
+        .lightbox-active { display: flex !important; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-sm max-w-container-max mx-auto w-full bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim text-3xl" data-icon="account_balance">account_balance</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Govt Naveen College, Saragaon</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors px-3 py-2 rounded-lg" href="#">Home | मुख्य पृष्ठ</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-secondary px-3 py-2" href="#">Gallery | गैलरी</a>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-full font-label-md text-label-md hover:opacity-90 transition-opacity">Admin Login</button>
+</nav>
+<button class="md:hidden p-2" onclick="toggleDrawer()">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<!-- Navigation Drawer (Mobile) -->
+<div class="fixed inset-y-0 left-0 z-[60] flex flex-col h-full w-80 rounded-r-xl bg-surface-container-lowest dark:bg-surface-container shadow-lg transform -translate-x-full transition-transform duration-300" id="drawer">
+<div class="p-6 border-b border-outline-variant">
+<div class="flex justify-between items-center">
+<span class="font-headline-md text-headline-md text-primary">College Menu | मेनू</span>
+<button onclick="toggleDrawer()"><span class="material-symbols-outlined">close</span></button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-4">
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home | मुख्य पृष्ठ</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-label-md text-label-md">About | परिचय</span>
+</a>
+<a class="flex items-center gap-4 bg-secondary-container text-on-secondary-container font-bold rounded-full mx-2 px-4 py-3" href="#">
+<span class="material-symbols-outlined" data-icon="photo_library">photo_library</span>
+<span class="font-label-md text-label-md">Gallery | गैलरी</span>
+</a>
+<!-- Additional items from JSON would go here -->
+</div>
+</div>
+<div class="fixed inset-0 bg-black/50 z-[55] hidden" id="drawer-overlay" onclick="toggleDrawer()"></div>
+<!-- Main Content -->
+<main class="flex-grow max-w-container-max mx-auto w-full px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Header Section -->
+<section class="mb-stack-lg border-l-4 border-secondary pl-6">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">College Gallery | महाविद्यालय गैलरी</h2>
+<p class="text-on-surface-variant font-body-md max-w-2xl">A visual journey through our academic achievements, cultural heritage, and vibrant campus life. Capturing moments of excellence and growth at Government Naveen College, Saragaon.</p>
+</section>
+<!-- Category Filters -->
+<div class="flex flex-wrap gap-stack-sm mb-stack-lg">
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-md text-label-md">All Events</button>
+<button class="bg-surface-container-high text-on-surface-variant px-6 py-2 rounded-full font-label-md text-label-md hover:bg-secondary-container hover:text-on-secondary-container transition-all">Academic</button>
+<button class="bg-surface-container-high text-on-surface-variant px-6 py-2 rounded-full font-label-md text-label-md hover:bg-secondary-container hover:text-on-secondary-container transition-all">Sports Meet</button>
+<button class="bg-surface-container-high text-on-surface-variant px-6 py-2 rounded-full font-label-md text-label-md hover:bg-secondary-container hover:text-on-secondary-container transition-all">Annual Function</button>
+<button class="bg-surface-container-high text-on-surface-variant px-6 py-2 rounded-full font-label-md text-label-md hover:bg-secondary-container hover:text-on-secondary-container transition-all">NSS/NCC</button>
+</div>
+<!-- Bento Grid Gallery -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Featured Album -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-xl aspect-[16/9] shadow-sm cursor-pointer gallery-card" onclick="openLightbox('Annual Function 2023 Celebration')">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A grand annual function celebration at an Indian college campus. Students in traditional colorful attire performing on a professionally lit stage with heavy floral decorations. The lighting is warm and celebratory, capturing the joy and vibrant cultural atmosphere of the event. Corporate modern photography style with deep navy and gold accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXEQpo7CycTrVHbr9x7EoKJEdt5zmd6g_hwzJzdQEWWkf1JXyBZ6HNdc-Ng8TM3BkkfqUZj-xRBzwqXhIznvlfDCndidskftqg5U2sENMIOgLuj3Xb81MEn7vqxhO7B74taogQMKtKUzVrOrAYxjYAU80hH2FG-IcAHvt62vmBSO9_4CIXWq892rgnaTGWxmr18iSxG0Rs2zUWOL8aO-ptFuAWgirPk3BAGBOgQRkWwUV-SKTUbwcR5XT3druPivVW2ia5_QSvjO0"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-secondary-fixed font-label-md text-label-md mb-2">Dec 2023</span>
+<h3 class="text-white font-headline-md text-headline-md">Annual Function 2023 | वार्षिक उत्सव</h3>
+<p class="text-white/80 font-body-md">Celebrating talent and cultural diversity of our institution.</p>
+</div>
+<div class="absolute top-4 right-4 bg-secondary text-on-secondary px-3 py-1 rounded-full text-caption flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">collections</span> 24 Photos
+                </div>
+</div>
+<!-- Side Cards -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl aspect-square shadow-sm cursor-pointer gallery-card" onclick="openLightbox('National Sports Meet')">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Action shot of a college sports meet on a lush green field. Students in athletic wear participating in track events under bright daylight. The scene conveys energy, competition, and sportsmanship. High-quality professional photography with a clean, bright, and authorized government institution aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWCNlcp5uXkSKofT1hvpEgC0fdm1O6_5CArSmley31toDxfbEZTLkl1l8BAOnO-Qu4vcj0cCaxc6S0Y31XXEPwEAqakJqeAiax_asUOpb4cnfqJmYqfDawoXdlHTerc_iMDUqLkHjc15oHKLVSCYS7BZ8jSh7jndE1bliwRj5Q_d9jzKQ43b14rBSntaRJmOzehenddJKDLGAtaMGOsI_f9PP95-bajLUtZvFiFqveXSp-yt0iAXEBt2ZCSMuG3kJMJFvhtK_WDqw"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-secondary-fixed font-label-md text-label-md mb-1">Nov 2023</span>
+<h3 class="text-white font-headline-md text-headline-md">Sports Meet | खेलकूद</h3>
+</div>
+</div>
+<!-- Grid Items -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl aspect-square shadow-sm cursor-pointer gallery-card" onclick="openLightbox('Science Exhibition 2023')">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Science exhibition in a modern laboratory setting at the college. Students explaining detailed scientific models to visitors. The lighting is crisp and academic, using a professional corporate style. The colors emphasize the navy blue of the college brand and the pristine white of the lab environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAERSP8RP9Ql0OpmkuTpVoegl0MBRhMviOZg7Y3sy3opKT2KohLzyVQyAPuCb1ImVlLn_vg6dd04SDa8c9pR-X7D8LA7PdThjMySg9rCv6uXn7DZVImWoogemCT-rSHv25MQWBB4LJhhVXDRFKaShkyy2RLK0hg7Ckovg_v7AhIB_-uX1rwyq0Nf2qd1QBLsCd0PqaDxvGFg49ij4zItjO-eNIBzFHD-lY0h9oDKu1RU0gPeIVP9wC0eWX4Qaae2GwtStbeuwXGaDw"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-secondary-fixed font-label-md text-label-md mb-1">Oct 2023</span>
+<h3 class="text-white font-headline-md text-headline-md">Science Expo | विज्ञान प्रदर्शनी</h3>
+</div>
+</div>
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl aspect-square shadow-sm cursor-pointer gallery-card" onclick="openLightbox('NSS Social Service Camp')">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="NSS student volunteers in official uniforms engaged in community service in a local village near Saragaon. The mood is helpful and purposeful, with soft morning light. The visual style is documentary yet professional, reflecting the college's commitment to social responsibility and national service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoL-mYwrCjD0zH8IC_I3TACwhJr32piSraXTpZkhoI_4sUS74aqs4A4b2m7lefDKkXdRouFHvE0Ae4cHg4a7LOe78jrQlZprKqjc4LwuI9kDLg6qcaG0ksTYhLdLoGDebYul7g49nC-QGm-LWMIvTQpsJEHoZvFaFMWBQ6LNhqJMDlC09GCTD_dTURPs3y7YwFewq_4jBPbg2WrfYdMYjpGHvTXvVxvuYjwrlZdZGhVOW7G9mHiLFtWSasFrKNlbNb8ZMv0qdvwJo"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-secondary-fixed font-label-md text-label-md mb-1">Sept 2023</span>
+<h3 class="text-white font-headline-md text-headline-md">NSS Camp | एनएसएस शिविर</h3>
+</div>
+</div>
+<div class="md:col-span-4 group relative overflow-hidden rounded-xl aspect-square shadow-sm cursor-pointer gallery-card" onclick="openLightbox('Library Inauguration')">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Interior of a newly inaugurated college library with large glass windows and wooden bookshelves. The scene is bright, peaceful, and scholarly. The design system's aesthetic of trust and authority is evident through the structured layout and the use of high-contrast professional lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh5swbifoRma2V3LMuIO7cmfSoTaMHViGcpzVEj3Xus4uPHbPwPfazxcVcKHdqPRNcq7kAXB6PfCATtbq23GGuP1gyiwRBuVDWumuTklaHkM4EhM2fjuUqqBlJkPhO6Ie_I2LoQzpVNa5VbOQ3uRaTXrAkpnx7u5vGpWiocKqUykdrB2yJ9YIhJn2jLwvWBtGqAYs8IoH4_7zdoSmZpQecXcz2lVP7SPZOWY7-BayilJTvyZ-ophjs4oDeGdNa4jhTENMY1QCkUiY"/>
+<div class="overlay absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
+<span class="text-secondary-fixed font-label-md text-label-md mb-1">Aug 2023</span>
+<h3 class="text-white font-headline-md text-headline-md">New Library | नवीन पुस्तकालय</h3>
+</div>
+</div>
+</div>
+<!-- Pagination/Load More -->
+<div class="flex justify-center mt-stack-lg">
+<button class="group flex items-center gap-2 border-2 border-primary text-primary px-8 py-3 rounded-full font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all active:scale-[0.98]">
+<span>Load More Albums | और देखें</span>
+<span class="material-symbols-outlined transition-transform group-hover:translate-y-1">expand_more</span>
+</button>
+</div>
+</main>
+<!-- Lightbox Mockup (Hidden by default) -->
+<div class="fixed inset-0 z-[100] bg-black/95 hidden flex-col items-center justify-center p-4" id="lightbox">
+<button class="absolute top-6 right-6 text-white hover:text-secondary-container" onclick="closeLightbox()">
+<span class="material-symbols-outlined text-4xl">close</span>
+</button>
+<div class="max-w-5xl w-full h-[618px] relative group">
+<img class="w-full h-full object-contain" id="lightbox-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt4Fu_F74nB3J96vx94BHMdunKqBScw9xBh4HtD3SZSP2k0rcVJKPokpylHfxd3lFwzY7cN9X1VikMRyil7rWgGbdKzyhRdme4sDYkIQQi1DsYNbjKx2aQt_PWgQ_fF9F0-54U_iE7yoorYgO_QC3UWMgnox2gaxW7KKZfn3hSoZcnvGENJW6mg-dtX9fjfFscWdyzGzsvQnh0b22GAd8NgxpoCfywpzbiP34dLxy-gbKjsOSl0c13xvNBrElCsu-zfbC53i1xIds"/>
+<button class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-5xl">chevron_left</span>
+</button>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-5xl">chevron_right</span>
+</button>
+</div>
+<div class="mt-6 text-center">
+<h4 class="text-white font-headline-md text-headline-md" id="lightbox-title">Event Title</h4>
+<p class="text-white/60 font-caption mt-2">Photo 1 of 24 • Government Naveen College Gallery</p>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-margin-mobile md:px-margin-desktop bg-primary text-on-primary mt-auto border-t-4 border-secondary-container">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter mb-stack-lg">
+<div class="col-span-1 md:col-span-2">
+<h3 class="font-headline-md text-headline-md text-on-primary mb-4">Govt Naveen College, Saragaon</h3>
+<p class="font-body-md text-on-primary-fixed-variant opacity-80 max-w-md">Dedicated to providing quality education and fostering an environment of academic excellence and social responsibility in the region.</p>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold mb-4">Quick Links</h4>
+<ul class="space-y-2">
+<li><a class="text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors" href="#">Admission Details</a></li>
+<li><a class="text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors" href="#">Course Curriculum</a></li>
+<li><a class="text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors" href="#">Examination Portal</a></li>
+<li><a class="text-on-primary-fixed-variant opacity-80 hover:text-secondary-fixed transition-colors underline text-secondary-fixed-dim" href="#">Gallery Archives</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold mb-4">Contact Info</h4>
+<div class="flex items-start gap-2 mb-2 text-on-primary-fixed-variant opacity-80">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<p class="text-caption">Saragaon, Janjgir-Champa,<br/>Chhattisgarh - 495686</p>
+</div>
+<div class="flex items-center gap-2 text-on-primary-fixed-variant opacity-80">
+<span class="material-symbols-outlined text-sm">mail</span>
+<p class="text-caption">info@gncsaragaon.ac.in</p>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto pt-stack-md border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-caption text-caption text-on-primary-fixed-variant opacity-80">© 2024 Government Naveen College, Saragaon. All Rights Reserved. Affiliated to Atal Bihari Vajpayee Vishwavidyalaya.</p>
+<div class="flex gap-4">
+<span class="font-caption text-caption text-on-primary-fixed-variant opacity-80">Designed by NIC</span>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-on-primary-fixed-variant opacity-80 text-lg">social_leaderboard</span>
+<span class="material-symbols-outlined text-on-primary-fixed-variant opacity-80 text-lg">share</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            const isOpen = drawer.classList.contains('translate-x-0');
+            
+            if (isOpen) {
+                drawer.classList.remove('translate-x-0');
+                drawer.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            } else {
+                drawer.classList.remove('-translate-x-full');
+                drawer.classList.add('translate-x-0');
+                overlay.classList.remove('hidden');
+            }
+        }
+
+        function openLightbox(title) {
+            const lightbox = document.getElementById('lightbox');
+            const lbTitle = document.getElementById('lightbox-title');
+            lbTitle.innerText = title;
+            lightbox.classList.add('lightbox-active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('lightbox-active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close drawer on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const drawer = document.getElementById('drawer');
+                if (drawer.classList.contains('translate-x-0')) toggleDrawer();
+                closeLightbox();
+            }
+        });
+    </script>
+</body></html>

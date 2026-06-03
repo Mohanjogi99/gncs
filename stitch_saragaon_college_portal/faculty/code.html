@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Faculty | Govt Naveen College, Saragaon</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c5c6cf",
+                        "secondary-fixed": "#ffdcc4",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e7e8e9",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9fa",
+                        "surface-variant": "#e1e3e4",
+                        "on-secondary-fixed-variant": "#6f3800",
+                        "on-tertiary-fixed": "#002114",
+                        "primary-fixed": "#dae2ff",
+                        "tertiary-fixed-dim": "#95d4b3",
+                        "surface-tint": "#4f5d85",
+                        "on-background": "#191c1d",
+                        "on-primary-container": "#8392bc",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary-fixed": "#b1f0ce",
+                        "surface-container": "#edeeef",
+                        "on-tertiary-container": "#629f81",
+                        "outline": "#75777f",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#1b2a4e",
+                        "on-tertiary-fixed-variant": "#0e5138",
+                        "tertiary-container": "#003321",
+                        "surface-dim": "#d9dadb",
+                        "surface-container-low": "#f3f4f5",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#2f1400",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#ffb780",
+                        "tertiary": "#001c10",
+                        "primary-fixed-dim": "#b7c6f2",
+                        "on-primary-fixed": "#091a3d",
+                        "on-surface": "#191c1d",
+                        "primary": "#041539",
+                        "on-primary-fixed-variant": "#37466b",
+                        "secondary": "#8e4e14",
+                        "surface": "#f8f9fa",
+                        "background": "#f8f9fa",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-surface-variant": "#45464e",
+                        "inverse-primary": "#b7c6f2",
+                        "on-secondary-container": "#783d01",
+                        "secondary-container": "#ffab69"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "2.5rem",
+                        "gutter": "1.5rem",
+                        "container-max": "1280px",
+                        "margin-mobile": "1rem",
+                        "stack-sm": "0.5rem",
+                        "stack-lg": "2rem",
+                        "stack-md": "1rem"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-size: 32px;">account_balance</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Govt Naveen College, Saragaon</h1>
+</div>
+<nav class="hidden md:flex gap-6 mt-4 md:mt-0">
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors px-2 py-1 rounded" href="#">Home | मुख्य पृष्ठ</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-secondary px-2 py-1" href="#">Faculty | संकाय</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors px-2 py-1 rounded" href="#">Admission | प्रवेश</a>
+</nav>
+<div class="flex items-center gap-4 mt-2 md:mt-0">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-full hover:bg-primary-container transition-all active:scale-[0.98]">
+                    Admin Login
+                </button>
+<button class="md:hidden p-2 text-primary" id="menu-toggle">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Navigation Drawer (Mobile) -->
+<div class="fixed inset-0 z-[100] hidden" id="drawer">
+<div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="drawer-overlay"></div>
+<aside class="fixed inset-y-0 left-0 z-[60] flex flex-col h-full w-80 rounded-r-xl bg-surface-container-lowest dark:bg-surface-container shadow-lg transition-transform -translate-x-full" id="drawer-content">
+<div class="p-6 border-b border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-primary">College Menu | मेनू</h2>
+</div>
+<nav class="flex-1 py-4 overflow-y-auto">
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Home | मुख्य पृष्ठ</span>
+</a>
+<a class="flex items-center gap-4 bg-secondary-container text-on-secondary-container font-bold rounded-full mx-2 px-4 py-3 opacity-80" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-md text-label-md">Faculty | संकाय</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 transition-all" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-md text-label-md">Admission | प्रवेश</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 transition-all" href="#">
+<span class="material-symbols-outlined">person_search</span>
+<span class="font-label-md text-label-md">Student Corner | छात्र कोना</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 transition-all" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-md text-label-md">Departments | विभाग</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 transition-all" href="#">
+<span class="material-symbols-outlined">photo_library</span>
+<span class="font-label-md text-label-md">Gallery | गैलरी</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 transition-all" href="#">
+<span class="material-symbols-outlined">download</span>
+<span class="font-label-md text-label-md">Downloads | डाउनलोड</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant rounded-full mx-2 px-4 py-3 transition-all" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-label-md text-label-md">Contact | संपर्क</span>
+</a>
+</div>
+</nav>
+</aside>
+</div>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg min-h-screen">
+<!-- Header Section -->
+<section class="mb-12 text-center md:text-left">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Academic Faculty</h2>
+<h3 class="font-headline-md text-headline-md text-secondary mb-6">शैक्षणिक संकाय</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
+                Our dedicated team of educators is committed to academic excellence and nurturing the future leaders of Saragaon and beyond. Meet the experts behind our various departments.
+            </p>
+</section>
+<!-- Search & Filter (UI Enhancement) -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface rounded-lg border border-outline-variant focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Search faculty by name or department..." type="text"/>
+</div>
+<div class="flex gap-2 flex-wrap">
+<button class="bg-primary text-on-primary px-4 py-2 rounded-full font-label-md text-label-md">All Departments</button>
+<button class="bg-surface text-on-surface-variant border border-outline-variant px-4 py-2 rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors">Arts</button>
+<button class="bg-surface text-on-surface-variant border border-outline-variant px-4 py-2 rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors">Science</button>
+<button class="bg-surface text-on-surface-variant border border-outline-variant px-4 py-2 rounded-full font-label-md text-label-md hover:bg-surface-variant transition-colors">Commerce</button>
+</div>
+</div>
+<!-- Faculty Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Principal / Head -->
+<div class="group bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-secondary">
+<div class="aspect-[4/5] relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional portrait of a senior academic male principal in a formal navy blue suit, standing in a brightly lit modern university office with bookshelves and a soft-focus campus window in the background. The lighting is crisp and scholarly, emphasizing authority and wisdom in a clean corporate modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKq1hGGw4aUd8S6xPj58kkoO7LdW1eHtbvJefbpVcPqYtORcwv11G-pqTqNsoWXRZC5ts86Vbv_K5wNdGcJrCN8AxmmnbOixc16VpsYzel_wjurlsdRzpmU0RRsxOoFHN2PEq2j2o_-lnyPgbb7dTAenNX495JFjHV_diNGRSiwTG9gTjkFAHh5_xgvB0pXY1XLNdvhQdQd0Mby04kGY_oHj0UC0ly16sQgXT7w_yPMfadALjvKeOmNAMYZbS1o8cGHkJLrcveFlM"/>
+</div>
+<div class="p-5">
+<h4 class="font-headline-md text-[18px] text-primary mb-1">Dr. Rajesh Kumar Verma</h4>
+<p class="font-label-md text-label-md text-secondary font-bold mb-2">Principal</p>
+<div class="space-y-1 border-t border-outline-variant pt-3">
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Dept:</span> Administration</p>
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Qual:</span> Ph.D., M.Phil, UGC NET</p>
+<a class="flex items-center gap-2 text-primary font-label-md text-[14px] mt-3 hover:underline" href="mailto:principal@gncsaragaon.ac.in">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                            principal@gncsaragaon.ac.in
+                        </a>
+</div>
+</div>
+</div>
+<!-- Faculty Card 2 -->
+<div class="group bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-primary">
+<div class="aspect-[4/5] relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional portrait of a middle-aged female professor with a confident smile, wearing traditional elegant Indian business attire. She is positioned in a modern academic library setting with soft natural light coming from the side, creating a warm and approachable educational atmosphere. High-contrast, clean UI photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhQWBTz1rRiZuY-vOggSHSBKRnl6cuQzdRPNYTrUu71Eyt9bw4eONoHiVSWDZjgywdcb9VYy3QF2YN4eKIx-ymDq_ECbVWzfYOW3mmlHt3olXYmS_D27KmAoUtU-UHNnyqyKQs4fJKFuFnlr3UdIN8k7puFt7nz-U7rwnbY2Kd79wgAwVbnW3DVv0B6H847IASWQiy9HL5ogm6nWgj_2puySqIahWhYjtX87D5_VTqf0EpEdeDoz9zdHqui6kKG-lzMRtGpWXEiM0"/>
+</div>
+<div class="p-5">
+<h4 class="font-headline-md text-[18px] text-primary mb-1">Dr. Sunita Sharma</h4>
+<p class="font-label-md text-label-md text-secondary font-bold mb-2">Assistant Professor</p>
+<div class="space-y-1 border-t border-outline-variant pt-3">
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Dept:</span> Hindi Literature</p>
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Qual:</span> Ph.D., M.A. (Hindi)</p>
+<a class="flex items-center gap-2 text-primary font-label-md text-[14px] mt-3 hover:underline" href="mailto:s.sharma@gncsaragaon.ac.in">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                            s.sharma@gncsaragaon.ac.in
+                        </a>
+</div>
+</div>
+</div>
+<!-- Faculty Card 3 -->
+<div class="group bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-primary">
+<div class="aspect-[4/5] relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A portrait of a male science faculty member in a clean, white laboratory setting. He is wearing a formal shirt and glasses, looking professional and friendly. The background features blurred scientific equipment like microscopes and beakers, bathed in cool, high-key lighting to represent precision and knowledge." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe6QtfkC7XNfwH2A5_trZKPp5sXxl845nJzpR89IMpLq3wgmX2koQZwxfvG21QeZ_P6ClSnxhgNEYv3izreN6TbtNzP3qAGIEihSSMCe1BsLAkTGRPrHlnTSTh-5m2DxbKwX_LCcnxvUnJYSH71G8iBhTylkNLv8h0Dbpq_zMK-6auHTTJ9Wk9LNDvy_vyu5XoYD3hty-kIegtC2STSnrJ5sKHFgrShO7kpkaQrMDXOSz49ZPEMfPQVWkmalD2AYXe2o8jFJuJXzc"/>
+</div>
+<div class="p-5">
+<h4 class="font-headline-md text-[18px] text-primary mb-1">Shri Amit Sahu</h4>
+<p class="font-label-md text-label-md text-secondary font-bold mb-2">Lecturer</p>
+<div class="space-y-1 border-t border-outline-variant pt-3">
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Dept:</span> Physics</p>
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Qual:</span> M.Sc. (Physics), CSIR NET</p>
+<a class="flex items-center gap-2 text-primary font-label-md text-[14px] mt-3 hover:underline" href="mailto:a.sahu@gncsaragaon.ac.in">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                            a.sahu@gncsaragaon.ac.in
+                        </a>
+</div>
+</div>
+</div>
+<!-- Faculty Card 4 -->
+<div class="group bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-primary">
+<div class="aspect-[4/5] relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional headshot of a young female educator in a contemporary office environment. She has a bright expression, wearing a smart casual blazer. The background is a clean white wall with minimal architectural detail, reflecting a modern, high-contrast, and professional aesthetic suitable for a government educational institution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxfW_zJTSnLLBbCn8RS4pUiyAYzjIsDVR86oKbFNbzLRgm9sYNuCv22a0oNIXYcZZpzKokSPMQBf4eZCF2_SN-C3sE5A8WOZTk3-wabd5d9pxfqsUaRWe1XoillVb9dxhgTT527PI8SXcmMhYRTuUSUaUCy4ziiP1n0JVI_k2w_xCytgUzHkKK0Z6BNgg8fGMdV55x6TqUfUbc_-afpPNpLX38d_0cixuNJQWQc3PQHXawlSLK5cRBPN2yLXcpeU43P-4p18XEHoI"/>
+</div>
+<div class="p-5">
+<h4 class="font-headline-md text-[18px] text-primary mb-1">Ms. Priyanka Dewangan</h4>
+<p class="font-label-md text-label-md text-secondary font-bold mb-2">Assistant Professor</p>
+<div class="space-y-1 border-t border-outline-variant pt-3">
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Dept:</span> Commerce</p>
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Qual:</span> M.Com, SET, Ph.D. Pursuing</p>
+<a class="flex items-center gap-2 text-primary font-label-md text-[14px] mt-3 hover:underline" href="mailto:p.dewangan@gncsaragaon.ac.in">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                            p.dewangan@gncsaragaon.ac.in
+                        </a>
+</div>
+</div>
+</div>
+<!-- Faculty Card 5 -->
+<div class="group bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-primary">
+<div class="aspect-[4/5] relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A scholarly portrait of an elderly male history professor in a room filled with historical maps and artifacts. The lighting is warm and traditional, creating a sense of deep expertise and institutional heritage. The photography style is sharp, clean, and highlights the dignity of long-standing academic service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7AW9zTIZSQmfO01QrQ2q2p0w3da3SzTUaAPcXeuZeX60rrouXB_EQr_m5eDV0-eTyd9hBw02n-klTFIvY4WeqnbZpQRnVYptA5q-Ryth7tFisU6Zx5aPWd-VdZKJTvXy02DTWOcYiQFydWzY7JMtibLyELbwz6qXMAzTGlEFsdhcjf6Hno08Cg2-s3yPYVxTbzDIQQ0r9Y2kdQ4ds92bKCEXwRaFD3VK1Ux1E9boqfxu4DsWzSsxgZ-EKtqrX0bLkLFELdQU7mbw"/>
+</div>
+<div class="p-5">
+<h4 class="font-headline-md text-[18px] text-primary mb-1">Dr. K.P. Singh</h4>
+<p class="font-label-md text-label-md text-secondary font-bold mb-2">Head of Department</p>
+<div class="space-y-1 border-t border-outline-variant pt-3">
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Dept:</span> History</p>
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Qual:</span> Ph.D., M.A. (History)</p>
+<a class="flex items-center gap-2 text-primary font-label-md text-[14px] mt-3 hover:underline" href="mailto:kp.singh@gncsaragaon.ac.in">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                            kp.singh@gncsaragaon.ac.in
+                        </a>
+</div>
+</div>
+</div>
+<!-- Faculty Card 6 -->
+<div class="group bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-primary">
+<div class="aspect-[4/5] relative overflow-hidden bg-surface-container flex items-center justify-center">
+<div class="text-center p-8">
+<span class="material-symbols-outlined text-[80px] text-outline-variant mb-4">person</span>
+<p class="font-caption text-caption text-outline">Placeholder for New Faculty</p>
+</div>
+</div>
+<div class="p-5">
+<h4 class="font-headline-md text-[18px] text-primary mb-1">Shri Naveen Patel</h4>
+<p class="font-label-md text-label-md text-secondary font-bold mb-2">Guest Lecturer</p>
+<div class="space-y-1 border-t border-outline-variant pt-3">
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Dept:</span> Computer Science</p>
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Qual:</span> MCA, M.Tech</p>
+<a class="flex items-center gap-2 text-primary font-label-md text-[14px] mt-3 hover:underline" href="mailto:n.patel@gncsaragaon.ac.in">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                            n.patel@gncsaragaon.ac.in
+                        </a>
+</div>
+</div>
+</div>
+<!-- Faculty Card 7 -->
+<div class="group bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-primary">
+<div class="aspect-[4/5] relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional portrait of a female university lecturer in a modern classroom setting. She is standing near a clean white digital display board, representing the fusion of traditional education and modern technology. The image is bright, with soft diffused light, emphasizing a high-end corporate educational feel with navy and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOB4d31bmGeooNghUHpZ__kC0uA3o96OQRrsOuTyO7d8X89FghICl_N31jPooMJC7GVksRfqCxyJosl-BXKA_h_7Ss_RojTXNNAvRXrmpMp2Nhoano_gBqGnBneirE8HLoHqWl-qkfHL8S2ZEBgxla19iEcG-i9rs5gJY8HX2lFQLtCLSk97PfCn6BM7Z8u1x8w9-pgpaij7IuSoi1waV_XUK3K9a_pq250IEMQYWPMiQcEROAqcVocIY_g0R95YyvXgxAXr9uZ00"/>
+</div>
+<div class="p-5">
+<h4 class="font-headline-md text-[18px] text-primary mb-1">Mrs. Anjali Rathore</h4>
+<p class="font-label-md text-label-md text-secondary font-bold mb-2">Assistant Professor</p>
+<div class="space-y-1 border-t border-outline-variant pt-3">
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Dept:</span> Economics</p>
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Qual:</span> M.A. (Economics), B.Ed.</p>
+<a class="flex items-center gap-2 text-primary font-label-md text-[14px] mt-3 hover:underline" href="mailto:a.rathore@gncsaragaon.ac.in">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                            a.rathore@gncsaragaon.ac.in
+                        </a>
+</div>
+</div>
+</div>
+<!-- Faculty Card 8 -->
+<div class="group bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border-t-4 border-primary">
+<div class="aspect-[4/5] relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A portrait of a male professor in a formal white shirt, standing in front of a modern architectural campus wall. The lighting is strong midday sun but softened with high-key editing, highlighting the crisp lines of the setting. The aesthetic is clean, authoritarian yet accessible, typical of a prestigious government educational institution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeTRgR6bAge-F0yuvQO73eIVF-9gikgCZFRDukx4nTEPb35_SV_ude0D0sWUtsitIUJug4BcV2xb1znxJdY_RlACTB-Fd_Oe-XlNkZx-NYzbydieQn-GX9GLrmORdHJcedKQwR-90mHzwBfRdLf5CGTog2-70EjQAjBv25fze_qAYwvEIi5BaPeZ6oLlQLz_0ISro5dR3cnsnQH7yO99WPceVoOdRfp4D0tIRha-hHACZFUGhgF_VO65O6xiE-6R2KkJYAcn6KFd0"/>
+</div>
+<div class="p-5">
+<h4 class="font-headline-md text-[18px] text-primary mb-1">Shri Vikas Yadav</h4>
+<p class="font-label-md text-label-md text-secondary font-bold mb-2">Lecturer</p>
+<div class="space-y-1 border-t border-outline-variant pt-3">
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Dept:</span> Mathematics</p>
+<p class="font-body-md text-[14px] text-on-surface-variant"><span class="font-bold">Qual:</span> M.Sc. (Maths), CSIR NET</p>
+<a class="flex items-center gap-2 text-primary font-label-md text-[14px] mt-3 hover:underline" href="mailto:v.yadav@gncsaragaon.ac.in">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                            v.yadav@gncsaragaon.ac.in
+                        </a>
+</div>
+</div>
+</div>
+</div>
+<!-- Join Us Section -->
+<section class="mt-20 p-8 rounded-2xl bg-primary text-on-primary flex flex-col md:flex-row items-center justify-between gap-8">
+<div>
+<h4 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-2">Want to Join Our Team?</h4>
+<p class="font-body-lg text-body-lg opacity-80">Check current vacancies for teaching and administrative positions at GNC Saragaon.</p>
+</div>
+<button class="bg-secondary-container text-on-secondary-container font-label-md text-label-md px-8 py-4 rounded-full font-bold hover:opacity-90 transition-all active:scale-[0.98]">
+                View Careers | करियर देखें
+            </button>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-margin-mobile md:px-margin-desktop bg-primary text-on-primary mt-auto border-t-4 border-secondary-container">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-2">
+<h2 class="font-headline-md text-headline-md text-on-primary mb-4">Govt Naveen College, Saragaon</h2>
+<p class="font-body-md text-body-md text-on-primary-fixed-variant opacity-80 mb-6 max-w-md">
+                    Dedicated to empowering rural education with modern infrastructure and quality academic guidance. Affiliated with Atal Bihari Vajpayee Vishwavidyalaya, Bilaspur.
+                </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:bg-secondary transition-colors" href="#"><span class="material-symbols-outlined text-sm">public</span></a>
+<a class="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:bg-secondary transition-colors" href="#"><span class="material-symbols-outlined text-sm">mail</span></a>
+<a class="w-10 h-10 rounded-full border border-on-primary/20 flex items-center justify-center hover:bg-secondary transition-colors" href="#"><span class="material-symbols-outlined text-sm">location_on</span></a>
+</div>
+</div>
+<div>
+<h5 class="font-label-md text-label-md font-bold mb-6 text-secondary-fixed">Quick Links</h5>
+<ul class="space-y-3">
+<li><a class="font-body-md text-body-md text-on-primary-fixed-variant hover:text-secondary-fixed transition-colors" href="#">Admission 2024</a></li>
+<li><a class="font-body-md text-body-md text-on-primary-fixed-variant hover:text-secondary-fixed transition-colors" href="#">Examination Portal</a></li>
+<li><a class="font-body-md text-body-md text-on-primary-fixed-variant hover:text-secondary-fixed transition-colors" href="#">Student Scholarship</a></li>
+<li><a class="font-body-md text-body-md text-on-primary-fixed-variant hover:text-secondary-fixed transition-colors" href="#">Academic Calendar</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-md text-label-md font-bold mb-6 text-secondary-fixed">Contact Info</h5>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-secondary-fixed">location_on</span>
+<span class="font-body-md text-body-md text-on-primary-fixed-variant">Main Road, Saragaon, Dist. Janjgir-Champa, CG</span>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-secondary-fixed">call</span>
+<span class="font-body-md text-body-md text-on-primary-fixed-variant">+91 07817-XXXXXX</span>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-secondary-fixed">mail</span>
+<span class="font-body-md text-body-md text-on-primary-fixed-variant">contact@gncsaragaon.ac.in</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="max-w-container-max mx-auto mt-16 pt-8 border-t border-on-primary/10 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-caption text-caption text-on-primary-fixed-variant opacity-80">
+                © 2024 Government Naveen College, Saragaon. All Rights Reserved. Affiliated to Atal Bihari Vajpayee Vishwavidyalaya.
+            </p>
+<p class="font-caption text-caption text-on-primary-fixed-variant opacity-60 italic">Designed by NIC</p>
+</div>
+</footer>
+<script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const drawer = document.getElementById('drawer');
+        const drawerContent = document.getElementById('drawer-content');
+        const drawerOverlay = document.getElementById('drawer-overlay');
+
+        function toggleDrawer() {
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => {
+                    drawerContent.classList.remove('-translate-x-full');
+                }, 10);
+            } else {
+                drawerContent.classList.add('-translate-x-full');
+                setTimeout(() => {
+                    drawer.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        menuToggle.addEventListener('click', toggleDrawer);
+        drawerOverlay.addEventListener('click', toggleDrawer);
+    </script>
+</body></html>
