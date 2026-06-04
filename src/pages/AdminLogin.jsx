@@ -34,6 +34,16 @@ export default function AdminLogin() {
       setPassword("Mohan@2026!Private");
     } else if (roleEmail === "govtcollegesaragaon@gmail.com") {
       setPassword("PatelBK@2026!Admin");
+    } else if (roleEmail === "kaushikpraveen90@gmail.com") {
+      setPassword("Kaushik!Faculty@90");
+    } else if (roleEmail === "chandrassi@gmail.com") {
+      setPassword("chandra!ssi@28India");
+    } else if (roleEmail === "navalajgalley101@gmail.com") {
+      setPassword("naval101@56Bharat");
+    } else if (roleEmail === "yogeshkumarsahurc@gmail.com") {
+      setPassword("yogesh26!Saragaon@");
+    } else if (roleEmail === "ppradeep730@gmail.com") {
+      setPassword("pradeep!730!India");
     } else {
       setPassword("password123");
     }
@@ -43,7 +53,7 @@ export default function AdminLogin() {
   const quickAccounts = [
     { role: "Super Admin", email: "mohan.jogi@live.com", icon: "shield" },
     { role: "Principal", email: "govtcollegesaragaon@gmail.com", icon: "school" },
-    { role: "Faculty", email: "faculty@saragaoncollege.in", icon: "person" },
+    { role: "Faculty", email: "kaushikpraveen90@gmail.com", icon: "person" },
     { role: "Office Staff", email: "staff@saragaoncollege.in", icon: "support_agent" }
   ];
 
