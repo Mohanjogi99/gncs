@@ -7,7 +7,7 @@ export default function About() {
   const profileDetails = [
     { labelHi: "स्थापना वर्ष", labelEn: "Established Year", value: "2021" },
     { labelHi: "संबद्ध विश्वविद्यालय", labelEn: "Affiliated University", value: language === "hi" ? "शहीद नंदकुमार पटेल विश्वविद्यालय, रायगढ़ (छ.ग.)" : "Shaheed Nandkumar Patel Vishwavidyalaya, Raigarh (C.G.)" },
-    { labelHi: "महाविद्यालय कोड", labelEn: "College Code", value: "217" },
+    { labelHi: "महाविद्यालय कोड", labelEn: "College Code", value: "317" },
     { labelHi: "एआईएसएचई (AISHE) कोड", labelEn: "AISHE Code", value: "C-70734" },
     { labelHi: "प्रकार", labelEn: "Institution Type", value: language === "hi" ? "शासकीय (सह-शिक्षा)" : "Government (Co-Education)" },
     { labelHi: "यूजीसी मान्यता", labelEn: "UGC Status", value: "Registered under 2(f) and 12(B) of UGC Act" },

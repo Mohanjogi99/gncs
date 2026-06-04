@@ -76,7 +76,7 @@ export default function Header() {
                   {language === "hi" ? "शासकीय नवीन महाविद्यालय, सारागांव" : "Govt Naveen College, Saragaon"}
                 </h1>
                 <span className="text-[10px] bg-secondary/15 text-secondary border border-secondary/35 font-bold px-2 py-0.5 rounded-full shrink-0">
-                  {language === "hi" ? "महाविद्यालय कोड - 217" : "College Code - 217"}
+                  {language === "hi" ? "महाविद्यालय कोड - 317" : "College Code - 317"}
                 </span>
                 <span className="text-[10px] bg-primary/10 text-primary border border-primary/20 font-bold px-2 py-0.5 rounded-full shrink-0">
                   AISHE: C-70734
