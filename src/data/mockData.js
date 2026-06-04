@@ -97,6 +97,17 @@ export const initialUsers = [
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-8.png",
     status: "Active",
     createdAt: "2021-07-15"
+  },
+  {
+    id: "user-10",
+    name: "Ashish Kumar",
+    email: "ashishpatel6358@gmail.com",
+    password: "Ashish!Sports@63",
+    role: "Faculty",
+    department: "Sports",
+    photoUrl: "/ashish_kumar.jpg",
+    status: "Active",
+    createdAt: "2021-07-15"
   }
 ];
 
@@ -418,6 +429,18 @@ export const initialFaculty = [
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-26.png",
     bioEnglish: "Manages laboratory apparatus, chemical safety, and helps conduct science practicals.",
     bioHindi: "प्रयोगशाला उपकरणों, रासायनिक सुरक्षा का प्रबंधन करती हैं और विज्ञान प्रयोगों के संचालन में सहायता करती हैं।"
+  },
+  {
+    id: "fac-18",
+    name: "Ashish Kumar",
+    designation: "Guest Sports Officer",
+    department: "Sports",
+    qualification: "M.P.Ed., NET Qualified",
+    email: "ashishpatel6358@gmail.com",
+    phone: "6261299963",
+    photoUrl: "/ashish_kumar.jpg",
+    bioEnglish: "Oversees physical education programs, gym operations, and guides students in sports training and athletic development.",
+    bioHindi: "शारीरिक शिक्षा कार्यक्रमों, जिम संचालन की देखरेख करते हैं और खेल प्रशिक्षण व एथलेटिक विकास में छात्रों का मार्गदर्शन करते हैं।"
   }
 ];
 

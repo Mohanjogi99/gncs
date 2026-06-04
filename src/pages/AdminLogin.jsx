@@ -44,6 +44,8 @@ export default function AdminLogin() {
       setPassword("yogesh26!Saragaon@");
     } else if (roleEmail === "ppradeep730@gmail.com") {
       setPassword("pradeep!730!India");
+    } else if (roleEmail === "ashishpatel6358@gmail.com") {
+      setPassword("Ashish!Sports@63");
     } else {
       setPassword("password123");
     }
