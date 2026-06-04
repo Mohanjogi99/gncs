@@ -231,7 +231,7 @@ export default function Home() {
               key={fac.id}
               className="min-w-[260px] max-w-[260px] bg-white p-5 rounded-3xl border border-outline-variant/60 shadow-sm hover:shadow-md hover:border-secondary transition-all snap-start flex flex-col items-center text-center space-y-4 group"
             >
-              <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-secondary transition-all shadow-inner">
+              <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-secondary transition-all shadow-inner">
                 <img
                   src={fac.photoUrl || "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"}
                   alt={fac.name}
