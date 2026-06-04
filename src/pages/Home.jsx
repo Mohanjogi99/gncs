@@ -1,11 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import NoticeTicker from "../components/NoticeTicker";
 
 export default function Home() {
-  const { notices, newsEvents, gallery, language, t } = useContext(AppContext);
+  const { notices, newsEvents, gallery, faculty, language, t } = useContext(AppContext);
   const navigate = useNavigate();
+  const sliderRef = useRef(null);
+
+  const scrollLeft = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: -300, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: 300, behavior: "smooth" });
+    }
+  };
 
   // Get active notices (take first 3)
   const recentNotices = notices.slice(0, 3);
@@ -176,6 +189,79 @@ export default function Home() {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Our Staff Slider */}
+      <section className="space-y-4 pt-4">
+        <div className="flex justify-between items-center border-b border-outline-variant pb-2">
+          <h3 className="text-lg sm:text-xl font-bold text-primary flex items-center gap-2">
+            <span className="material-symbols-outlined">groups</span>
+            {language === "hi" ? "हमारे समर्पित संकाय और स्टाफ" : "Our Dedicated Faculty & Staff"}
+          </h3>
+          <div className="flex gap-2">
+            <button
+              onClick={scrollLeft}
+              className="w-10 h-10 rounded-full border border-outline-variant hover:bg-primary hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-sm"
+              title="Scroll Left"
+            >
+              <span className="material-symbols-outlined text-lg">arrow_back</span>
+            </button>
+            <button
+              onClick={scrollRight}
+              className="w-10 h-10 rounded-full border border-outline-variant hover:bg-primary hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-sm"
+              title="Scroll Right"
+            >
+              <span className="material-symbols-outlined text-lg">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Scrollable Container */}
+        <div
+          ref={sliderRef}
+          className="flex overflow-x-auto gap-6 py-4 px-2 scroll-smooth snap-x snap-mandatory scrollbar-none"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {faculty.map((fac) => (
+            <div
+              key={fac.id}
+              className="min-w-[260px] max-w-[260px] bg-white p-5 rounded-3xl border border-outline-variant/60 shadow-sm hover:shadow-md hover:border-secondary transition-all snap-start flex flex-col items-center text-center space-y-4 group"
+            >
+              <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-secondary transition-all shadow-inner">
+                <img
+                  src={fac.photoUrl || "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"}
+                  alt={fac.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300"
+                />
+              </div>
+              <div className="space-y-1 w-full">
+                <h4 className="font-bold text-base text-primary group-hover:text-secondary transition-colors truncate">
+                  {fac.name}
+                </h4>
+                <p className="text-xs text-secondary font-bold uppercase truncate">{fac.designation}</p>
+                <span className="inline-block text-[10px] bg-primary/5 text-primary px-2 py-0.5 rounded-full font-bold">
+                  {fac.department}
+                </span>
+              </div>
+              <div className="w-full text-xs text-on-surface-variant leading-relaxed line-clamp-2 italic border-t border-outline-variant/50 pt-3">
+                "{language === "hi" ? fac.bioHindi : fac.bioEnglish}"
+              </div>
+              <div className="w-full border-t border-outline-variant/50 pt-3 flex justify-center gap-4 text-xs">
+                <a href={`mailto:${fac.email}`} className="flex items-center gap-1 text-on-surface-variant hover:text-secondary font-semibold">
+                  <span className="material-symbols-outlined text-base">mail</span>
+                  Email
+                </a>
+                <a href={`tel:${fac.phone}`} className="flex items-center gap-1 text-on-surface-variant hover:text-secondary font-semibold">
+                  <span className="material-symbols-outlined text-base">call</span>
+                  Call
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
