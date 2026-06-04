@@ -441,6 +441,18 @@ export const initialFaculty = [
     photoUrl: "/ashish_kumar.jpg",
     bioEnglish: "Oversees physical education programs, gym operations, and guides students in sports training and athletic development.",
     bioHindi: "शारीरिक शिक्षा कार्यक्रमों, जिम संचालन की देखरेख करते हैं और खेल प्रशिक्षण व एथलेटिक विकास में छात्रों का मार्गदर्शन करते हैं।"
+  },
+  {
+    id: "fac-19",
+    name: "Prateek Kumar Dewangan",
+    designation: "Lab Attendant",
+    department: "Science",
+    qualification: "B.Sc., B.Ed.",
+    email: "pratikdewangan20@gmail.com",
+    phone: "9098112604",
+    photoUrl: "/prateek_dewangan.jpg",
+    bioEnglish: "Supports laboratory setup, manages scientific instruments, and assists students during practical classes.",
+    bioHindi: "प्रयोगशाला सेटअप का समर्थन करते हैं, वैज्ञानिक उपकरणों का प्रबंधन करते हैं और व्यावहारिक कक्षाओं के दौरान छात्रों की सहायता करते हैं।"
   }
 ];
 
