@@ -67,7 +67,8 @@ export default function AdminDashboard() {
     email: "",
     phone: "",
     bioEnglish: "",
-    bioHindi: ""
+    bioHindi: "",
+    photoUrl: ""
   });
 
   // Course form states
@@ -211,7 +212,7 @@ export default function AdminDashboard() {
     // Reset forms
     setNoticeForm({ titleEnglish: "", titleHindi: "", category: "Admission", isImportant: false });
     setDownloadForm({ titleEnglish: "", titleHindi: "", category: "Admission Forms" });
-    setFacultyForm({ name: "", designation: "Assistant Professor", department: "Arts", qualification: "", email: "", phone: "", bioEnglish: "", bioHindi: "" });
+    setFacultyForm({ name: "", designation: "Assistant Professor", department: "Arts", qualification: "", email: "", phone: "", bioEnglish: "", bioHindi: "", photoUrl: "" });
     setCourseForm({ name: "", stream: "Arts", duration: "3 Years / 3 वर्ष", eligibility: "", seats: 60, fee: "₹2,500 per annum" });
     setGalleryForm({ albumTitle: "", caption: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA72eXokI1lfD95EVEcAR3osAynjp5wfvMvtugkG0bOK_1g7YRvPOwJ9wt9EJEZ3Y_BmjOJaIOxTaTTAvU5DXyuczs0S2DFGtNUoqki8h5n4vVrke8WF1PhFl1l-JCcRYdRvFwUK4JeXDTYSNJfu3QYoW78eZe6BHq7D86Cz2tSUTBb36y99fbjn7vNRs9HjRIxAKwB-ZVe43KBDGY5iP0Y3NY5TBsYHSzTW-XRE9yDpqIV4ABK9EMBoWzT1uHO4Fi6fYj4KIqe6lg" });
     setNewsForm({ titleEnglish: "", titleHindi: "", descriptionEnglish: "", descriptionHindi: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg" });
@@ -226,7 +227,7 @@ export default function AdminDashboard() {
     } else if (activeMenu === "downloads") {
       setDownloadForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, category: item.category });
     } else if (activeMenu === "faculty") {
-      setFacultyForm({ name: item.name, designation: item.designation, department: item.department, qualification: item.qualification, email: item.email, phone: item.phone, bioEnglish: item.bioEnglish, bioHindi: item.bioHindi });
+      setFacultyForm({ name: item.name, designation: item.designation, department: item.department, qualification: item.qualification, email: item.email, phone: item.phone, bioEnglish: item.bioEnglish, bioHindi: item.bioHindi, photoUrl: item.photoUrl || "" });
     } else if (activeMenu === "courses") {
       setCourseForm({ name: item.name, stream: item.stream, duration: item.duration, eligibility: item.eligibility, seats: item.seats, fee: item.fee });
     } else if (activeMenu === "news") {
@@ -597,6 +598,32 @@ export default function AdminDashboard() {
                         onChange={(e) => setFacultyForm({ ...facultyForm, bioHindi: e.target.value })}
                         className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
                       ></textarea>
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="font-bold">Profile Photo URL (फ़ोटो URL)</label>
+                    <div className="flex gap-4 items-center">
+                      <input
+                        type="url"
+                        placeholder="https://example.com/photo.jpg"
+                        value={facultyForm.photoUrl}
+                        onChange={(e) => setFacultyForm({ ...facultyForm, photoUrl: e.target.value })}
+                        className="w-full flex-1 px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                      <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-outline-variant bg-surface-container-low flex items-center justify-center">
+                        {facultyForm.photoUrl ? (
+                          <img
+                            src={facultyForm.photoUrl}
+                            alt="Preview"
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM";
+                            }}
+                          />
+                        ) : (
+                          <span className="material-symbols-outlined text-outline text-2xl font-light">person</span>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <div className="flex gap-2 justify-end pt-4">
@@ -980,7 +1007,17 @@ export default function AdminDashboard() {
                 <tbody className="divide-y divide-outline-variant/60 bg-white">
                   {faculty.map((f) => (
                     <tr key={f.id} className="hover:bg-surface-container-low/40">
-                      <td className="px-5 py-3 font-bold text-primary">{f.name}</td>
+                      <td className="px-5 py-3 font-bold text-primary flex items-center gap-3">
+                        <img
+                          src={f.photoUrl || "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"}
+                          alt={f.name}
+                          className="w-8 h-8 rounded-full object-cover border border-outline-variant shrink-0"
+                          onError={(e) => {
+                            e.target.src = "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM";
+                          }}
+                        />
+                        <span>{f.name}</span>
+                      </td>
                       <td className="px-5 py-3 font-semibold text-secondary">{f.designation}</td>
                       <td className="px-5 py-3">{f.department} Stream</td>
                       <td className="px-5 py-3">
