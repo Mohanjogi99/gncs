@@ -70,7 +70,7 @@ export default function Contact() {
               </li>
               <li className="flex justify-between border-b border-outline-variant/40 pb-1.5">
                 <span className="font-semibold text-primary">Office Timings:</span>
-                <span>10:30 AM - 05:00 PM</span>
+                <span>07:30 AM - 12:00 PM</span>
               </li>
               <li className="flex justify-between border-b border-outline-variant/40 pb-1.5">
                 <span className="font-semibold text-primary">General Enquiry:</span>
