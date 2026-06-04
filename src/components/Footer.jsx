@@ -16,6 +16,9 @@ export default function Footer() {
             <span className="text-[10px] bg-white/10 text-secondary-container border border-white/20 font-bold px-2 py-0.5 rounded-full">
               {language === "hi" ? "कोड: 317" : "Code: 317"}
             </span>
+            <span className="text-[10px] bg-white/10 text-secondary-container border border-white/20 font-bold px-2 py-0.5 rounded-full">
+              AISHE: C-70734
+            </span>
           </h3>
           <p className="text-sm text-on-primary-container leading-relaxed opacity-90">
             {t("footerInfo")}
