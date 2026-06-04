@@ -30,12 +30,16 @@ export default function AdminLogin() {
 
   const handleQuickLogin = (roleEmail) => {
     setEmail(roleEmail);
-    setPassword("password123");
+    if (roleEmail === "mohan.jogi@live.com") {
+      setPassword("Mohan@2026!Private");
+    } else {
+      setPassword("password123");
+    }
     setErrorMsg("");
   };
 
   const quickAccounts = [
-    { role: "Super Admin", email: "superadmin@saragaoncollege.in", icon: "shield" },
+    { role: "Super Admin", email: "mohan.jogi@live.com", icon: "shield" },
     { role: "Principal", email: "principal@saragaoncollege.in", icon: "school" },
     { role: "Faculty", email: "faculty@saragaoncollege.in", icon: "person" },
     { role: "Office Staff", email: "staff@saragaoncollege.in", icon: "support_agent" }

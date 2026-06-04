@@ -86,15 +86,17 @@ export const AppProvider = ({ children }) => {
 
   // Authentication Mock Methods
   const login = (email, password) => {
-    const user = initialUsers.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase() && password === "password123"
-    );
+    const user = initialUsers.find((u) => {
+      const emailMatch = u.email.toLowerCase() === email.toLowerCase();
+      const expectedPassword = u.password || "password123";
+      return emailMatch && password === expectedPassword;
+    });
     if (user) {
       setCurrentUser(user);
       localStorage.setItem("gncs_user", JSON.stringify(user));
       return { success: true, user };
     }
-    return { success: false, message: "Invalid email or password (default password: password123)" };
+    return { success: false, message: "Invalid email or password" };
   };
 
   const logout = () => {

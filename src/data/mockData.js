@@ -13,8 +13,9 @@ export const initialUsers = [
   },
   {
     id: "user-2",
-    name: "Amit Kumar Dewangan",
-    email: "superadmin@saragaoncollege.in",
+    name: "Mohan Jogi",
+    email: "mohan.jogi@live.com",
+    password: "Mohan@2026!Private",
     role: "Super Admin",
     department: "IT Cell",
     photoUrl: "",
