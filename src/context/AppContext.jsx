@@ -38,6 +38,16 @@ export const AppProvider = ({ children }) => {
 
   // Initialize DB from LocalStorage or mockData
   useEffect(() => {
+    const CURRENT_DB_VERSION = "v3";
+    const storedVersion = localStorage.getItem("gncs_db_version");
+
+    if (storedVersion !== CURRENT_DB_VERSION) {
+      // Clear old collection keys to force reload fallbacks
+      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages"];
+      keysToClear.forEach(key => localStorage.removeItem(`gncs_db_${key}`));
+      localStorage.setItem("gncs_db_version", CURRENT_DB_VERSION);
+    }
+
     const loadCollection = (key, fallback) => {
       const data = localStorage.getItem(`gncs_db_${key}`);
       if (data) {
