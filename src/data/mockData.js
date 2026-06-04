@@ -210,7 +210,7 @@ export const initialDepartments = [
     descriptionEnglish: "The Science stream equips students with analytical and experimental skills through rigorous courses in physical and biological sciences.",
     descriptionHindi: "विज्ञान संकाय भौतिक और जैविक विज्ञान में कठोर पाठ्यक्रमों के माध्यम से छात्रों को विश्लेषणात्मक और प्रयोगात्मक कौशल से सुसज्जित करता है।",
     hodName: "Dr. Angesh Chandra",
-    facultyIds: ["fac-2", "fac-3", "fac-4", "fac-12", "fac-17", "fac-19", "fac-20", "fac-21", "fac-22"],
+    facultyIds: ["fac-2", "fac-4", "fac-12", "fac-17", "fac-19", "fac-20", "fac-21", "fac-22"],
     subjects: ["Physics", "Chemistry", "Mathematics", "Botany", "Zoology"]
   },
   {
@@ -249,18 +249,6 @@ export const initialFaculty = [
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-2.png",
     bioEnglish: "Dr. Chandra specializes in Solid State Ionics with extensive teaching and research experience.",
     bioHindi: "डॉ. चंद्र व्यापक अध्यापन और अनुसंधान अनुभव के साथ सॉलिड स्टेट आयोनिक्स में विशेषज्ञ हैं।"
-  },
-  {
-    id: "fac-3",
-    name: "Loknath Lahare",
-    designation: "Guest Lecturer (Botany)",
-    department: "Science",
-    qualification: "M.Sc. in Botany",
-    email: "govtcollegesaragaon@gmail.com",
-    phone: "9893907415",
-    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-3.png",
-    bioEnglish: "Dedicated educator guiding students in botanical sciences and environmental awareness.",
-    bioHindi: "वनस्पति विज्ञान और पर्यावरणीय जागरूकता में छात्रों का मार्गदर्शन करने वाले समर्पित शिक्षक।"
   },
   {
     id: "fac-4",
