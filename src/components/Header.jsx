@@ -71,17 +71,9 @@ export default function Header() {
               className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
             />
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="font-hindi text-lg sm:text-xl font-bold text-primary leading-tight">
-                  {language === "hi" ? "शासकीय नवीन महाविद्यालय, सारागांव" : "Govt Naveen College, Saragaon"}
-                </h1>
-                <span className="text-[10px] bg-secondary/15 text-secondary border border-secondary/35 font-bold px-2 py-0.5 rounded-full shrink-0">
-                  {language === "hi" ? "महाविद्यालय कोड - 317" : "College Code - 317"}
-                </span>
-                <span className="text-[10px] bg-primary/10 text-primary border border-primary/20 font-bold px-2 py-0.5 rounded-full shrink-0">
-                  AISHE: C-70734
-                </span>
-              </div>
+              <h1 className="font-hindi text-lg sm:text-xl font-bold text-primary leading-tight">
+                {language === "hi" ? "शासकीय नवीन महाविद्यालय, सारागांव" : "Govt Naveen College, Saragaon"}
+              </h1>
               <p className="font-hindi text-xs sm:text-sm text-secondary font-medium leading-none mt-1">
                 {t("hindiSubtitle")} • {t("districtName")}
               </p>
