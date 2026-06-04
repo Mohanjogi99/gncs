@@ -359,18 +359,6 @@ export const initialFaculty = [
     bioHindi: "विज्ञान के स्नातक छात्रों को कलन, बीजगणित और वास्तविक विश्लेषण पढ़ाते हैं।"
   },
   {
-    id: "fac-13",
-    name: "Day Narayan Sonant",
-    designation: "Guest Sports Officer",
-    department: "Sports",
-    qualification: "B.P.Ed. / M.P.Ed.",
-    email: "govtcollegesaragaon@gmail.com",
-    phone: "9893907415",
-    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-22.png",
-    bioEnglish: "Coordinates physical education, outdoor sports, and annual athletics events.",
-    bioHindi: "शारीरिक शिक्षा, बाहरी खेलों और वार्षिक एथलेटिक्स कार्यक्रमों का समन्वय करते हैं।"
-  },
-  {
     id: "fac-14",
     name: "Nawal Kishor Ajgalle",
     designation: "Assistant Professor (Hindi)",
