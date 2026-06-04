@@ -117,7 +117,7 @@ export default function AdminDashboard() {
       return ["overview", "notices", "downloads"].includes(moduleName);
     }
     if (role === "Faculty") {
-      return ["overview", "downloads", "messages"].includes(moduleName);
+      return ["overview", "downloads", "messages", "gallery", "news"].includes(moduleName);
     }
     return false;
   };
