@@ -545,7 +545,7 @@ export const translations = {
   en: {
     title: "Govt Naveen College, Saragaon",
     subtitle: "Affiliated to Shaheed Nandkumar Patel Vishwavidyalaya, Raigarh",
-    hindiSubtitle: "J.D.M., Saragaon",
+    hindiSubtitle: "J.D.M. Govt. Girls School Campus, Saragaon",
     districtName: "Janjgir-Champa (Chhattisgarh) 495686",
     home: "Home",
     about: "About",
@@ -630,7 +630,7 @@ export const translations = {
   hi: {
     title: "शासकीय नवीन महाविद्यालय, सारागांव",
     subtitle: "शहीद नंदकुमार पटेल विश्वविद्यालय, रायगढ़ से संबद्ध",
-    hindiSubtitle: "जे.डी.एम., सारागांव",
+    hindiSubtitle: "जे.डी.एम. शास. कन्या विद्यालय परिसर, सारागांव",
     districtName: "जांजगीर-चांपा (छत्तीसगढ़) 495686",
     home: "मुख्य पृष्ठ",
     about: "हमारे बारे में",
