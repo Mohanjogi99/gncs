@@ -131,8 +131,8 @@ export const initialDepartments = [
     nameHindi: "कला संकाय",
     descriptionEnglish: "The Arts stream offers courses in literature and social sciences. Our goal is to cultivate critical thinking, communication, and historical awareness among students.",
     descriptionHindi: "कला संकाय साहित्य और सामाजिक विज्ञान में पाठ्यक्रम प्रदान करता है। हमारा लक्ष्य छात्रों में आलोचनात्मक सोच, संचार और ऐतिहासिक जागरूकता विकसित करना है।",
-    hodName: "Dr. Rajeshwari Patel",
-    facultyIds: ["fac-1", "fac-4"],
+    hodName: "Pravin Kumar Kaushik",
+    facultyIds: ["fac-5", "fac-6", "fac-7", "fac-9", "fac-14"],
     subjects: ["Hindi Literature", "English Literature", "Political Science", "Sociology", "History"]
   },
   {
@@ -141,8 +141,8 @@ export const initialDepartments = [
     nameHindi: "विज्ञान संकाय",
     descriptionEnglish: "The Science stream equips students with analytical and experimental skills through rigorous courses in physical and biological sciences.",
     descriptionHindi: "विज्ञान संकाय भौतिक और जैविक विज्ञान में कठोर पाठ्यक्रमों के माध्यम से छात्रों को विश्लेषणात्मक और प्रयोगात्मक कौशल से सुसज्जित करता है।",
-    hodName: "Shri Vinod Dewangan",
-    facultyIds: ["fac-2", "fac-5"],
+    hodName: "Dr. Angesh Chandra",
+    facultyIds: ["fac-2", "fac-3", "fac-4", "fac-12", "fac-17"],
     subjects: ["Physics", "Chemistry", "Mathematics", "Botany", "Zoology"]
   },
   {
@@ -151,8 +151,8 @@ export const initialDepartments = [
     nameHindi: "वाणिज्य संकाय",
     descriptionEnglish: "The Commerce stream focuses on business, finance, accounting, and economics. It prepares students for corporate careers and entrepreneurship.",
     descriptionHindi: "वाणिज्य संकाय व्यवसाय, वित्त, लेखा और अर्थशास्त्र पर केंद्रित है। यह छात्रों को कॉर्पोरेट करियर और उद्यमिता के लिए तैयार करता है।",
-    hodName: "Smt. Shweta Soni",
-    facultyIds: ["fac-3"],
+    hodName: "Ashutosh Painkra",
+    facultyIds: ["fac-8", "fac-10"],
     subjects: ["Financial Accounting", "Business Law", "Corporate Accounting", "Business Economics", "Auditing"]
   }
 ];
@@ -160,65 +160,211 @@ export const initialDepartments = [
 export const initialFaculty = [
   {
     id: "fac-1",
-    name: "Dr. Rajeshwari Patel",
-    designation: "Assistant Professor & Head",
-    department: "Arts",
-    qualification: "M.A., Ph.D. (Sociology), UGC NET",
-    email: "rajeshwari.patel@saragaoncollege.in",
-    phone: "+91 94254 XXXXX",
-    photoUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM",
-    bioEnglish: "Dr. Patel has over 12 years of teaching experience. She has published 8 research papers in national and international journals.",
-    bioHindi: "डॉ. पटेल को अध्यापन का 12 से अधिक वर्षों का अनुभव है। उन्होंने राष्ट्रीय और अंतर्राष्ट्रीय पत्रिकाओं में 8 शोध पत्र प्रकाशित किए हैं।"
+    name: "Prof. B.K. Patel",
+    designation: "Principal",
+    department: "Administration",
+    qualification: "M.Sc., Ph.D.",
+    email: "principal@gncsaragaon.in",
+    phone: "+91 98939 07415",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-1.png",
+    bioEnglish: "Prof. B.K. Patel is the Principal of Government Naveen College, Saragaon, leading academic and administrative excellence.",
+    bioHindi: "प्रो. बी.के. पटेल शासकीय नवीन महाविद्यालय, सारागांव के प्राचार्य हैं, जो शैक्षणिक और प्रशासनिक उत्कृष्टता का नेतृत्व कर रहे हैं।"
   },
   {
     id: "fac-2",
-    name: "Shri Vinod Dewangan",
-    designation: "Assistant Professor & Head",
+    name: "Dr. Angesh Chandra",
+    designation: "Assistant Professor (Physics)",
     department: "Science",
-    qualification: "M.Sc. (Physics), CSIR NET",
-    email: "vinod.dewangan@saragaoncollege.in",
-    phone: "+91 88712 XXXXX",
-    photoUrl: "",
-    bioEnglish: "Shri Dewangan's research interest lies in atmospheric physics. He guides the science club of the college.",
-    bioHindi: "श्री देवांगन का शोध रुचि वायुमंडलीय भौतिकी में है। वह महाविद्यालय के विज्ञान क्लब का मार्गदर्शन करते हैं।"
+    qualification: "Ph.D. in Physics, M.Sc. in Physics",
+    email: "angesh.chandra@gncsaragaon.in",
+    phone: "+91 96914 85889",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-2.png",
+    bioEnglish: "Dr. Chandra specializes in Solid State Ionics with extensive teaching and research experience.",
+    bioHindi: "डॉ. चंद्र व्यापक अध्यापन और अनुसंधान अनुभव के साथ सॉलिड स्टेट आयोनिक्स में विशेषज्ञ हैं।"
   },
   {
     id: "fac-3",
-    name: "Smt. Shweta Soni",
-    designation: "Assistant Professor",
-    department: "Commerce",
-    qualification: "M.Com., M.Phil., CG SET",
-    email: "shweta.soni@saragaoncollege.in",
-    phone: "+91 79998 XXXXX",
-    photoUrl: "",
-    bioEnglish: "Smt. Soni specializes in taxation laws and corporate accounts. She handles career counseling cells.",
-    bioHindi: "श्रीमती सोनी कराधान कानूनों और कॉर्पोरेट खातों में विशेषज्ञ हैं। वह करियर काउंसलिंग सेल का कार्यभार संभालती हैं।"
+    name: "Loknath Lahare",
+    designation: "Guest Lecturer (Botany)",
+    department: "Science",
+    qualification: "M.Sc. in Botany",
+    email: "loknath.lahare@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-3.png",
+    bioEnglish: "Dedicated educator guiding students in botanical sciences and environmental awareness.",
+    bioHindi: "वनस्पति विज्ञान और पर्यावरणीय जागरूकता में छात्रों का मार्गदर्शन करने वाले समर्पित शिक्षक।"
   },
   {
     id: "fac-4",
-    name: "Dr. Kamlesh Chandra",
-    designation: "Guest Lecturer",
-    department: "Arts",
-    qualification: "M.A. (Hindi Lit.), Ph.D.",
-    email: "kamlesh.chandra@saragaoncollege.in",
-    phone: "+91 99268 XXXXX",
-    photoUrl: "",
-    bioEnglish: "Dr. Chandra specializes in medieval Hindi poetry and Lok Sahitya of Chhattisgarh.",
-    bioHindi: "डॉ. चंद्र मध्यकालीन हिंदी कविता और छत्तीसगढ़ के लोक साहित्य में विशेषज्ञता रखते हैं।"
+    name: "Yogesh Kumar Sahu",
+    designation: "Assistant Professor (Chemistry)",
+    department: "Science",
+    qualification: "M.Sc. in Chemistry, CSIR NET",
+    email: "yogesh.sahu@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-4.png",
+    bioEnglish: "Instructs inorganic and physical chemistry, encouraging laboratory research.",
+    bioHindi: "अकार्बनिक और भौतिक रसायन विज्ञान पढ़ाते हैं, प्रयोगशाला अनुसंधान को बढ़ावा देते हैं।"
   },
   {
     id: "fac-5",
-    name: "Ku. Preeti Tiwari",
-    designation: "Guest Lecturer",
+    name: "Pravin Kumar Kaushik",
+    designation: "Assistant Professor (Geography)",
+    department: "Arts",
+    qualification: "M.A. in Geography, CG SET",
+    email: "pravin.kaushik@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-5.png",
+    bioEnglish: "Teaches physical geography and GIS applications, organizing field study tours.",
+    bioHindi: "भौतिक भूगोल और जीआईएस अनुप्रयोगों को पढ़ाते हैं, फील्ड अध्ययन दौरों का आयोजन करते हैं।"
+  },
+  {
+    id: "fac-6",
+    name: "Raju Patel",
+    designation: "Assistant Professor (Political Science)",
+    department: "Arts",
+    qualification: "M.A. in Political Science, NET",
+    email: "raju.patel@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-7.png",
+    bioEnglish: "Specializes in public administration and Indian political thought.",
+    bioHindi: "लोक प्रशासन और भारतीय राजनीतिक विचारों में विशेषज्ञता रखते हैं।"
+  },
+  {
+    id: "fac-7",
+    name: "Pradeep Kumar Patel",
+    designation: "Assistant Professor (Sociology)",
+    department: "Arts",
+    qualification: "M.A. in Sociology, M.Phil.",
+    email: "pradeep.patel@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-8.png",
+    bioEnglish: "Conducts sociology and rural community studies, guiding student research projects.",
+    bioHindi: "समाजशास्त्र और ग्रामीण सामुदायिक अध्ययन का संचालन करते हैं, छात्र अनुसंधान परियोजनाओं का मार्गदर्शन करते हैं।"
+  },
+  {
+    id: "fac-8",
+    name: "Ashutosh Painkra",
+    designation: "Assistant Professor (Commerce)",
+    department: "Commerce",
+    qualification: "M.Com., NET",
+    email: "ashutosh.painkra@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-9.png",
+    bioEnglish: "Instructs financial accounting, business statistics, and taxation systems.",
+    bioHindi: "वित्तीय लेखांकन, व्यावसायिक सांख्यिकी और कराधान प्रणाली पढ़ाते हैं।"
+  },
+  {
+    id: "fac-9",
+    name: "Mrs. Rashmi Rathore",
+    designation: "Assistant Professor (English)",
+    department: "Arts",
+    qualification: "M.A. in English Literature",
+    email: "rashmi.rathore@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-18.jpg",
+    bioEnglish: "Guides students in English communication skills and classic English literature studies.",
+    bioHindi: "अंग्रेजी संचार कौशल और शास्त्रीय अंग्रेजी साहित्य अध्ययन में छात्रों का मार्गदर्शन करती हैं।"
+  },
+  {
+    id: "fac-10",
+    name: "Manjulata Dewangan",
+    designation: "Assistant Professor (Commerce)",
+    department: "Commerce",
+    qualification: "M.Com.",
+    email: "manjulata.dewangan@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-19.jpg",
+    bioEnglish: "Focuses on business economics, corporate management, and auditing principles.",
+    bioHindi: "व्यावसायिक अर्थशास्त्र, कॉर्पोरेट प्रबंधन और ऑडिटिंग सिद्धांतों पर ध्यान केंद्रित करती हैं।"
+  },
+  {
+    id: "fac-11",
+    name: "Aneelisha Khakha",
+    designation: "Guest Librarian",
+    department: "Library",
+    qualification: "M.Lib.",
+    email: "aneelisha.khakha@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-20.png",
+    bioEnglish: "Manages the college central library, digital archives, and reference services.",
+    bioHindi: "महाविद्यालय के केंद्रीय पुस्तकालय, डिजिटल अभिलेखागार और संदर्भ सेवाओं का प्रबंधन करती हैं।"
+  },
+  {
+    id: "fac-12",
+    name: "Kawesh Kumar Dewangan",
+    designation: "Guest Lecturer (Mathematics)",
     department: "Science",
-    qualification: "M.Sc. (Mathematics)",
-    email: "preeti.tiwari@saragaoncollege.in",
-    phone: "+91 91790 XXXXX",
-    photoUrl: "",
-    bioEnglish: "Ku. Preeti Tiwari teaches Real Analysis and Algebra to undergraduate classes.",
-    bioHindi: "कु. प्रीति तिवारी स्नातक कक्षाओं को रियल एनालिसिस और बीजगणित पढ़ाती हैं।"
+    qualification: "M.Sc. in Mathematics",
+    email: "kawesh.dewangan@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-21.png",
+    bioEnglish: "Teaches calculus, algebra, and real analysis to science undergraduates.",
+    bioHindi: "विज्ञान के स्नातक छात्रों को कलन, बीजगणित और वास्तविक विश्लेषण पढ़ाते हैं।"
+  },
+  {
+    id: "fac-13",
+    name: "Day Narayan Sonant",
+    designation: "Guest Sports Officer",
+    department: "Sports",
+    qualification: "B.P.Ed. / M.P.Ed.",
+    email: "daynarayan.sonant@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-22.png",
+    bioEnglish: "Coordinates physical education, outdoor sports, and annual athletics events.",
+    bioHindi: "शारीरिक शिक्षा, बाहरी खेलों और वार्षिक एथलेटिक्स कार्यक्रमों का समन्वय करते हैं।"
+  },
+  {
+    id: "fac-14",
+    name: "Nawal Kishor Ajgalle",
+    designation: "Assistant Professor (Hindi)",
+    department: "Arts",
+    qualification: "M.A. in Hindi Literature, NET",
+    email: "nawal.ajgalle@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-23.png",
+    bioEnglish: "Teaches Hindi literature, grammar, and regional language history.",
+    bioHindi: "हिंदी साहित्य, व्याकरण और क्षेत्रीय भाषा के इतिहास का अध्यापन करते हैं।"
+  },
+  {
+    id: "fac-15",
+    name: "Umang Pandey",
+    designation: "Assistant Grade III (AG III)",
+    department: "Administration",
+    qualification: "Graduate, PGDCA",
+    email: "umang.pandey@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-24.png",
+    bioEnglish: "Office administrator handles student admissions, records, and registration support.",
+    bioHindi: "कार्यालय प्रशासक छात्र प्रवेश, रिकॉर्ड और पंजीकरण सहायता का कार्य संभालते हैं।"
+  },
+  {
+    id: "fac-16",
+    name: "Kunti Bai Yadav",
+    designation: "Peon",
+    department: "Administration",
+    qualification: "Secondary School",
+    email: "kuntibai.yadav@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-25.png",
+    bioEnglish: "Support staff assisting in day-to-day office communications and maintenance.",
+    bioHindi: "सहायक स्टाफ जो दिन-प्रतिदिन के कार्यालय संचार और रखरखाव में सहायता करते हैं।"
+  },
+  {
+    id: "fac-17",
+    name: "Saraswati Raj",
+    designation: "Lab Technician",
+    department: "Science",
+    qualification: "B.Sc., Lab Tech Certification",
+    email: "saraswati.raj@gncsaragaon.in",
+    phone: "+91 98939 XXXXX",
+    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-26.png",
+    bioEnglish: "Manages laboratory apparatus, chemical safety, and helps conduct science practicals.",
+    bioHindi: "प्रयोगशाला उपकरणों, रासायनिक सुरक्षा का प्रबंधन करती हैं और विज्ञान प्रयोगों के संचालन में सहायता करती हैं।"
   }
 ];
+
+
 
 export const initialCourses = [
   {
