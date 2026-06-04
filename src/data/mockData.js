@@ -234,7 +234,7 @@ export const initialFaculty = [
     qualification: "M.Sc., Ph.D.",
     email: "govtcollegesaragaon@gmail.com",
     phone: "9893907415",
-    photoUrl: "https://gncsaragaon.in/public/uploads/team-member-1.png",
+    photoUrl: "/principal.jpg",
     bioEnglish: "Prof. B.K. Patel is the Principal of Government Naveen College, Saragaon, leading academic and administrative excellence.",
     bioHindi: "प्रो. बी.के. पटेल शासकीय नवीन महाविद्यालय, सारागांव के प्राचार्य हैं, जो शैक्षणिक और प्रशासनिक उत्कृष्टता का नेतृत्व कर रहे हैं।"
   },
