@@ -11,8 +11,11 @@ export default function Footer() {
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
         {/* About College Column */}
         <div className="space-y-4">
-          <h3 className="font-hindi text-lg font-bold text-secondary-container">
-            {language === "hi" ? "शासकीय नवीन महाविद्यालय, सारागांव" : "Govt Naveen College, Saragaon"}
+          <h3 className="font-hindi text-lg font-bold text-secondary-container flex items-center gap-2 flex-wrap">
+            <span>{language === "hi" ? "शासकीय नवीन महाविद्यालय, सारागांव" : "Govt Naveen College, Saragaon"}</span>
+            <span className="text-[10px] bg-white/10 text-secondary-container border border-white/20 font-bold px-2 py-0.5 rounded-full">
+              {language === "hi" ? "कोड: 317" : "Code: 317"}
+            </span>
           </h3>
           <p className="text-sm text-on-primary-container leading-relaxed opacity-90">
             {t("footerInfo")}
