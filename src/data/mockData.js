@@ -210,7 +210,7 @@ export const initialDepartments = [
     descriptionEnglish: "The Science stream equips students with analytical and experimental skills through rigorous courses in physical and biological sciences.",
     descriptionHindi: "विज्ञान संकाय भौतिक और जैविक विज्ञान में कठोर पाठ्यक्रमों के माध्यम से छात्रों को विश्लेषणात्मक और प्रयोगात्मक कौशल से सुसज्जित करता है।",
     hodName: "Dr. Angesh Chandra",
-    facultyIds: ["fac-2", "fac-3", "fac-4", "fac-12", "fac-17"],
+    facultyIds: ["fac-2", "fac-3", "fac-4", "fac-12", "fac-17", "fac-19", "fac-20", "fac-21", "fac-22"],
     subjects: ["Physics", "Chemistry", "Mathematics", "Botany", "Zoology"]
   },
   {
@@ -453,6 +453,42 @@ export const initialFaculty = [
     photoUrl: "/prateek_dewangan.jpg",
     bioEnglish: "Supports laboratory setup, manages scientific instruments, and assists students during practical classes.",
     bioHindi: "प्रयोगशाला सेटअप का समर्थन करते हैं, वैज्ञानिक उपकरणों का प्रबंधन करते हैं और व्यावहारिक कक्षाओं के दौरान छात्रों की सहायता करते हैं।"
+  },
+  {
+    id: "fac-20",
+    name: "Chumman Lal",
+    designation: "Lab Attendant",
+    department: "Science",
+    qualification: "M. Sc. Chemistry",
+    email: "chummanlahare8@gmail.com",
+    phone: "9165384682",
+    photoUrl: "/chumman_lal.jpg",
+    bioEnglish: "Maintains chemistry laboratory equipment, manages chemical inventory, and assists science students during practical sessions.",
+    bioHindi: "रसायन विज्ञान प्रयोगशाला उपकरणों का रखरखाव करते हैं, रासायनिक सूची का प्रबंधन करते हैं और व्यावहारिक सत्रों के दौरान विज्ञान के छात्रों की सहायता करते हैं।"
+  },
+  {
+    id: "fac-21",
+    name: "Satrupa Gond",
+    designation: "Guest Lecturer (Botany)",
+    department: "Science",
+    qualification: "M.Sc. Botany, SET",
+    email: "satrupagond24121997@gmail.com",
+    phone: "8839835497",
+    photoUrl: "/satrupa_gond.jpg",
+    bioEnglish: "Teaches botany courses, coordinates plant biology labs, and guides science undergraduates.",
+    bioHindi: "वनस्पति विज्ञान के पाठ्यक्रमों का अध्यापन करती हैं, पादप जीव विज्ञान प्रयोगशालाओं का समन्वय करती हैं और विज्ञान के स्नातक छात्रों का मार्गदर्शन करती हैं।"
+  },
+  {
+    id: "fac-22",
+    name: "Sangita Kumari Suryawanshi",
+    designation: "Guest Lecturer (Zoology)",
+    department: "Science",
+    qualification: "M.Sc. Zoology, M.Phil.",
+    email: "suryawanshisangita089@gmail.com",
+    phone: "9343113707",
+    photoUrl: "/sangita_suryawanshi.jpg",
+    bioEnglish: "Teaches zoology modules, oversees animal biology experiments, and conducts practical demonstrations for undergraduates.",
+    bioHindi: "प्राणी विज्ञान के विषयों का अध्यापन करती हैं, जंतु जीव विज्ञान के प्रयोगों की देखरेख करती हैं और स्नातक छात्रों के लिए व्यावहारिक प्रदर्शन आयोजित करती हैं।"
   }
 ];
 

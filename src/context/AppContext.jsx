@@ -38,7 +38,7 @@ export const AppProvider = ({ children }) => {
 
   // Initialize DB from LocalStorage or mockData
   useEffect(() => {
-    const CURRENT_DB_VERSION = "v5";
+    const CURRENT_DB_VERSION = "v6";
     const storedVersion = localStorage.getItem("gncs_db_version");
 
     if (storedVersion !== CURRENT_DB_VERSION) {
