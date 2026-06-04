@@ -14,7 +14,7 @@ export default function Footer() {
           <h3 className="font-hindi text-lg font-bold text-secondary-container flex items-center gap-2 flex-wrap">
             <span>{language === "hi" ? "शासकीय नवीन महाविद्यालय, सारागांव" : "Govt Naveen College, Saragaon"}</span>
             <span className="text-[10px] bg-white/10 text-secondary-container border border-white/20 font-bold px-2 py-0.5 rounded-full">
-              {language === "hi" ? "कोड: 317" : "Code: 317"}
+              {language === "hi" ? "कोड: 217" : "Code: 217"}
             </span>
             <span className="text-[10px] bg-white/10 text-secondary-container border border-white/20 font-bold px-2 py-0.5 rounded-full">
               AISHE: C-70734
@@ -134,8 +134,8 @@ export default function Footer() {
             </p>
             <p>
               {language === "hi"
-                ? "महाविद्यालय कोड: 808"
-                : "College Code: 808"}
+                ? "महाविद्यालय कोड: 217"
+                : "College Code: 217"}
             </p>
             <p>
               {language === "hi"
