@@ -72,9 +72,13 @@ export default function Contact() {
                 <span className="font-semibold text-primary">Office Timings:</span>
                 <span>10:30 AM - 05:00 PM</span>
               </li>
-              <li className="flex justify-between">
+              <li className="flex justify-between border-b border-outline-variant/40 pb-1.5">
                 <span className="font-semibold text-primary">General Enquiry:</span>
-                <span>+91 7750 - XXXXXX</span>
+                <span>9893907415</span>
+              </li>
+              <li className="flex justify-between">
+                <span className="font-semibold text-primary">General Email:</span>
+                <span>govtcollegesaragaon@gmail.com</span>
               </li>
             </ul>
           </div>

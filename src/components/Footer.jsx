@@ -106,11 +106,11 @@ export default function Footer() {
             </li>
             <li className="flex gap-2.5 items-center">
               <span className="material-symbols-outlined text-secondary-container text-lg">call</span>
-              <span>+91 7750 - XXXXXX</span>
+              <span>9893907415</span>
             </li>
             <li className="flex gap-2.5 items-center">
               <span className="material-symbols-outlined text-secondary-container text-lg">mail</span>
-              <span className="break-all">govtcollege.saragaon@gmail.com</span>
+              <span className="break-all">govtcollegesaragaon@gmail.com</span>
             </li>
           </ul>
         </div>

@@ -45,11 +45,11 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-sm text-secondary-container">call</span>
-              +91 7750 - XXXXXX
+              9893907415
             </span>
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-sm text-secondary-container">mail</span>
-              govtcollege.saragaon@gmail.com
+              govtcollegesaragaon@gmail.com
             </span>
           </div>
           <div className="flex items-center gap-3">
