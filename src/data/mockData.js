@@ -4,7 +4,8 @@ export const initialUsers = [
   {
     id: "user-1",
     name: "Prof. B. K. Patel",
-    email: "principal@saragaoncollege.in",
+    email: "govtcollegesaragaon@gmail.com",
+    password: "PatelBK@2026!Admin",
     role: "Principal",
     department: "Administration",
     photoUrl: "/principal.jpg",

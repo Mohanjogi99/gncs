@@ -68,11 +68,11 @@ export default function Administration() {
             <div className="flex flex-wrap gap-4 text-xs font-semibold justify-center md:justify-start">
               <span className="flex items-center gap-1.5 text-on-surface-variant">
                 <span className="material-symbols-outlined text-sm text-secondary">mail</span>
-                principal@saragaoncollege.in
+                govtcollegesaragaon@gmail.com
               </span>
               <span className="flex items-center gap-1.5 text-on-surface-variant">
                 <span className="material-symbols-outlined text-sm text-secondary">call</span>
-                +91 7750 - XXXXXX
+                +91 98939 07415
               </span>
             </div>
           </div>
