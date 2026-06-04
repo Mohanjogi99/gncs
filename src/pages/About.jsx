@@ -34,7 +34,7 @@ export default function About() {
             <span className="material-symbols-outlined text-secondary">history</span>
             {t("history")} | महाविद्यालय का इतिहास
           </h3>
-          <div className="text-sm sm:text-base text-on-surface-variant leading-relaxed space-y-4">
+          <div className="text-sm sm:text-base text-on-surface-variant leading-relaxed space-y-4 text-justify">
             <p>
               {language === "hi"
                 ? "शासकीय नवीन महाविद्यालय, सारागांव की स्थापना छत्तीसगढ़ शासन, उच्च शिक्षा विभाग द्वारा वर्ष 2021 में की गई थी। इस महाविद्यालय का मुख्य उद्देश्य सारागांव क्षेत्र के अंतर्गत आने वाले सुदूर ग्रामीण एवं आर्थिक रूप से कमजोर वर्ग के छात्र-छात्राओं को उच्च शिक्षा की मुख्यधारा से जोड़ना है।"
