@@ -231,17 +231,38 @@ export default function Admission() {
             Admission Help Desk | प्रवेश सहायता केंद्र
           </h3>
           <div className="divide-y divide-outline-variant/50 text-xs sm:text-sm">
-            <div className="py-2 flex justify-between">
-              <span className="font-bold text-on-surface">Shri Vinod Dewangan (Arts/Commerce In-charge)</span>
-              <span className="text-on-surface-variant font-semibold">+91 88712 XXXXX</span>
+            <div className="py-2.5 flex justify-between gap-4">
+              <div className="flex flex-col">
+                <span className="font-bold text-on-surface">
+                  {language === "hi" ? "विज्ञान संकाय (B.Sc. - Bio/Maths Group):" : "Science Stream (B.Sc. - Bio/Maths Group):"}
+                </span>
+                <span className="text-on-surface-variant font-medium mt-0.5">
+                  {language === "hi" ? "डॉ. अंगेश चंद्र (Physics)" : "Dr. Angesh Chandra (Physics)"}
+                </span>
+              </div>
+              <span className="text-on-surface-variant font-semibold flex items-center">+91 98939 07415</span>
             </div>
-            <div className="py-2 flex justify-between">
-              <span className="font-bold text-on-surface">Smt. Shweta Soni (Science In-charge)</span>
-              <span className="text-on-surface-variant font-semibold">+91 79998 XXXXX</span>
+            <div className="py-2.5 flex justify-between gap-4">
+              <div className="flex flex-col">
+                <span className="font-bold text-on-surface">
+                  {language === "hi" ? "कला संकाय (B.A. Group):" : "Arts Stream (B.A. Group):"}
+                </span>
+                <span className="text-on-surface-variant font-medium mt-0.5">
+                  {language === "hi" ? "प्रवीण कुमार कौशिक (Geography)" : "Pravin Kumar Kaushik (Geography)"}
+                </span>
+              </div>
+              <span className="text-on-surface-variant font-semibold flex items-center">+91 98939 07415</span>
             </div>
-            <div className="py-2 flex justify-between">
-              <span className="font-bold text-on-surface">Shri Santosh Sahu (Office Help)</span>
-              <span className="text-on-surface-variant font-semibold">+91 94254 XXXXX</span>
+            <div className="py-2.5 flex justify-between gap-4">
+              <div className="flex flex-col">
+                <span className="font-bold text-on-surface">
+                  {language === "hi" ? "वाणिज्य संकाय (B.Com. Group):" : "Commerce Stream (B.Com. Group):"}
+                </span>
+                <span className="text-on-surface-variant font-medium mt-0.5">
+                  {language === "hi" ? "आशुतोष पैंकरा" : "Ashutosh Painkra"}
+                </span>
+              </div>
+              <span className="text-on-surface-variant font-semibold flex items-center">+91 98939 07415</span>
             </div>
           </div>
         </div>
