@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import NoticeTicker from "../components/NoticeTicker";
@@ -7,6 +7,7 @@ export default function Home() {
   const { notices, newsEvents, gallery, faculty, language, t } = useContext(AppContext);
   const navigate = useNavigate();
   const sliderRef = useRef(null);
+  const [selectedNews, setSelectedNews] = useState(null);
 
   const scrollLeft = () => {
     if (sliderRef.current) {
@@ -339,7 +340,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {recentNews.map((news) => (
-              <div key={news.id} className="bg-white rounded-2xl overflow-hidden border border-outline-variant/60 shadow-sm flex flex-col group cursor-pointer" onClick={() => navigate("/gallery")}>
+              <div key={news.id} className="bg-white rounded-2xl overflow-hidden border border-outline-variant/60 shadow-sm flex flex-col group cursor-pointer" onClick={() => setSelectedNews(news)}>
                 <div className="aspect-[16/10] w-full overflow-hidden bg-surface-container">
                   <img
                     src={news.imageUrl}
@@ -397,6 +398,64 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* News Detail Modal */}
+      {selectedNews && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/65 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setSelectedNews(null)}
+        >
+          <div 
+            className="bg-white rounded-3xl border border-outline-variant/60 max-w-2xl w-full max-h-[85vh] overflow-hidden shadow-2xl flex flex-col animate-in fade-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Image & Header banner */}
+            <div className="relative aspect-[16/9] w-full bg-surface-container shrink-0">
+              <img 
+                src={selectedNews.imageUrl} 
+                alt={selectedNews.titleEnglish} 
+                className="w-full h-full object-cover"
+              />
+              <button 
+                onClick={() => setSelectedNews(null)}
+                className="absolute top-4 right-4 bg-black/40 hover:bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer shadow-md"
+                title="Close"
+              >
+                <span className="material-symbols-outlined text-lg">close</span>
+              </button>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-16">
+                <span className="text-[10px] text-secondary-container font-extrabold uppercase bg-secondary/90 text-white px-2.5 py-1 rounded-full shadow-sm">
+                  {selectedNews.eventDate}
+                </span>
+              </div>
+            </div>
+
+            {/* Modal content body */}
+            <div className="p-6 sm:p-8 overflow-y-auto space-y-4 text-justify">
+              <h3 className="text-lg sm:text-2xl font-bold text-primary font-hindi leading-tight">
+                {language === "hi" ? selectedNews.titleHindi : selectedNews.titleEnglish}
+              </h3>
+              <div className="w-12 h-1 bg-secondary rounded-full"></div>
+              
+              <div className="text-sm sm:text-base text-on-surface-variant leading-relaxed space-y-3 font-medium whitespace-pre-line pt-2">
+                {language === "hi" 
+                  ? (selectedNews.contentHindi || selectedNews.descriptionHindi) 
+                  : (selectedNews.contentEnglish || selectedNews.descriptionEnglish)}
+              </div>
+            </div>
+            
+            {/* Modal Footer */}
+            <div className="p-4 border-t border-outline-variant/50 flex justify-end bg-surface-container-low shrink-0 rounded-b-3xl">
+              <button 
+                onClick={() => setSelectedNews(null)}
+                className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm"
+              >
+                Close | बंद करें
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -95,6 +95,8 @@ export default function AdminDashboard() {
     titleHindi: "",
     descriptionEnglish: "",
     descriptionHindi: "",
+    contentEnglish: "",
+    contentHindi: "",
     eventDate: new Date().toISOString().split("T")[0],
     imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg"
   });
@@ -215,7 +217,7 @@ export default function AdminDashboard() {
     setFacultyForm({ name: "", designation: "Assistant Professor", department: "Arts", qualification: "", email: "", phone: "", bioEnglish: "", bioHindi: "", photoUrl: "" });
     setCourseForm({ name: "", stream: "Arts", duration: "3 Years / 3 वर्ष", eligibility: "", seats: 60, fee: "₹2,500 per annum" });
     setGalleryForm({ albumTitle: "", caption: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA72eXokI1lfD95EVEcAR3osAynjp5wfvMvtugkG0bOK_1g7YRvPOwJ9wt9EJEZ3Y_BmjOJaIOxTaTTAvU5DXyuczs0S2DFGtNUoqki8h5n4vVrke8WF1PhFl1l-JCcRYdRvFwUK4JeXDTYSNJfu3QYoW78eZe6BHq7D86Cz2tSUTBb36y99fbjn7vNRs9HjRIxAKwB-ZVe43KBDGY5iP0Y3NY5TBsYHSzTW-XRE9yDpqIV4ABK9EMBoWzT1uHO4Fi6fYj4KIqe6lg" });
-    setNewsForm({ titleEnglish: "", titleHindi: "", descriptionEnglish: "", descriptionHindi: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg" });
+    setNewsForm({ titleEnglish: "", titleHindi: "", descriptionEnglish: "", descriptionHindi: "", contentEnglish: "", contentHindi: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg" });
   };
 
   const openEditForm = (item) => {
@@ -231,7 +233,7 @@ export default function AdminDashboard() {
     } else if (activeMenu === "courses") {
       setCourseForm({ name: item.name, stream: item.stream, duration: item.duration, eligibility: item.eligibility, seats: item.seats, fee: item.fee });
     } else if (activeMenu === "news") {
-      setNewsForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, descriptionEnglish: item.descriptionEnglish, descriptionHindi: item.descriptionHindi, eventDate: item.eventDate, imageUrl: item.imageUrl });
+      setNewsForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, descriptionEnglish: item.descriptionEnglish, descriptionHindi: item.descriptionHindi, contentEnglish: item.contentEnglish || "", contentHindi: item.contentHindi || "", eventDate: item.eventDate, imageUrl: item.imageUrl });
     }
   };
 
@@ -881,6 +883,28 @@ export default function AdminDashboard() {
                         rows="3"
                         value={newsForm.descriptionHindi}
                         onChange={(e) => setNewsForm({ ...newsForm, descriptionHindi: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Detailed Content (English) - Max 600 words</label>
+                      <textarea
+                        rows="5"
+                        value={newsForm.contentEnglish}
+                        onChange={(e) => setNewsForm({ ...newsForm, contentEnglish: e.target.value })}
+                        placeholder="Enter full news article in English..."
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      ></textarea>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Detailed Content (Hindi) - अधिकतम 600 शब्द</label>
+                      <textarea
+                        rows="5"
+                        value={newsForm.contentHindi}
+                        onChange={(e) => setNewsForm({ ...newsForm, contentHindi: e.target.value })}
+                        placeholder="समाचार का पूरा विवरण हिंदी में लिखें..."
                         className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
                       ></textarea>
                     </div>
