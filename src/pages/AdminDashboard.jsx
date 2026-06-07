@@ -601,16 +601,38 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="font-bold">Profile Photo URL (फ़ोटो URL)</label>
-                    <div className="flex gap-4 items-center">
-                      <input
-                        type="url"
-                        placeholder="https://example.com/photo.jpg"
-                        value={facultyForm.photoUrl}
-                        onChange={(e) => setFacultyForm({ ...facultyForm, photoUrl: e.target.value })}
-                        className="w-full flex-1 px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
-                      />
-                      <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-outline-variant bg-surface-container-low flex items-center justify-center">
+                    <label className="font-bold">Profile Photo (फ़ोटो अपलोड या URL)</label>
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                      <div className="flex-1 w-full space-y-2">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              triggerSimulatedUpload(() => {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                  setFacultyForm(prev => ({ ...prev, photoUrl: reader.result }));
+                                };
+                                reader.readAsDataURL(file);
+                              });
+                            }
+                          }}
+                          className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer"
+                        />
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-on-surface-variant font-bold">OR URL:</span>
+                          <input
+                            type="url"
+                            placeholder="https://example.com/photo.jpg"
+                            value={facultyForm.photoUrl}
+                            onChange={(e) => setFacultyForm({ ...facultyForm, photoUrl: e.target.value })}
+                            className="w-full flex-1 px-3 py-1.5 rounded-lg border border-outline-variant bg-white outline-none text-xs"
+                          />
+                        </div>
+                      </div>
+                      <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 border-2 border-primary/20 bg-surface-container-low flex items-center justify-center shadow-inner">
                         {facultyForm.photoUrl ? (
                           <img
                             src={facultyForm.photoUrl}
@@ -621,7 +643,7 @@ export default function AdminDashboard() {
                             }}
                           />
                         ) : (
-                          <span className="material-symbols-outlined text-outline text-2xl font-light">person</span>
+                          <span className="material-symbols-outlined text-outline text-3xl font-light">person</span>
                         )}
                       </div>
                     </div>
@@ -762,6 +784,47 @@ export default function AdminDashboard() {
                       className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
                     />
                   </div>
+                  <div className="space-y-1.5">
+                    <label className="font-bold">Gallery Image (फ़ोटो अपलोड या URL) *</label>
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                      <div className="flex-1 w-full space-y-2">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              triggerSimulatedUpload(() => {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                  setGalleryForm(prev => ({ ...prev, imageUrl: reader.result }));
+                                };
+                                reader.readAsDataURL(file);
+                              });
+                            }
+                          }}
+                          className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer"
+                        />
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-on-surface-variant font-bold">OR URL:</span>
+                          <input
+                            type="url"
+                            placeholder="https://example.com/photo.jpg"
+                            value={galleryForm.imageUrl}
+                            onChange={(e) => setGalleryForm({ ...galleryForm, imageUrl: e.target.value })}
+                            className="w-full flex-1 px-3 py-1.5 rounded-lg border border-outline-variant bg-white outline-none text-xs"
+                          />
+                        </div>
+                      </div>
+                      <div className="w-24 h-16 rounded-xl overflow-hidden shrink-0 border border-outline-variant bg-surface-container-low flex items-center justify-center shadow-inner">
+                        {galleryForm.imageUrl ? (
+                          <img src={galleryForm.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                        ) : (
+                          <span className="material-symbols-outlined text-outline text-2xl font-light">image</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                   <div className="flex gap-2 justify-end pt-4">
                     <button
                       type="button"
@@ -822,15 +885,55 @@ export default function AdminDashboard() {
                       ></textarea>
                     </div>
                   </div>
-                  <div className="space-y-1.5">
-                    <label className="font-bold">Event Date *</label>
-                    <input
-                      type="date"
-                      required
-                      value={newsForm.eventDate}
-                      onChange={(e) => setNewsForm({ ...newsForm, eventDate: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none w-48"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Event Date *</label>
+                      <input
+                        type="date"
+                        required
+                        value={newsForm.eventDate}
+                        onChange={(e) => setNewsForm({ ...newsForm, eventDate: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Event Image (फ़ोटो अपलोड या URL)</label>
+                      <div className="flex items-center gap-4">
+                        <div className="flex-grow space-y-2">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files[0];
+                              if (file) {
+                                triggerSimulatedUpload(() => {
+                                  const reader = new FileReader();
+                                  reader.onloadend = () => {
+                                    setNewsForm(prev => ({ ...prev, imageUrl: reader.result }));
+                                  };
+                                  reader.readAsDataURL(file);
+                                });
+                              }
+                            }}
+                            className="w-full px-3 py-1.5 rounded-lg border border-outline-variant bg-white outline-none file:mr-2 file:py-0.5 file:px-2 file:rounded-full file:border-0 file:text-[11px] file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer text-xs"
+                          />
+                          <input
+                            type="url"
+                            placeholder="Or enter image URL"
+                            value={newsForm.imageUrl}
+                            onChange={(e) => setNewsForm({ ...newsForm, imageUrl: e.target.value })}
+                            className="w-full px-3 py-1.5 rounded-lg border border-outline-variant bg-white outline-none text-xs"
+                          />
+                        </div>
+                        <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-outline-variant bg-surface-container-low flex items-center justify-center shadow-inner">
+                          {newsForm.imageUrl ? (
+                            <img src={newsForm.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                          ) : (
+                            <span className="material-symbols-outlined text-outline text-2xl font-light">image</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className="flex gap-2 justify-end pt-4">
                     <button
