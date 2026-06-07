@@ -112,7 +112,7 @@ export default function Home() {
             <span className="material-symbols-outlined">info</span>
             {language === "hi" ? "महाविद्यालय का परिचय" : "About Our College"}
           </h2>
-          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-outline-variant/60 shadow-sm leading-relaxed space-y-4">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-outline-variant/60 shadow-sm leading-relaxed space-y-4 text-justify">
             <p className="text-sm sm:text-base text-on-surface-variant">
               {t("aboutShortIntro")}
             </p>
