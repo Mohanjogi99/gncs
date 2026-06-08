@@ -14,7 +14,9 @@ import {
   initialOfficeStaff,
   initialCommittees,
   initialReqDocs,
-  initialIqacDetails
+  initialIqacDetails,
+  initialAqarDocs,
+  initialSsrDocs
 } from "../data/mockData";
 
 export const AppContext = createContext();
@@ -45,15 +47,17 @@ export const AppProvider = ({ children }) => {
   const [committees, setCommittees] = useState([]);
   const [reqDocs, setReqDocs] = useState([]);
   const [iqacDetails, setIqacDetails] = useState({});
+  const [aqarDocs, setAqarDocs] = useState([]);
+  const [ssrDocs, setSsrDocs] = useState([]);
 
   // Initialize DB from LocalStorage or mockData
   useEffect(() => {
-    const CURRENT_DB_VERSION = "v14";
+    const CURRENT_DB_VERSION = "v15";
     const storedVersion = localStorage.getItem("gncs_db_version");
 
     if (storedVersion !== CURRENT_DB_VERSION) {
       // Clear old collection keys to force reload fallbacks
-      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees", "reqDocs", "iqacDetails"];
+      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees", "reqDocs", "iqacDetails", "aqarDocs", "ssrDocs"];
       keysToClear.forEach(key => localStorage.removeItem(`gncs_db_${key}`));
       localStorage.setItem("gncs_db_version", CURRENT_DB_VERSION);
     }
@@ -81,6 +85,8 @@ export const AppProvider = ({ children }) => {
     setCommittees(loadCollection("committees", initialCommittees));
     setReqDocs(loadCollection("reqDocs", initialReqDocs));
     setIqacDetails(loadCollection("iqacDetails", initialIqacDetails));
+    setAqarDocs(loadCollection("aqarDocs", initialAqarDocs));
+    setSsrDocs(loadCollection("ssrDocs", initialSsrDocs));
   }, []);
 
   // Save collections to LocalStorage whenever they change
@@ -380,6 +386,46 @@ export const AppProvider = ({ children }) => {
     saveCollection("iqacDetails", updated);
   };
 
+  // AQAR CRUD
+  const addAqarDoc = (doc) => {
+    const newDoc = { id: `aqar-${Date.now()}`, ...doc };
+    const updated = [...aqarDocs, newDoc];
+    setAqarDocs(updated);
+    saveCollection("aqarDocs", updated);
+  };
+
+  const updateAqarDoc = (id, updatedFields) => {
+    const updated = aqarDocs.map((d) => (d.id === id ? { ...d, ...updatedFields } : d));
+    setAqarDocs(updated);
+    saveCollection("aqarDocs", updated);
+  };
+
+  const deleteAqarDoc = (id) => {
+    const updated = aqarDocs.filter((d) => d.id !== id);
+    setAqarDocs(updated);
+    saveCollection("aqarDocs", updated);
+  };
+
+  // SSR CRUD
+  const addSsrDoc = (doc) => {
+    const newDoc = { id: `ssr-${Date.now()}`, ...doc };
+    const updated = [...ssrDocs, newDoc];
+    setSsrDocs(updated);
+    saveCollection("ssrDocs", updated);
+  };
+
+  const updateSsrDoc = (id, updatedFields) => {
+    const updated = ssrDocs.map((d) => (d.id === id ? { ...d, ...updatedFields } : d));
+    setSsrDocs(updated);
+    saveCollection("ssrDocs", updated);
+  };
+
+  const deleteSsrDoc = (id) => {
+    const updated = ssrDocs.filter((d) => d.id !== id);
+    setSsrDocs(updated);
+    saveCollection("ssrDocs", updated);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -434,7 +480,15 @@ export const AppProvider = ({ children }) => {
         updateReqDoc,
         deleteReqDoc,
         iqacDetails,
-        updateIqacDetails
+        updateIqacDetails,
+        aqarDocs,
+        addAqarDoc,
+        updateAqarDoc,
+        deleteAqarDoc,
+        ssrDocs,
+        addSsrDoc,
+        updateSsrDoc,
+        deleteSsrDoc
       }}
     >
       {children}

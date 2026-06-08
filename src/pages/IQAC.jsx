@@ -2,19 +2,10 @@ import React, { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
 export default function IQAC() {
-  const { language, t, iqacDetails } = useContext(AppContext);
+  const { language, t, iqacDetails, aqarDocs, ssrDocs } = useContext(AppContext);
 
-  const aqarDocuments = [
-    { year: "2025-26", titleEn: "Annual Quality Assurance Report (AQAR) 2025-26", titleHi: "वार्षिक गुणवत्ता आश्वासन रिपोर्ट (AQAR) 2025-26" },
-    { year: "2024-25", titleEn: "Annual Quality Assurance Report (AQAR) 2024-25", titleHi: "वार्षिक गुणवत्ता आश्वासन रिपोर्ट (AQAR) 2024-25" },
-    { year: "2023-24", titleEn: "Annual Quality Assurance Report (AQAR) 2023-24", titleHi: "वार्षिक गुणवत्ता आश्वासन रिपोर्ट (AQAR) 2023-24" }
-  ];
-
-  const feedbackReports = [
-    { titleEn: "Student Feedback Analysis & Action Taken Report 2025", titleHi: "छात्र प्रतिक्रिया विश्लेषण एवं की गई कार्रवाई रिपोर्ट 2025" },
-    { titleEn: "Teacher Feedback on Curriculum 2025", titleHi: "पाठ्यक्रम पर शिक्षक प्रतिक्रिया 2025" },
-    { titleEn: "Alumni Feedback Analysis Report 2024", titleHi: "पूर्व छात्र प्रतिक्रिया विश्लेषण रिपोर्ट 2024" }
-  ];
+  const currentAqarDocs = aqarDocs || [];
+  const currentSsrDocs = ssrDocs || [];
 
   return (
     <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 space-y-8 flex-1">
@@ -61,9 +52,9 @@ export default function IQAC() {
             AQAR Reports | वार्षिक गुणवत्ता आश्वासन रिपोर्ट
           </h3>
           <div className="space-y-3">
-            {aqarDocuments.map((doc, idx) => (
+            {currentAqarDocs.map((doc) => (
               <div
-                key={idx}
+                key={doc.id}
                 className="p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/60 flex justify-between items-center text-xs"
               >
                 <div>
@@ -73,10 +64,10 @@ export default function IQAC() {
                   <span className="text-[10px] text-on-surface-variant font-semibold">Year: {doc.year}</span>
                 </div>
                 <a
-                  href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                  href={doc.pdfUrl || "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-red-600 hover:scale-105 transition-all flex items-center gap-0.5 font-bold"
+                  className="text-red-600 hover:scale-105 transition-all flex items-center gap-0.5 font-bold shrink-0 ml-4"
                 >
                   <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
                   PDF
@@ -93,9 +84,9 @@ export default function IQAC() {
             Self Study Report (SSR) & Feedback | स्व-अध्ययन रिपोर्ट
           </h3>
           <div className="space-y-3">
-            {feedbackReports.map((doc, idx) => (
+            {currentSsrDocs.map((doc) => (
               <div
-                key={idx}
+                key={doc.id}
                 className="p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/60 flex justify-between items-center text-xs"
               >
                 <div>
@@ -105,10 +96,10 @@ export default function IQAC() {
                   <span className="text-[10px] text-on-surface-variant font-semibold">Quality Metric</span>
                 </div>
                 <a
-                  href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                  href={doc.pdfUrl || "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-red-600 hover:scale-105 transition-all flex items-center gap-0.5 font-bold"
+                  className="text-red-600 hover:scale-105 transition-all flex items-center gap-0.5 font-bold shrink-0 ml-4"
                 >
                   <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
                   PDF

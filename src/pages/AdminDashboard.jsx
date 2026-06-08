@@ -51,7 +51,15 @@ export default function AdminDashboard() {
     updateReqDoc,
     deleteReqDoc,
     iqacDetails,
-    updateIqacDetails
+    updateIqacDetails,
+    aqarDocs,
+    addAqarDoc,
+    updateAqarDoc,
+    deleteAqarDoc,
+    ssrDocs,
+    addSsrDoc,
+    updateSsrDoc,
+    deleteSsrDoc
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -158,6 +166,24 @@ export default function AdminDashboard() {
     managementRep: "",
     facultyMembers: ""
   });
+
+  // IQAC Subtab & Form States
+  const [iqacSubTab, setIqacSubTab] = useState("committee");
+  const [aqarForm, setAqarForm] = useState({
+    year: "",
+    titleEn: "",
+    titleHi: "",
+    pdfUrl: ""
+  });
+  const [ssrForm, setSsrForm] = useState({
+    titleEn: "",
+    titleHi: "",
+    pdfUrl: ""
+  });
+  const [isAddingAqar, setIsAddingAqar] = useState(false);
+  const [editingAqar, setEditingAqar] = useState(null);
+  const [isAddingSsr, setIsAddingSsr] = useState(false);
+  const [editingSsr, setEditingSsr] = useState(null);
 
   // Department and Subject state
   const [selectedDeptId, setSelectedDeptId] = useState("dept-arts");
@@ -343,6 +369,67 @@ export default function AdminDashboard() {
     e.preventDefault();
     updateIqacDetails(iqacForm);
     alert("IQAC committee details updated successfully!");
+  };
+
+  const handleSaveAqar = (e) => {
+    e.preventDefault();
+    if (editingAqar) {
+      updateAqarDoc(editingAqar.id, aqarForm);
+      alert("AQAR Report updated successfully!");
+    } else {
+      addAqarDoc(aqarForm);
+      alert("AQAR Report added successfully!");
+    }
+    setAqarForm({ year: "", titleEn: "", titleHi: "", pdfUrl: "" });
+    setIsAddingAqar(false);
+    setEditingAqar(null);
+  };
+
+  const handleSaveSsr = (e) => {
+    e.preventDefault();
+    if (editingSsr) {
+      updateSsrDoc(editingSsr.id, ssrForm);
+      alert("Self Study Report / Feedback updated successfully!");
+    } else {
+      addSsrDoc(ssrForm);
+      alert("Self Study Report / Feedback added successfully!");
+    }
+    setSsrForm({ titleEn: "", titleHi: "", pdfUrl: "" });
+    setIsAddingSsr(false);
+    setEditingSsr(null);
+  };
+
+  const openAddAqar = () => {
+    setAqarForm({ year: "", titleEn: "", titleHi: "", pdfUrl: "" });
+    setEditingAqar(null);
+    setIsAddingAqar(true);
+  };
+
+  const openEditAqar = (item) => {
+    setAqarForm({
+      year: item.year || "",
+      titleEn: item.titleEn || "",
+      titleHi: item.titleHi || "",
+      pdfUrl: item.pdfUrl || ""
+    });
+    setEditingAqar(item);
+    setIsAddingAqar(false);
+  };
+
+  const openAddSsr = () => {
+    setSsrForm({ titleEn: "", titleHi: "", pdfUrl: "" });
+    setEditingSsr(null);
+    setIsAddingSsr(true);
+  };
+
+  const openEditSsr = (item) => {
+    setSsrForm({
+      titleEn: item.titleEn || "",
+      titleHi: item.titleHi || "",
+      pdfUrl: item.pdfUrl || ""
+    });
+    setEditingSsr(item);
+    setIsAddingSsr(false);
   };
 
   const handleSaveDeptInfo = (e) => {
@@ -2128,62 +2215,387 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {/* IQAC Committee Management Panel */}
+          {/* IQAC Cell Management Panel */}
           {activeMenu === "iqac" && (
-            <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/80 space-y-4">
-              <h4 className="font-bold text-sm text-primary border-b border-outline-variant/60 pb-2 flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-secondary text-lg">verified</span>
-                IQAC Committee Members | आंतरिक गुणवत्ता आश्वासन प्रकोष्ठ
-              </h4>
-              <form onSubmit={handleSaveIqac} className="space-y-4 text-xs sm:text-sm">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="font-bold">Chairman *</label>
-                    <input
-                      type="text"
-                      required
-                      value={iqacForm.chairman}
-                      onChange={(e) => setIqacForm({ ...iqacForm, chairman: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="font-bold">Coordinator *</label>
-                    <input
-                      type="text"
-                      required
-                      value={iqacForm.coordinator}
-                      onChange={(e) => setIqacForm({ ...iqacForm, coordinator: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="font-bold">Management Representative *</label>
-                    <input
-                      type="text"
-                      required
-                      value={iqacForm.managementRep}
-                      onChange={(e) => setIqacForm({ ...iqacForm, managementRep: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="font-bold">Faculty Members (Comma-separated) *</label>
-                    <input
-                      type="text"
-                      required
-                      value={iqacForm.facultyMembers}
-                      onChange={(e) => setIqacForm({ ...iqacForm, facultyMembers: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
-                    />
-                  </div>
-                </div>
-                <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
-                  Save Committee Details
+            <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/80 space-y-6">
+              {/* Tab Header */}
+              <div className="flex border-b border-outline-variant pb-2 gap-4 text-xs sm:text-sm">
+                <button
+                  onClick={() => {
+                    setIqacSubTab("committee");
+                    setIsAddingAqar(false);
+                    setEditingAqar(null);
+                    setIsAddingSsr(false);
+                    setEditingSsr(null);
+                  }}
+                  className={`pb-1 font-bold transition-all ${
+                    iqacSubTab === "committee"
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-on-surface-variant hover:text-primary"
+                  }`}
+                >
+                  Committee Structure | समिति संरचना
                 </button>
-              </form>
+                <button
+                  onClick={() => {
+                    setIqacSubTab("aqar");
+                    setIsAddingAqar(false);
+                    setEditingAqar(null);
+                    setIsAddingSsr(false);
+                    setEditingSsr(null);
+                  }}
+                  className={`pb-1 font-bold transition-all ${
+                    iqacSubTab === "aqar"
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-on-surface-variant hover:text-primary"
+                  }`}
+                >
+                  AQAR Reports | वार्षिक गुणवत्ता आश्वासन
+                </button>
+                <button
+                  onClick={() => {
+                    setIqacSubTab("ssr");
+                    setIsAddingAqar(false);
+                    setEditingAqar(null);
+                    setIsAddingSsr(false);
+                    setEditingSsr(null);
+                  }}
+                  className={`pb-1 font-bold transition-all ${
+                    iqacSubTab === "ssr"
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-on-surface-variant hover:text-primary"
+                  }`}
+                >
+                  SSR & Feedback | स्व-अध्ययन रिपोर्ट
+                </button>
+              </div>
+
+              {/* Subtab 1: Committee Members */}
+              {iqacSubTab === "committee" && (
+                <div className="space-y-4">
+                  <h4 className="font-bold text-sm text-primary border-b border-outline-variant/60 pb-2 flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-secondary text-lg">verified</span>
+                    IQAC Committee Members | आंतरिक गुणवत्ता आश्वासन प्रकोष्ठ
+                  </h4>
+                  <form onSubmit={handleSaveIqac} className="space-y-4 text-xs sm:text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="font-bold">Chairman *</label>
+                        <input
+                          type="text"
+                          required
+                          value={iqacForm.chairman}
+                          onChange={(e) => setIqacForm({ ...iqacForm, chairman: e.target.value })}
+                          className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="font-bold">Coordinator *</label>
+                        <input
+                          type="text"
+                          required
+                          value={iqacForm.coordinator}
+                          onChange={(e) => setIqacForm({ ...iqacForm, coordinator: e.target.value })}
+                          className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="font-bold">Management Representative *</label>
+                        <input
+                          type="text"
+                          required
+                          value={iqacForm.managementRep}
+                          onChange={(e) => setIqacForm({ ...iqacForm, managementRep: e.target.value })}
+                          className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="font-bold">Faculty Members (Comma-separated) *</label>
+                        <input
+                          type="text"
+                          required
+                          value={iqacForm.facultyMembers}
+                          onChange={(e) => setIqacForm({ ...iqacForm, facultyMembers: e.target.value })}
+                          className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                        />
+                      </div>
+                    </div>
+                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
+                      Save Committee Details
+                    </button>
+                  </form>
+                </div>
+              )}
+
+              {/* Subtab 2: AQAR Reports */}
+              {iqacSubTab === "aqar" && (
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-bold text-sm text-primary flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-secondary text-lg">description</span>
+                      AQAR Reports | वार्षिक गुणवत्ता आश्वासन रिपोर्ट
+                    </h4>
+                    {!isAddingAqar && !editingAqar && (
+                      <button
+                        onClick={openAddAqar}
+                        className="bg-secondary hover:bg-secondary/95 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"
+                      >
+                        <span className="material-symbols-outlined text-xs">add</span>
+                        Add AQAR Report
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Add / Edit Form */}
+                  {(isAddingAqar || editingAqar) ? (
+                    <form onSubmit={handleSaveAqar} className="bg-surface-container-low p-4 rounded-xl border border-outline-variant space-y-4 text-xs sm:text-sm">
+                      <h5 className="font-bold text-xs text-primary">
+                        {editingAqar ? "Edit AQAR Report" : "Add New AQAR Report"}
+                      </h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Year (e.g. 2025-26) *</label>
+                          <input
+                            type="text"
+                            required
+                            value={aqarForm.year}
+                            onChange={(e) => setAqarForm({ ...aqarForm, year: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">PDF Link / URL *</label>
+                          <input
+                            type="url"
+                            required
+                            value={aqarForm.pdfUrl}
+                            onChange={(e) => setAqarForm({ ...aqarForm, pdfUrl: e.target.value })}
+                            placeholder="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Title (English) *</label>
+                          <input
+                            type="text"
+                            required
+                            value={aqarForm.titleEn}
+                            onChange={(e) => setAqarForm({ ...aqarForm, titleEn: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Title (Hindi) *</label>
+                          <input
+                            type="text"
+                            required
+                            value={aqarForm.titleHi}
+                            onChange={(e) => setAqarForm({ ...aqarForm, titleHi: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex gap-2 justify-end">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsAddingAqar(false);
+                            setEditingAqar(null);
+                          }}
+                          className="px-3 py-1.5 border border-outline rounded-lg font-bold"
+                        >
+                          Cancel
+                        </button>
+                        <button type="submit" className="px-4 py-1.5 bg-primary text-white rounded-lg font-bold">
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    /* Table List */
+                    <div className="border border-outline-variant rounded-xl overflow-hidden">
+                      <table className="w-full text-left text-xs sm:text-sm">
+                        <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                          <tr>
+                            <th className="px-4 py-2.5">Year</th>
+                            <th className="px-4 py-2.5">Title (English)</th>
+                            <th className="px-4 py-2.5">Title (Hindi)</th>
+                            <th className="px-4 py-2.5 text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-outline-variant/60 bg-white">
+                          {(aqarDocs || []).map((doc) => (
+                            <tr key={doc.id} className="hover:bg-surface-container-low/40">
+                              <td className="px-4 py-2.5 font-bold text-primary">{doc.year}</td>
+                              <td className="px-4 py-2.5 text-on-surface">{doc.titleEn}</td>
+                              <td className="px-4 py-2.5 text-on-surface-variant">{doc.titleHi}</td>
+                              <td className="px-4 py-2.5">
+                                <div className="flex gap-2 justify-center">
+                                  <button
+                                    onClick={() => openEditAqar(doc)}
+                                    className="p-1 text-primary hover:bg-primary/5 rounded"
+                                  >
+                                    <span className="material-symbols-outlined text-lg">edit</span>
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      if (window.confirm("Are you sure you want to delete this report?")) {
+                                        deleteAqarDoc(doc.id);
+                                      }
+                                    }}
+                                    className="p-1 text-error hover:bg-error/5 rounded"
+                                  >
+                                    <span className="material-symbols-outlined text-lg">delete</span>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                          {(aqarDocs || []).length === 0 && (
+                            <tr>
+                              <td colSpan="4" className="px-4 py-8 text-center text-on-surface-variant italic">
+                                No AQAR reports added yet.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Subtab 3: SSR & Feedback Reports */}
+              {iqacSubTab === "ssr" && (
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-bold text-sm text-primary flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-secondary text-lg">task_alt</span>
+                      Self Study Report (SSR) & Feedback | स्व-अध्ययन रिपोर्ट
+                    </h4>
+                    {!isAddingSsr && !editingSsr && (
+                      <button
+                        onClick={openAddSsr}
+                        className="bg-secondary hover:bg-secondary/95 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"
+                      >
+                        <span className="material-symbols-outlined text-xs">add</span>
+                        Add SSR Report
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Add / Edit Form */}
+                  {(isAddingSsr || editingSsr) ? (
+                    <form onSubmit={handleSaveSsr} className="bg-surface-container-low p-4 rounded-xl border border-outline-variant space-y-4 text-xs sm:text-sm">
+                      <h5 className="font-bold text-xs text-primary">
+                        {editingSsr ? "Edit SSR Report / Feedback" : "Add New SSR Report / Feedback"}
+                      </h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">PDF Link / URL *</label>
+                          <input
+                            type="url"
+                            required
+                            value={ssrForm.pdfUrl}
+                            onChange={(e) => setSsrForm({ ...ssrForm, pdfUrl: e.target.value })}
+                            placeholder="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Title (English) *</label>
+                          <input
+                            type="text"
+                            required
+                            value={ssrForm.titleEn}
+                            onChange={(e) => setSsrForm({ ...ssrForm, titleEn: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Title (Hindi) *</label>
+                          <input
+                            type="text"
+                            required
+                            value={ssrForm.titleHi}
+                            onChange={(e) => setSsrForm({ ...ssrForm, titleHi: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex gap-2 justify-end">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsAddingSsr(false);
+                            setEditingSsr(null);
+                          }}
+                          className="px-3 py-1.5 border border-outline rounded-lg font-bold"
+                        >
+                          Cancel
+                        </button>
+                        <button type="submit" className="px-4 py-1.5 bg-primary text-white rounded-lg font-bold">
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    /* Table List */
+                    <div className="border border-outline-variant rounded-xl overflow-hidden">
+                      <table className="w-full text-left text-xs sm:text-sm">
+                        <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                          <tr>
+                            <th className="px-4 py-2.5">Title (English)</th>
+                            <th className="px-4 py-2.5">Title (Hindi)</th>
+                            <th className="px-4 py-2.5 text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-outline-variant/60 bg-white">
+                          {(ssrDocs || []).map((doc) => (
+                            <tr key={doc.id} className="hover:bg-surface-container-low/40">
+                              <td className="px-4 py-2.5 text-on-surface font-semibold">{doc.titleEn}</td>
+                              <td className="px-4 py-2.5 text-on-surface-variant">{doc.titleHi}</td>
+                              <td className="px-4 py-2.5">
+                                <div className="flex gap-2 justify-center">
+                                  <button
+                                    onClick={() => openEditSsr(doc)}
+                                    className="p-1 text-primary hover:bg-primary/5 rounded"
+                                  >
+                                    <span className="material-symbols-outlined text-lg">edit</span>
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      if (window.confirm("Are you sure you want to delete this report?")) {
+                                        deleteSsrDoc(doc.id);
+                                      }
+                                    }}
+                                    className="p-1 text-error hover:bg-error/5 rounded"
+                                  >
+                                    <span className="material-symbols-outlined text-lg">delete</span>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                          {(ssrDocs || []).length === 0 && (
+                            <tr>
+                              <td colSpan="3" className="px-4 py-8 text-center text-on-surface-variant italic">
+                                No SSR reports or feedback added yet.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -633,6 +633,19 @@ export const initialIqacDetails = {
   facultyMembers: "Dr. Rajeshwari Patel, Smt. Shweta Soni"
 };
 
+export const initialAqarDocs = [
+  { id: "aqar-1", year: "2025-26", titleEn: "Annual Quality Assurance Report (AQAR) 2025-26", titleHi: "वार्षिक गुणवत्ता आश्वासन रिपोर्ट (AQAR) 2025-26", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
+  { id: "aqar-2", year: "2024-25", titleEn: "Annual Quality Assurance Report (AQAR) 2024-25", titleHi: "वार्षिक गुणवत्ता आश्वासन रिपोर्ट (AQAR) 2024-25", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
+  { id: "aqar-3", year: "2023-24", titleEn: "Annual Quality Assurance Report (AQAR) 2023-24", titleHi: "वार्षिक गुणवत्ता आश्वासन रिपोर्ट (AQAR) 2023-24", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" }
+];
+
+export const initialSsrDocs = [
+  { id: "ssr-1", titleEn: "Student Feedback Analysis & Action Taken Report 2025", titleHi: "छात्र प्रतिक्रिया विश्लेषण एवं की गई कार्रवाई रिपोर्ट 2025", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
+  { id: "ssr-2", titleEn: "Teacher Feedback on Curriculum 2025", titleHi: "पाठ्यक्रम पर शिक्षक प्रतिक्रिया 2025", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
+  { id: "ssr-3", titleEn: "Alumni Feedback Analysis Report 2024", titleHi: "पूर्व छात्र प्रतिक्रिया विश्लेषण रिपोर्ट 2024", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" }
+];
+
+
 // Translations dictionary for dynamic text translation (UI Labels, Headers)
 export const translations = {
   en: {
