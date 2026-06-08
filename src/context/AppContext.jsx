@@ -16,7 +16,8 @@ import {
   initialReqDocs,
   initialIqacDetails,
   initialAqarDocs,
-  initialSsrDocs
+  initialSsrDocs,
+  initialLibraryRules
 } from "../data/mockData";
 
 export const AppContext = createContext();
@@ -49,15 +50,16 @@ export const AppProvider = ({ children }) => {
   const [iqacDetails, setIqacDetails] = useState({});
   const [aqarDocs, setAqarDocs] = useState([]);
   const [ssrDocs, setSsrDocs] = useState([]);
+  const [libraryRules, setLibraryRules] = useState([]);
 
   // Initialize DB from LocalStorage or mockData
   useEffect(() => {
-    const CURRENT_DB_VERSION = "v15";
+    const CURRENT_DB_VERSION = "v16";
     const storedVersion = localStorage.getItem("gncs_db_version");
 
     if (storedVersion !== CURRENT_DB_VERSION) {
       // Clear old collection keys to force reload fallbacks
-      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees", "reqDocs", "iqacDetails", "aqarDocs", "ssrDocs"];
+      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees", "reqDocs", "iqacDetails", "aqarDocs", "ssrDocs", "libraryRules"];
       keysToClear.forEach(key => localStorage.removeItem(`gncs_db_${key}`));
       localStorage.setItem("gncs_db_version", CURRENT_DB_VERSION);
     }
@@ -87,6 +89,7 @@ export const AppProvider = ({ children }) => {
     setIqacDetails(loadCollection("iqacDetails", initialIqacDetails));
     setAqarDocs(loadCollection("aqarDocs", initialAqarDocs));
     setSsrDocs(loadCollection("ssrDocs", initialSsrDocs));
+    setLibraryRules(loadCollection("libraryRules", initialLibraryRules));
   }, []);
 
   // Save collections to LocalStorage whenever they change
@@ -426,6 +429,26 @@ export const AppProvider = ({ children }) => {
     saveCollection("ssrDocs", updated);
   };
 
+  // Library Rules CRUD
+  const addLibraryRule = (rule) => {
+    const newRule = { id: `lr-${Date.now()}`, ...rule };
+    const updated = [...libraryRules, newRule];
+    setLibraryRules(updated);
+    saveCollection("libraryRules", updated);
+  };
+
+  const updateLibraryRule = (id, updatedFields) => {
+    const updated = libraryRules.map((r) => (r.id === id ? { ...r, ...updatedFields } : r));
+    setLibraryRules(updated);
+    saveCollection("libraryRules", updated);
+  };
+
+  const deleteLibraryRule = (id) => {
+    const updated = libraryRules.filter((r) => r.id !== id);
+    setLibraryRules(updated);
+    saveCollection("libraryRules", updated);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -488,7 +511,11 @@ export const AppProvider = ({ children }) => {
         ssrDocs,
         addSsrDoc,
         updateSsrDoc,
-        deleteSsrDoc
+        deleteSsrDoc,
+        libraryRules,
+        addLibraryRule,
+        updateLibraryRule,
+        deleteLibraryRule
       }}
     >
       {children}

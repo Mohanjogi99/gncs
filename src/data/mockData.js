@@ -645,6 +645,14 @@ export const initialSsrDocs = [
   { id: "ssr-3", titleEn: "Alumni Feedback Analysis Report 2024", titleHi: "पूर्व छात्र प्रतिक्रिया विश्लेषण रिपोर्ट 2024", pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" }
 ];
 
+export const initialLibraryRules = [
+  { id: "lr-1", ruleEn: "Each student is eligible to borrow up to 2 books for a duration of 15 days.", ruleHi: "प्रत्येक छात्र को अधिकतम 2 पुस्तकें 15 दिनों के लिए जारी की जा सकती हैं।" },
+  { id: "lr-2", ruleEn: "A fine of ₹1 per day will be charged for overdue books.", ruleHi: "निर्धारित तिथि के बाद पुस्तक जमा करने पर ₹1 प्रति दिन की दर से अर्थदंड देय होगा।" },
+  { id: "lr-3", ruleEn: "Maintaining complete silence and discipline inside the library is compulsory.", ruleHi: "पुस्तकालय परिसर के भीतर पूर्ण शांति एवं अनुशासन बनाए रखना अनिवार्य है।" },
+  { id: "lr-4", ruleEn: "Reference books, journals, and dictionaries are reserved for in-library reading only.", ruleHi: "संदर्भ ग्रंथ, शब्दकोश और पत्र-पत्रिकाएं पुस्तकालय से बाहर ले जाने की अनुमति नहीं है।" }
+];
+
+
 
 // Translations dictionary for dynamic text translation (UI Labels, Headers)
 export const translations = {
