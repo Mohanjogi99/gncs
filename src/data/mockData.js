@@ -483,7 +483,7 @@ export const initialCourses = [
     eligibility: "12th Pass (Any Stream) / 12वीं उत्तीर्ण (किसी भी विषय में)",
     seats: 90,
     fee: "₹2,450 per annum / प्रति वर्ष",
-    syllabusUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    syllabusUrl: "https://www.snpvraigarh.in/"
   },
   {
     id: "course-bsc",
@@ -493,7 +493,7 @@ export const initialCourses = [
     eligibility: "12th Pass with Science stream / 12वीं उत्तीर्ण (विज्ञान विषय के साथ)",
     seats: 60,
     fee: "₹3,120 per annum / प्रति वर्ष",
-    syllabusUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    syllabusUrl: "https://www.snpvraigarh.in/"
   },
   {
     id: "course-bcom",
@@ -503,7 +503,7 @@ export const initialCourses = [
     eligibility: "12th Pass with Commerce/Maths / 12वीं उत्तीर्ण (वाणिज्य या गणित के साथ)",
     seats: 60,
     fee: "₹2,680 per annum / प्रति वर्ष",
-    syllabusUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+    syllabusUrl: "https://www.snpvraigarh.in/"
   }
 ];
 
