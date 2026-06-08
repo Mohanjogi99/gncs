@@ -112,7 +112,7 @@ export default function Footer() {
             </li>
             <li className="flex gap-2.5 items-center">
               <span className="material-symbols-outlined text-secondary-container text-lg">call</span>
-              <span>9893907415</span>
+              <span>7722861400, 9893907415</span>
             </li>
             <li className="flex gap-2.5 items-center">
               <span className="material-symbols-outlined text-secondary-container text-lg">mail</span>

@@ -74,7 +74,7 @@ export default function Contact() {
               </li>
               <li className="flex justify-between border-b border-outline-variant/40 pb-1.5">
                 <span className="font-semibold text-primary">General Enquiry:</span>
-                <span>9893907415</span>
+                <span>7722861400, 9893907415</span>
               </li>
               <li className="flex justify-between">
                 <span className="font-semibold text-primary">General Email:</span>
