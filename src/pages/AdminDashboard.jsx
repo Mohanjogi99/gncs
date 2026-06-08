@@ -45,7 +45,11 @@ export default function AdminDashboard() {
     updateCommittee,
     deleteCommittee,
     departments,
-    updateDepartment
+    updateDepartment,
+    reqDocs,
+    addReqDoc,
+    updateReqDoc,
+    deleteReqDoc
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -137,6 +141,12 @@ export default function AdminDashboard() {
     titleHi: "",
     convenerEn: "",
     membersEn: ""
+  });
+
+  // Required Document form state
+  const [reqDocForm, setReqDocForm] = useState({
+    labelEn: "",
+    labelHi: ""
   });
 
   // Department and Subject state
@@ -297,6 +307,16 @@ export default function AdminDashboard() {
     closeForm();
   };
 
+  const handleSaveReqDoc = (e) => {
+    e.preventDefault();
+    if (editingItem) {
+      updateReqDoc(editingItem.id, reqDocForm);
+    } else {
+      addReqDoc(reqDocForm);
+    }
+    closeForm();
+  };
+
   const handleSaveDeptInfo = (e) => {
     e.preventDefault();
     updateDepartment(selectedDeptId, {
@@ -355,6 +375,7 @@ export default function AdminDashboard() {
     setJanbhagidariForm({ nameEn: "", nameHi: "", roleEn: "", roleHi: "" });
     setOfficeStaffForm({ nameEn: "", nameHi: "", roleEn: "", roleHi: "" });
     setCommitteeForm({ titleEn: "", titleHi: "", convenerEn: "", membersEn: "" });
+    setReqDocForm({ labelEn: "", labelHi: "" });
   };
 
   const openEditForm = (item) => {
@@ -377,6 +398,8 @@ export default function AdminDashboard() {
       setOfficeStaffForm({ nameEn: item.nameEn, nameHi: item.nameHi, roleEn: item.roleEn, roleHi: item.roleHi });
     } else if (activeMenu === "committees") {
       setCommitteeForm({ titleEn: item.titleEn, titleHi: item.titleHi, convenerEn: item.convenerEn, membersEn: item.membersEn });
+    } else if (activeMenu === "reqDocs") {
+      setReqDocForm({ labelEn: item.labelEn, labelHi: item.labelHi });
     }
   };
 
@@ -395,6 +418,7 @@ export default function AdminDashboard() {
     { key: "officeStaff", label: "Office Staff Directory", icon: "support_agent" },
     { key: "committees", label: "Manage Committees", icon: "badge" },
     { key: "departments", label: "Manage Departments & Subjects", icon: "menu_book" },
+    { key: "reqDocs", label: "Admission Required Docs", icon: "assignment" },
     { key: "gallery", label: "Photo Gallery", icon: "photo_library" },
     { key: "news", label: "News & Campus Events", icon: "newspaper" },
     { key: "messages", label: "Contact Inquiries", icon: "mail" }
@@ -488,7 +512,7 @@ export default function AdminDashboard() {
               </p>
             </div>
             {/* Action buttons (Add new) for appropriate modules */}
-            {["notices", "downloads", "faculty", "courses", "news", "janbhagidari", "officeStaff", "committees"].includes(activeMenu) &&
+            {["notices", "downloads", "faculty", "courses", "news", "janbhagidari", "officeStaff", "committees", "reqDocs"].includes(activeMenu) &&
               !isAdding &&
               !editingItem && (
                 <button
@@ -496,7 +520,7 @@ export default function AdminDashboard() {
                   className="bg-secondary hover:bg-secondary/95 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
                 >
                   <span className="material-symbols-outlined text-sm">add</span>
-                  Add {activeMenu === "janbhagidari" ? "Member" : activeMenu === "officeStaff" ? "Staff" : activeMenu === "committees" ? "Committee" : activeMenu.slice(0, -1)}
+                  Add {activeMenu === "janbhagidari" ? "Member" : activeMenu === "officeStaff" ? "Staff" : activeMenu === "committees" ? "Committee" : activeMenu === "reqDocs" ? "Document" : activeMenu.slice(0, -1)}
                 </button>
               )}
             {activeMenu === "gallery" && !isAdding && (
@@ -1306,6 +1330,46 @@ export default function AdminDashboard() {
                   </div>
                 </form>
               )}
+
+              {/* Required Document Form */}
+              {activeMenu === "reqDocs" && (
+                <form onSubmit={handleSaveReqDoc} className="space-y-4 text-xs sm:text-sm">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Required Document (English) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={reqDocForm.labelEn}
+                        onChange={(e) => setReqDocForm({ ...reqDocForm, labelEn: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Required Document (Hindi) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={reqDocForm.labelHi}
+                        onChange={(e) => setReqDocForm({ ...reqDocForm, labelHi: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-2 justify-end pt-4">
+                    <button
+                      type="button"
+                      onClick={closeForm}
+                      className="px-4 py-2 border border-outline rounded-lg font-bold"
+                    >
+                      Cancel
+                    </button>
+                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
+                      Save
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           )}
 
@@ -1813,6 +1877,49 @@ export default function AdminDashboard() {
                             onClick={() => {
                               if (window.confirm("Are you sure you want to delete this committee?")) {
                                 deleteCommittee(com.id);
+                              }
+                            }}
+                            className="p-1 text-error hover:bg-error/5 rounded"
+                          >
+                            <span className="material-symbols-outlined text-lg">delete</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Required Documents Management List */}
+          {activeMenu === "reqDocs" && !isAdding && !editingItem && (
+            <div className="border border-outline-variant rounded-2xl overflow-hidden shadow-sm">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                  <tr>
+                    <th className="px-5 py-3">Required Document (English) / आवश्यक दस्तावेज सूची</th>
+                    <th className="px-5 py-3">Required Document (Hindi) / आवश्यक दस्तावेज सूची (हिंदी)</th>
+                    <th className="px-5 py-3 text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-outline-variant/60 bg-white">
+                  {reqDocs.map((doc) => (
+                    <tr key={doc.id} className="hover:bg-surface-container-low/40">
+                      <td className="px-5 py-3 font-bold text-primary">{doc.labelEn}</td>
+                      <td className="px-5 py-3 text-on-surface-variant">{doc.labelHi}</td>
+                      <td className="px-5 py-3">
+                        <div className="flex gap-2 justify-center">
+                          <button
+                            onClick={() => openEditForm(doc)}
+                            className="p-1 text-primary hover:bg-primary/5 rounded"
+                          >
+                            <span className="material-symbols-outlined text-lg">edit</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (window.confirm("Are you sure you want to delete this document?")) {
+                                deleteReqDoc(doc.id);
                               }
                             }}
                             className="p-1 text-error hover:bg-error/5 rounded"

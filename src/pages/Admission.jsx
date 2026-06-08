@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 
 export default function Admission() {
-  const { notices, addContactMessage, language, t } = useContext(AppContext);
+  const { notices, addContactMessage, language, t, reqDocs } = useContext(AppContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,16 +35,7 @@ export default function Admission() {
     setTimeout(() => setSuccess(false), 5000);
   };
 
-  const reqDocs = [
-    { labelHi: "10वीं और 12वीं की अंकसूची (मूल एवं छायाप्रति)", labelEn: "10th & 12th Marksheets (Original & Photocopies)" },
-    { labelHi: "स्थानांतरण प्रमाण पत्र (टीसी) (मूल प्रति)", labelEn: "Transfer Certificate (TC) (Original)" },
-    { labelHi: "चरित्र प्रमाण पत्र (सीसी) (मूल प्रति)", labelEn: "Character Certificate (CC) (Original)" },
-    { labelHi: "निवास प्रमाण पत्र (छत्तीसगढ़ निवासी हेतु)", labelEn: "Domicile Certificate (for CG State resident)" },
-    { labelHi: "जाति प्रमाण पत्र (एसटी/एससी/ओबीसी वर्ग हेतु)", labelEn: "Caste Certificate (for reserved categories)" },
-    { labelHi: "आय प्रमाण पत्र (छात्रवृत्ति एवं फीस छूट हेतु)", labelEn: "Income Certificate (recent for scholarships)" },
-    { labelHi: "पासपोर्ट आकार की रंगीन फोटो (4 प्रतियां)", labelEn: "Passport size color photos (4 copies)" },
-    { labelHi: "आधार कार्ड की छायाप्रति", labelEn: "Aadhaar Card copy" }
-  ];
+
 
   return (
     <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 space-y-8 flex-1">

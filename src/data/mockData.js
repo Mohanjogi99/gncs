@@ -615,6 +615,17 @@ export const initialOfficeStaff = [
   { id: "os-4", nameEn: "Shri Hemant Sahu", nameHi: "श्री हेमंत साहू", roleEn: "Peon / Attendant", roleHi: "भृत्य" }
 ];
 
+export const initialReqDocs = [
+  { id: "rd-1", labelEn: "10th & 12th Marksheets (Original & Photocopies)", labelHi: "10वीं और 12वीं की अंकसूची (मूल एवं छायाप्रति)" },
+  { id: "rd-2", labelEn: "Transfer Certificate (TC) (Original)", labelHi: "स्थानांतरण प्रमाण पत्र (टीसी) (मूल प्रति)" },
+  { id: "rd-3", labelEn: "Character Certificate (CC) (Original)", labelHi: "चरित्र प्रमाण पत्र (सीसी) (मूल प्रति)" },
+  { id: "rd-4", labelEn: "Domicile Certificate (for CG State resident)", labelHi: "निवास प्रमाण पत्र (छत्तीसगढ़ निवासी हेतु)" },
+  { id: "rd-5", labelEn: "Caste Certificate (for reserved categories)", labelHi: "जाति प्रमाण पत्र (एसटी/एससी/ओबीसी वर्ग हेतु)" },
+  { id: "rd-6", labelEn: "Income Certificate (recent for scholarships)", labelHi: "आय प्रमाण पत्र (छात्रवृत्ति एवं फीस छूट हेतु)" },
+  { id: "rd-7", labelEn: "Passport size color photos (4 copies)", labelHi: "पासपोर्ट आकार की रंगीन फोटो (4 प्रतियां)" },
+  { id: "rd-8", labelEn: "Aadhaar Card copy", labelHi: "आधार कार्ड की छायाप्रति" }
+];
+
 // Translations dictionary for dynamic text translation (UI Labels, Headers)
 export const translations = {
   en: {

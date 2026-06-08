@@ -12,7 +12,8 @@ import {
   translations,
   initialJanbhagidari,
   initialOfficeStaff,
-  initialCommittees
+  initialCommittees,
+  initialReqDocs
 } from "../data/mockData";
 
 export const AppContext = createContext();
@@ -41,15 +42,16 @@ export const AppProvider = ({ children }) => {
   const [janbhagidari, setJanbhagidari] = useState([]);
   const [officeStaff, setOfficeStaff] = useState([]);
   const [committees, setCommittees] = useState([]);
+  const [reqDocs, setReqDocs] = useState([]);
 
   // Initialize DB from LocalStorage or mockData
   useEffect(() => {
-    const CURRENT_DB_VERSION = "v12";
+    const CURRENT_DB_VERSION = "v13";
     const storedVersion = localStorage.getItem("gncs_db_version");
 
     if (storedVersion !== CURRENT_DB_VERSION) {
       // Clear old collection keys to force reload fallbacks
-      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees"];
+      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees", "reqDocs"];
       keysToClear.forEach(key => localStorage.removeItem(`gncs_db_${key}`));
       localStorage.setItem("gncs_db_version", CURRENT_DB_VERSION);
     }
@@ -75,6 +77,7 @@ export const AppProvider = ({ children }) => {
     setJanbhagidari(loadCollection("janbhagidari", initialJanbhagidari));
     setOfficeStaff(loadCollection("officeStaff", initialOfficeStaff));
     setCommittees(loadCollection("committees", initialCommittees));
+    setReqDocs(loadCollection("reqDocs", initialReqDocs));
   }, []);
 
   // Save collections to LocalStorage whenever they change
@@ -344,6 +347,29 @@ export const AppProvider = ({ children }) => {
     saveCollection("committees", updated);
   };
 
+  // CRUD for Required Documents
+  const addReqDoc = (doc) => {
+    const newDoc = {
+      ...doc,
+      id: `rd-${Date.now()}`
+    };
+    const updated = [...reqDocs, newDoc];
+    setReqDocs(updated);
+    saveCollection("reqDocs", updated);
+  };
+
+  const updateReqDoc = (id, updatedFields) => {
+    const updated = reqDocs.map((d) => (d.id === id ? { ...d, ...updatedFields } : d));
+    setReqDocs(updated);
+    saveCollection("reqDocs", updated);
+  };
+
+  const deleteReqDoc = (id) => {
+    const updated = reqDocs.filter((d) => d.id !== id);
+    setReqDocs(updated);
+    saveCollection("reqDocs", updated);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -392,7 +418,11 @@ export const AppProvider = ({ children }) => {
         committees,
         addCommittee,
         updateCommittee,
-        deleteCommittee
+        deleteCommittee,
+        reqDocs,
+        addReqDoc,
+        updateReqDoc,
+        deleteReqDoc
       }}
     >
       {children}
