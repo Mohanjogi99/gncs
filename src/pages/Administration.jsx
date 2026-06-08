@@ -2,16 +2,7 @@ import React, { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
 export default function Administration() {
-  const { t, language, janbhagidari, officeStaff } = useContext(AppContext);
-
-  const committees = [
-    { titleEn: "Admission Committee", titleHi: "प्रवेश समिति", convenerEn: "Dr. Rajeshwari Patel", membersEn: "Shri Vinod Dewangan, Smt. Shweta Soni" },
-    { titleEn: "Anti-Ragging Cell", titleHi: "एंटी-रैगिंग सेल", convenerEn: "Shri Vinod Dewangan", membersEn: "Dr. Kamlesh Chandra, Shri Santosh Sahu" },
-    { titleEn: "Scholarship Committee", titleHi: "छात्रवृत्ति समिति", convenerEn: "Smt. Shweta Soni", membersEn: "Ku. Preeti Tiwari, Shri Santosh Sahu" },
-    { titleEn: "NSS Committee", titleHi: "रा.से.यो. (NSS) समिति", convenerEn: "Dr. Kamlesh Chandra", membersEn: "Ku. Preeti Tiwari" },
-    { titleEn: "Grievance Redressal Cell", titleHi: "शिकायत निवारण सेल", convenerEn: "Dr. Rajeshwari Patel", membersEn: "Shri Vinod Dewangan, Smt. Shweta Soni" },
-    { titleEn: "Discipline Committee", titleHi: "अनुशासन समिति", convenerEn: "Shri Vinod Dewangan", membersEn: "Dr. Rajeshwari Patel, Dr. Kamlesh Chandra" }
-  ];
+  const { t, language, janbhagidari, officeStaff, committees } = useContext(AppContext);
 
   return (
     <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 space-y-8 flex-1">

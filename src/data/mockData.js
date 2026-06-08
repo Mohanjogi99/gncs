@@ -591,6 +591,15 @@ export const initialContactMessages = [
   }
 ];
 
+export const initialCommittees = [
+  { id: "com-1", titleEn: "Admission Committee", titleHi: "प्रवेश समिति", convenerEn: "Dr. Rajeshwari Patel", membersEn: "Shri Vinod Dewangan, Smt. Shweta Soni" },
+  { id: "com-2", titleEn: "Anti-Ragging Cell", titleHi: "एंटी-रैगिंग सेल", convenerEn: "Shri Vinod Dewangan", membersEn: "Dr. Kamlesh Chandra, Shri Santosh Sahu" },
+  { id: "com-3", titleEn: "Scholarship Committee", titleHi: "छात्रवृत्ति समिति", convenerEn: "Smt. Shweta Soni", membersEn: "Ku. Preeti Tiwari, Shri Santosh Sahu" },
+  { id: "com-4", titleEn: "NSS Committee", titleHi: "रा.से.यो. (NSS) समिति", convenerEn: "Dr. Kamlesh Chandra", membersEn: "Ku. Preeti Tiwari" },
+  { id: "com-5", titleEn: "Grievance Redressal Cell", titleHi: "शिकायत निवारण सेल", convenerEn: "Dr. Rajeshwari Patel", membersEn: "Shri Vinod Dewangan, Smt. Shweta Soni" },
+  { id: "com-6", titleEn: "Discipline Committee", titleHi: "अनुशासन समिति", convenerEn: "Shri Vinod Dewangan", membersEn: "Dr. Rajeshwari Patel, Dr. Kamlesh Chandra" }
+];
+
 export const initialJanbhagidari = [
   { id: "jb-1", nameEn: "Shri Rajesh Patel", nameHi: "श्री राजेश पटेल", roleEn: "President (Janbhagidari)", roleHi: "अध्यक्ष (जनभागीदारी समिति)" },
   { id: "jb-2", nameEn: "Prof. B. K. Patel", nameHi: "प्रो. बी. के. पटेल", roleEn: "Ex-Officio Member Secretary", roleHi: "पदेन सदस्य सचिव (प्राचार्य)" },

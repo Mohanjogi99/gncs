@@ -11,7 +11,8 @@ import {
   initialContactMessages,
   translations,
   initialJanbhagidari,
-  initialOfficeStaff
+  initialOfficeStaff,
+  initialCommittees
 } from "../data/mockData";
 
 export const AppContext = createContext();
@@ -39,15 +40,16 @@ export const AppProvider = ({ children }) => {
   const [contactMessages, setContactMessages] = useState([]);
   const [janbhagidari, setJanbhagidari] = useState([]);
   const [officeStaff, setOfficeStaff] = useState([]);
+  const [committees, setCommittees] = useState([]);
 
   // Initialize DB from LocalStorage or mockData
   useEffect(() => {
-    const CURRENT_DB_VERSION = "v10";
+    const CURRENT_DB_VERSION = "v11";
     const storedVersion = localStorage.getItem("gncs_db_version");
 
     if (storedVersion !== CURRENT_DB_VERSION) {
       // Clear old collection keys to force reload fallbacks
-      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff"];
+      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees"];
       keysToClear.forEach(key => localStorage.removeItem(`gncs_db_${key}`));
       localStorage.setItem("gncs_db_version", CURRENT_DB_VERSION);
     }
@@ -72,6 +74,7 @@ export const AppProvider = ({ children }) => {
     setContactMessages(loadCollection("contactMessages", initialContactMessages));
     setJanbhagidari(loadCollection("janbhagidari", initialJanbhagidari));
     setOfficeStaff(loadCollection("officeStaff", initialOfficeStaff));
+    setCommittees(loadCollection("committees", initialCommittees));
   }, []);
 
   // Save collections to LocalStorage whenever they change
@@ -318,6 +321,29 @@ export const AppProvider = ({ children }) => {
     saveCollection("officeStaff", updated);
   };
 
+  // CRUD for Committees
+  const addCommittee = (committee) => {
+    const newCommittee = {
+      ...committee,
+      id: `com-${Date.now()}`
+    };
+    const updated = [...committees, newCommittee];
+    setCommittees(updated);
+    saveCollection("committees", updated);
+  };
+
+  const updateCommittee = (id, updatedFields) => {
+    const updated = committees.map((c) => (c.id === id ? { ...c, ...updatedFields } : c));
+    setCommittees(updated);
+    saveCollection("committees", updated);
+  };
+
+  const deleteCommittee = (id) => {
+    const updated = committees.filter((c) => c.id !== id);
+    setCommittees(updated);
+    saveCollection("committees", updated);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -362,7 +388,11 @@ export const AppProvider = ({ children }) => {
         officeStaff,
         addOfficeStaff,
         updateOfficeStaff,
-        deleteOfficeStaff
+        deleteOfficeStaff,
+        committees,
+        addCommittee,
+        updateCommittee,
+        deleteCommittee
       }}
     >
       {children}
