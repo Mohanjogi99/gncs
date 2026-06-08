@@ -13,7 +13,8 @@ import {
   initialJanbhagidari,
   initialOfficeStaff,
   initialCommittees,
-  initialReqDocs
+  initialReqDocs,
+  initialIqacDetails
 } from "../data/mockData";
 
 export const AppContext = createContext();
@@ -43,15 +44,16 @@ export const AppProvider = ({ children }) => {
   const [officeStaff, setOfficeStaff] = useState([]);
   const [committees, setCommittees] = useState([]);
   const [reqDocs, setReqDocs] = useState([]);
+  const [iqacDetails, setIqacDetails] = useState({});
 
   // Initialize DB from LocalStorage or mockData
   useEffect(() => {
-    const CURRENT_DB_VERSION = "v13";
+    const CURRENT_DB_VERSION = "v14";
     const storedVersion = localStorage.getItem("gncs_db_version");
 
     if (storedVersion !== CURRENT_DB_VERSION) {
       // Clear old collection keys to force reload fallbacks
-      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees", "reqDocs"];
+      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees", "reqDocs", "iqacDetails"];
       keysToClear.forEach(key => localStorage.removeItem(`gncs_db_${key}`));
       localStorage.setItem("gncs_db_version", CURRENT_DB_VERSION);
     }
@@ -78,6 +80,7 @@ export const AppProvider = ({ children }) => {
     setOfficeStaff(loadCollection("officeStaff", initialOfficeStaff));
     setCommittees(loadCollection("committees", initialCommittees));
     setReqDocs(loadCollection("reqDocs", initialReqDocs));
+    setIqacDetails(loadCollection("iqacDetails", initialIqacDetails));
   }, []);
 
   // Save collections to LocalStorage whenever they change
@@ -370,6 +373,13 @@ export const AppProvider = ({ children }) => {
     saveCollection("reqDocs", updated);
   };
 
+  // Update IQAC details
+  const updateIqacDetails = (updatedFields) => {
+    const updated = { ...iqacDetails, ...updatedFields };
+    setIqacDetails(updated);
+    saveCollection("iqacDetails", updated);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -422,7 +432,9 @@ export const AppProvider = ({ children }) => {
         reqDocs,
         addReqDoc,
         updateReqDoc,
-        deleteReqDoc
+        deleteReqDoc,
+        iqacDetails,
+        updateIqacDetails
       }}
     >
       {children}

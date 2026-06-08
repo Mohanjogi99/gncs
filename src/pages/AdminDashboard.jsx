@@ -49,7 +49,9 @@ export default function AdminDashboard() {
     reqDocs,
     addReqDoc,
     updateReqDoc,
-    deleteReqDoc
+    deleteReqDoc,
+    iqacDetails,
+    updateIqacDetails
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -149,6 +151,14 @@ export default function AdminDashboard() {
     labelHi: ""
   });
 
+  // IQAC form state
+  const [iqacForm, setIqacForm] = useState({
+    chairman: "",
+    coordinator: "",
+    managementRep: "",
+    facultyMembers: ""
+  });
+
   // Department and Subject state
   const [selectedDeptId, setSelectedDeptId] = useState("dept-arts");
   const [deptHod, setDeptHod] = useState("");
@@ -176,6 +186,18 @@ export default function AdminDashboard() {
       }
     }
   }, [selectedDeptId, departments]);
+
+  // Sync IQAC form when activeMenu changes or iqacDetails changes
+  React.useEffect(() => {
+    if (iqacDetails) {
+      setIqacForm({
+        chairman: iqacDetails.chairman || "",
+        coordinator: iqacDetails.coordinator || "",
+        managementRep: iqacDetails.managementRep || "",
+        facultyMembers: iqacDetails.facultyMembers || ""
+      });
+    }
+  }, [iqacDetails]);
 
   if (!currentUser) return null;
 
@@ -317,6 +339,12 @@ export default function AdminDashboard() {
     closeForm();
   };
 
+  const handleSaveIqac = (e) => {
+    e.preventDefault();
+    updateIqacDetails(iqacForm);
+    alert("IQAC committee details updated successfully!");
+  };
+
   const handleSaveDeptInfo = (e) => {
     e.preventDefault();
     updateDepartment(selectedDeptId, {
@@ -419,6 +447,7 @@ export default function AdminDashboard() {
     { key: "committees", label: "Manage Committees", icon: "badge" },
     { key: "departments", label: "Manage Departments & Subjects", icon: "menu_book" },
     { key: "reqDocs", label: "Admission Required Docs", icon: "assignment" },
+    { key: "iqac", label: "Manage IQAC Cell", icon: "verified" },
     { key: "gallery", label: "Photo Gallery", icon: "photo_library" },
     { key: "news", label: "News & Campus Events", icon: "newspaper" },
     { key: "messages", label: "Contact Inquiries", icon: "mail" }
@@ -2096,6 +2125,65 @@ export default function AdminDashboard() {
                   ))}
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* IQAC Committee Management Panel */}
+          {activeMenu === "iqac" && (
+            <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/80 space-y-4">
+              <h4 className="font-bold text-sm text-primary border-b border-outline-variant/60 pb-2 flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-secondary text-lg">verified</span>
+                IQAC Committee Members | आंतरिक गुणवत्ता आश्वासन प्रकोष्ठ
+              </h4>
+              <form onSubmit={handleSaveIqac} className="space-y-4 text-xs sm:text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="font-bold">Chairman *</label>
+                    <input
+                      type="text"
+                      required
+                      value={iqacForm.chairman}
+                      onChange={(e) => setIqacForm({ ...iqacForm, chairman: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="font-bold">Coordinator *</label>
+                    <input
+                      type="text"
+                      required
+                      value={iqacForm.coordinator}
+                      onChange={(e) => setIqacForm({ ...iqacForm, coordinator: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="font-bold">Management Representative *</label>
+                    <input
+                      type="text"
+                      required
+                      value={iqacForm.managementRep}
+                      onChange={(e) => setIqacForm({ ...iqacForm, managementRep: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="font-bold">Faculty Members (Comma-separated) *</label>
+                    <input
+                      type="text"
+                      required
+                      value={iqacForm.facultyMembers}
+                      onChange={(e) => setIqacForm({ ...iqacForm, facultyMembers: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                    />
+                  </div>
+                </div>
+                <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
+                  Save Committee Details
+                </button>
+              </form>
             </div>
           )}
         </div>

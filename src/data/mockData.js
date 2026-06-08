@@ -626,6 +626,13 @@ export const initialReqDocs = [
   { id: "rd-8", labelEn: "Aadhaar Card copy", labelHi: "आधार कार्ड की छायाप्रति" }
 ];
 
+export const initialIqacDetails = {
+  chairman: "Prof. B. K. Patel (Principal)",
+  coordinator: "Shri Vinod Dewangan (Assistant Professor, Physics)",
+  managementRep: "President (Janbhagidari Committee)",
+  facultyMembers: "Dr. Rajeshwari Patel, Smt. Shweta Soni"
+};
+
 // Translations dictionary for dynamic text translation (UI Labels, Headers)
 export const translations = {
   en: {
