@@ -2900,7 +2900,7 @@ export default function AdminDashboard() {
           {activeMenu === "research" && (
             <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/80 space-y-6">
               {/* Tab Header */}
-              <div className="flex border-b border-outline-variant pb-2 gap-4 text-xs sm:text-sm overflow-x-auto">
+              <div className="flex flex-wrap gap-3 p-2 bg-surface-container rounded-2xl border border-outline-variant/60 text-xs sm:text-sm overflow-x-auto">
                 <button
                   onClick={() => {
                     setResearchSubTab("committee");
@@ -2911,12 +2911,13 @@ export default function AdminDashboard() {
                     setIsAddingEvent(false);
                     setEditingEvent(null);
                   }}
-                  className={`pb-1 font-bold whitespace-nowrap transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 ${
                     researchSubTab === "committee"
-                      ? "text-primary border-b-2 border-primary"
-                      : "text-on-surface-variant hover:text-primary"
+                      ? "bg-blue-600 text-white shadow-md shadow-blue-600/15"
+                      : "bg-white text-blue-900 border border-blue-100 hover:bg-blue-50/50"
                   }`}
                 >
+                  <span className="material-symbols-outlined text-lg">groups</span>
                   Committee Structure | समिति संरचना
                 </button>
                 <button
@@ -2929,12 +2930,13 @@ export default function AdminDashboard() {
                     setIsAddingEvent(false);
                     setEditingEvent(null);
                   }}
-                  className={`pb-1 font-bold whitespace-nowrap transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 ${
                     researchSubTab === "publications"
-                      ? "text-primary border-b-2 border-primary"
-                      : "text-on-surface-variant hover:text-primary"
+                      ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/15"
+                      : "bg-white text-emerald-900 border border-emerald-100 hover:bg-emerald-50/50"
                   }`}
                 >
+                  <span className="material-symbols-outlined text-lg">menu_book</span>
                   Publications | शोध पत्र
                 </button>
                 <button
@@ -2947,12 +2949,13 @@ export default function AdminDashboard() {
                     setIsAddingEvent(false);
                     setEditingEvent(null);
                   }}
-                  className={`pb-1 font-bold whitespace-nowrap transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 ${
                     researchSubTab === "projects"
-                      ? "text-primary border-b-2 border-primary"
-                      : "text-on-surface-variant hover:text-primary"
+                      ? "bg-purple-600 text-white shadow-md shadow-purple-600/15"
+                      : "bg-white text-purple-900 border border-purple-100 hover:bg-purple-50/50"
                   }`}
                 >
+                  <span className="material-symbols-outlined text-lg">account_balance_wallet</span>
                   Research Projects | शोध परियोजनाएं
                 </button>
                 <button
@@ -2965,12 +2968,13 @@ export default function AdminDashboard() {
                     setIsAddingEvent(false);
                     setEditingEvent(null);
                   }}
-                  className={`pb-1 font-bold whitespace-nowrap transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 ${
                     researchSubTab === "events"
-                      ? "text-primary border-b-2 border-primary"
-                      : "text-on-surface-variant hover:text-primary"
+                      ? "bg-amber-600 text-white shadow-md shadow-amber-600/15"
+                      : "bg-white text-amber-900 border border-amber-100 hover:bg-amber-50/50"
                   }`}
                 >
+                  <span className="material-symbols-outlined text-lg">event_available</span>
                   Seminars & Workshops | सेमीनार एवं कार्यशाला
                 </button>
               </div>
