@@ -591,6 +591,21 @@ export const initialContactMessages = [
   }
 ];
 
+export const initialJanbhagidari = [
+  { id: "jb-1", nameEn: "Shri Rajesh Patel", nameHi: "श्री राजेश पटेल", roleEn: "President (Janbhagidari)", roleHi: "अध्यक्ष (जनभागीदारी समिति)" },
+  { id: "jb-2", nameEn: "Prof. B. K. Patel", nameHi: "प्रो. बी. के. पटेल", roleEn: "Ex-Officio Member Secretary", roleHi: "पदेन सदस्य सचिव (प्राचार्य)" },
+  { id: "jb-3", nameEn: "Shri Santosh Kumar", nameHi: "श्री संतोष कुमार", roleEn: "Donor Member", roleHi: "दाता सदस्य" },
+  { id: "jb-4", nameEn: "Smt. Anita Sahu", nameHi: "श्रीमती अनीता साहू", roleEn: "Public Representative", roleHi: "जनप्रतिनिधि" },
+  { id: "jb-5", nameEn: "Shri Vinod Dewangan", nameHi: "श्री विनोद देवांगन", roleEn: "Teacher Representative", roleHi: "शिक्षक प्रतिनिधि" }
+];
+
+export const initialOfficeStaff = [
+  { id: "os-1", nameEn: "Shri Santosh Sahu", nameHi: "श्री संतोष साहू", roleEn: "Office Superintendent / Assistant Grade-I", roleHi: "मुख्य लिपिक / सहायक वर्ग-1" },
+  { id: "os-2", nameEn: "Smt. Pushpa Rathore", nameHi: "श्रीमती पुष्पा राठौर", roleEn: "Assistant Grade-II", roleHi: "सहायक वर्ग-2" },
+  { id: "os-3", nameEn: "Shri Tilochan Yadav", nameHi: "श्री त्रिलोचन यादव", roleEn: "Laboratory Technician", roleHi: "प्रयोगशाला तकनीशियन" },
+  { id: "os-4", nameEn: "Shri Hemant Sahu", nameHi: "श्री हेमंत साहू", roleEn: "Peon / Attendant", roleHi: "भृत्य" }
+];
+
 // Translations dictionary for dynamic text translation (UI Labels, Headers)
 export const translations = {
   en: {

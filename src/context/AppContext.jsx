@@ -9,7 +9,9 @@ import {
   initialDownloads,
   initialGallery,
   initialContactMessages,
-  translations
+  translations,
+  initialJanbhagidari,
+  initialOfficeStaff
 } from "../data/mockData";
 
 export const AppContext = createContext();
@@ -35,15 +37,17 @@ export const AppProvider = ({ children }) => {
   const [downloads, setDownloads] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [contactMessages, setContactMessages] = useState([]);
+  const [janbhagidari, setJanbhagidari] = useState([]);
+  const [officeStaff, setOfficeStaff] = useState([]);
 
   // Initialize DB from LocalStorage or mockData
   useEffect(() => {
-    const CURRENT_DB_VERSION = "v9";
+    const CURRENT_DB_VERSION = "v10";
     const storedVersion = localStorage.getItem("gncs_db_version");
 
     if (storedVersion !== CURRENT_DB_VERSION) {
       // Clear old collection keys to force reload fallbacks
-      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages"];
+      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff"];
       keysToClear.forEach(key => localStorage.removeItem(`gncs_db_${key}`));
       localStorage.setItem("gncs_db_version", CURRENT_DB_VERSION);
     }
@@ -66,6 +70,8 @@ export const AppProvider = ({ children }) => {
     setDownloads(loadCollection("downloads", initialDownloads));
     setGallery(loadCollection("gallery", initialGallery));
     setContactMessages(loadCollection("contactMessages", initialContactMessages));
+    setJanbhagidari(loadCollection("janbhagidari", initialJanbhagidari));
+    setOfficeStaff(loadCollection("officeStaff", initialOfficeStaff));
   }, []);
 
   // Save collections to LocalStorage whenever they change
@@ -266,6 +272,52 @@ export const AppProvider = ({ children }) => {
     saveCollection("departments", updated);
   };
 
+  // CRUD for Janbhagidari
+  const addJanbhagidari = (member) => {
+    const newMember = {
+      ...member,
+      id: `jb-${Date.now()}`
+    };
+    const updated = [...janbhagidari, newMember];
+    setJanbhagidari(updated);
+    saveCollection("janbhagidari", updated);
+  };
+
+  const updateJanbhagidari = (id, updatedFields) => {
+    const updated = janbhagidari.map((m) => (m.id === id ? { ...m, ...updatedFields } : m));
+    setJanbhagidari(updated);
+    saveCollection("janbhagidari", updated);
+  };
+
+  const deleteJanbhagidari = (id) => {
+    const updated = janbhagidari.filter((m) => m.id !== id);
+    setJanbhagidari(updated);
+    saveCollection("janbhagidari", updated);
+  };
+
+  // CRUD for Office Staff
+  const addOfficeStaff = (staff) => {
+    const newStaff = {
+      ...staff,
+      id: `os-${Date.now()}`
+    };
+    const updated = [...officeStaff, newStaff];
+    setOfficeStaff(updated);
+    saveCollection("officeStaff", updated);
+  };
+
+  const updateOfficeStaff = (id, updatedFields) => {
+    const updated = officeStaff.map((s) => (s.id === id ? { ...s, ...updatedFields } : s));
+    setOfficeStaff(updated);
+    saveCollection("officeStaff", updated);
+  };
+
+  const deleteOfficeStaff = (id) => {
+    const updated = officeStaff.filter((s) => s.id !== id);
+    setOfficeStaff(updated);
+    saveCollection("officeStaff", updated);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -302,7 +354,15 @@ export const AppProvider = ({ children }) => {
         deleteGalleryItem,
         contactMessages,
         addContactMessage,
-        updateContactMessageStatus
+        updateContactMessageStatus,
+        janbhagidari,
+        addJanbhagidari,
+        updateJanbhagidari,
+        deleteJanbhagidari,
+        officeStaff,
+        addOfficeStaff,
+        updateOfficeStaff,
+        deleteOfficeStaff
       }}
     >
       {children}

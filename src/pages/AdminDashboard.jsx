@@ -31,7 +31,15 @@ export default function AdminDashboard() {
     addNewsEvent,
     updateNewsEvent,
     deleteNewsEvent,
-    t
+    t,
+    janbhagidari,
+    addJanbhagidari,
+    updateJanbhagidari,
+    deleteJanbhagidari,
+    officeStaff,
+    addOfficeStaff,
+    updateOfficeStaff,
+    deleteOfficeStaff
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -99,6 +107,22 @@ export default function AdminDashboard() {
     contentHindi: "",
     eventDate: new Date().toISOString().split("T")[0],
     imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg"
+  });
+
+  // Janbhagidari form states
+  const [janbhagidariForm, setJanbhagidariForm] = useState({
+    nameEn: "",
+    nameHi: "",
+    roleEn: "",
+    roleHi: ""
+  });
+
+  // Office Staff form states
+  const [officeStaffForm, setOfficeStaffForm] = useState({
+    nameEn: "",
+    nameHi: "",
+    roleEn: "",
+    roleHi: ""
   });
 
   // Redirect if not logged in
@@ -208,6 +232,26 @@ export default function AdminDashboard() {
     closeForm();
   };
 
+  const handleSaveJanbhagidari = (e) => {
+    e.preventDefault();
+    if (editingItem) {
+      updateJanbhagidari(editingItem.id, janbhagidariForm);
+    } else {
+      addJanbhagidari(janbhagidariForm);
+    }
+    closeForm();
+  };
+
+  const handleSaveOfficeStaff = (e) => {
+    e.preventDefault();
+    if (editingItem) {
+      updateOfficeStaff(editingItem.id, officeStaffForm);
+    } else {
+      addOfficeStaff(officeStaffForm);
+    }
+    closeForm();
+  };
+
   const openAddForm = () => {
     setIsAdding(true);
     setEditingItem(null);
@@ -218,6 +262,8 @@ export default function AdminDashboard() {
     setCourseForm({ name: "", stream: "Arts", duration: "3 Years / 3 वर्ष", eligibility: "", seats: 60, fee: "₹2,500 per annum" });
     setGalleryForm({ albumTitle: "", caption: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA72eXokI1lfD95EVEcAR3osAynjp5wfvMvtugkG0bOK_1g7YRvPOwJ9wt9EJEZ3Y_BmjOJaIOxTaTTAvU5DXyuczs0S2DFGtNUoqki8h5n4vVrke8WF1PhFl1l-JCcRYdRvFwUK4JeXDTYSNJfu3QYoW78eZe6BHq7D86Cz2tSUTBb36y99fbjn7vNRs9HjRIxAKwB-ZVe43KBDGY5iP0Y3NY5TBsYHSzTW-XRE9yDpqIV4ABK9EMBoWzT1uHO4Fi6fYj4KIqe6lg" });
     setNewsForm({ titleEnglish: "", titleHindi: "", descriptionEnglish: "", descriptionHindi: "", contentEnglish: "", contentHindi: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg" });
+    setJanbhagidariForm({ nameEn: "", nameHi: "", roleEn: "", roleHi: "" });
+    setOfficeStaffForm({ nameEn: "", nameHi: "", roleEn: "", roleHi: "" });
   };
 
   const openEditForm = (item) => {
@@ -234,6 +280,10 @@ export default function AdminDashboard() {
       setCourseForm({ name: item.name, stream: item.stream, duration: item.duration, eligibility: item.eligibility, seats: item.seats, fee: item.fee });
     } else if (activeMenu === "news") {
       setNewsForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, descriptionEnglish: item.descriptionEnglish, descriptionHindi: item.descriptionHindi, contentEnglish: item.contentEnglish || "", contentHindi: item.contentHindi || "", eventDate: item.eventDate, imageUrl: item.imageUrl });
+    } else if (activeMenu === "janbhagidari") {
+      setJanbhagidariForm({ nameEn: item.nameEn, nameHi: item.nameHi, roleEn: item.roleEn, roleHi: item.roleHi });
+    } else if (activeMenu === "officeStaff") {
+      setOfficeStaffForm({ nameEn: item.nameEn, nameHi: item.nameHi, roleEn: item.roleEn, roleHi: item.roleHi });
     }
   };
 
@@ -248,6 +298,8 @@ export default function AdminDashboard() {
     { key: "downloads", label: "Downloads & Syllabus", icon: "download" },
     { key: "faculty", label: "Faculty Directory", icon: "groups" },
     { key: "courses", label: "Courses & Intake", icon: "auto_stories" },
+    { key: "janbhagidari", label: "Janbhagidari Committee", icon: "diversity_3" },
+    { key: "officeStaff", label: "Office Staff Directory", icon: "support_agent" },
     { key: "gallery", label: "Photo Gallery", icon: "photo_library" },
     { key: "news", label: "News & Campus Events", icon: "newspaper" },
     { key: "messages", label: "Contact Inquiries", icon: "mail" }
@@ -341,7 +393,7 @@ export default function AdminDashboard() {
               </p>
             </div>
             {/* Action buttons (Add new) for appropriate modules */}
-            {["notices", "downloads", "faculty", "courses", "news"].includes(activeMenu) &&
+            {["notices", "downloads", "faculty", "courses", "news", "janbhagidari", "officeStaff"].includes(activeMenu) &&
               !isAdding &&
               !editingItem && (
                 <button
@@ -349,7 +401,7 @@ export default function AdminDashboard() {
                   className="bg-secondary hover:bg-secondary/95 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
                 >
                   <span className="material-symbols-outlined text-sm">add</span>
-                  Add {activeMenu.slice(0, -1)}
+                  Add {activeMenu === "janbhagidari" ? "Member" : activeMenu === "officeStaff" ? "Staff" : activeMenu.slice(0, -1)}
                 </button>
               )}
             {activeMenu === "gallery" && !isAdding && (
@@ -973,6 +1025,130 @@ export default function AdminDashboard() {
                   </div>
                 </form>
               )}
+
+              {/* Janbhagidari Form */}
+              {activeMenu === "janbhagidari" && (
+                <form onSubmit={handleSaveJanbhagidari} className="space-y-4 text-xs sm:text-sm">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Member Name (English) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={janbhagidariForm.nameEn}
+                        onChange={(e) => setJanbhagidariForm({ ...janbhagidariForm, nameEn: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Member Name (Hindi) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={janbhagidariForm.nameHi}
+                        onChange={(e) => setJanbhagidariForm({ ...janbhagidariForm, nameHi: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Role/Designation (English) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={janbhagidariForm.roleEn}
+                        onChange={(e) => setJanbhagidariForm({ ...janbhagidariForm, roleEn: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Role/Designation (Hindi) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={janbhagidariForm.roleHi}
+                        onChange={(e) => setJanbhagidariForm({ ...janbhagidariForm, roleHi: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-2 justify-end pt-4">
+                    <button
+                      type="button"
+                      onClick={closeForm}
+                      className="px-4 py-2 border border-outline rounded-lg font-bold"
+                    >
+                      Cancel
+                    </button>
+                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
+                      Save
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Office Staff Form */}
+              {activeMenu === "officeStaff" && (
+                <form onSubmit={handleSaveOfficeStaff} className="space-y-4 text-xs sm:text-sm">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Staff Name (English) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={officeStaffForm.nameEn}
+                        onChange={(e) => setOfficeStaffForm({ ...officeStaffForm, nameEn: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Staff Name (Hindi) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={officeStaffForm.nameHi}
+                        onChange={(e) => setOfficeStaffForm({ ...officeStaffForm, nameHi: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Designation (English) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={officeStaffForm.roleEn}
+                        onChange={(e) => setOfficeStaffForm({ ...officeStaffForm, roleEn: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Designation (Hindi) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={officeStaffForm.roleHi}
+                        onChange={(e) => setOfficeStaffForm({ ...officeStaffForm, roleHi: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-2 justify-end pt-4">
+                    <button
+                      type="button"
+                      onClick={closeForm}
+                      className="px-4 py-2 border border-outline rounded-lg font-bold"
+                    >
+                      Cancel
+                    </button>
+                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
+                      Save
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           )}
 
@@ -1334,6 +1510,104 @@ export default function AdminDashboard() {
                             onClick={() => {
                               if (window.confirm("Are you sure you want to delete this event?")) {
                                 deleteNewsEvent(news.id);
+                              }
+                            }}
+                            className="p-1 text-error hover:bg-error/5 rounded"
+                          >
+                            <span className="material-symbols-outlined text-lg">delete</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Janbhagidari Management List */}
+          {activeMenu === "janbhagidari" && !isAdding && !editingItem && (
+            <div className="border border-outline-variant rounded-2xl overflow-hidden shadow-sm">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                  <tr>
+                    <th className="px-5 py-3">Member Name / सदस्य का नाम</th>
+                    <th className="px-5 py-3">Role / पद</th>
+                    <th className="px-5 py-3 text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-outline-variant/60 bg-white">
+                  {janbhagidari.map((m) => (
+                    <tr key={m.id} className="hover:bg-surface-container-low/40">
+                      <td className="px-5 py-3 space-y-1">
+                        <span className="font-bold text-primary block">{m.nameEn}</span>
+                        <span className="text-[11px] text-on-surface-variant block">{m.nameHi}</span>
+                      </td>
+                      <td className="px-5 py-3 space-y-1">
+                        <span className="font-semibold text-secondary block">{m.roleEn}</span>
+                        <span className="text-[11px] text-on-surface-variant block">{m.roleHi}</span>
+                      </td>
+                      <td className="px-5 py-3">
+                        <div className="flex gap-2 justify-center">
+                          <button
+                            onClick={() => openEditForm(m)}
+                            className="p-1 text-primary hover:bg-primary/5 rounded"
+                          >
+                            <span className="material-symbols-outlined text-lg">edit</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (window.confirm("Are you sure you want to delete this member?")) {
+                                deleteJanbhagidari(m.id);
+                              }
+                            }}
+                            className="p-1 text-error hover:bg-error/5 rounded"
+                          >
+                            <span className="material-symbols-outlined text-lg">delete</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Office Staff Management List */}
+          {activeMenu === "officeStaff" && !isAdding && !editingItem && (
+            <div className="border border-outline-variant rounded-2xl overflow-hidden shadow-sm">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                  <tr>
+                    <th className="px-5 py-3">Staff Name / कर्मचारी का नाम</th>
+                    <th className="px-5 py-3">Designation / पद</th>
+                    <th className="px-5 py-3 text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-outline-variant/60 bg-white">
+                  {officeStaff.map((s) => (
+                    <tr key={s.id} className="hover:bg-surface-container-low/40">
+                      <td className="px-5 py-3 space-y-1">
+                        <span className="font-bold text-primary block">{s.nameEn}</span>
+                        <span className="text-[11px] text-on-surface-variant block">{s.nameHi}</span>
+                      </td>
+                      <td className="px-5 py-3 space-y-1">
+                        <span className="font-semibold text-secondary block">{s.roleEn}</span>
+                        <span className="text-[11px] text-on-surface-variant block">{s.roleHi}</span>
+                      </td>
+                      <td className="px-5 py-3">
+                        <div className="flex gap-2 justify-center">
+                          <button
+                            onClick={() => openEditForm(s)}
+                            className="p-1 text-primary hover:bg-primary/5 rounded"
+                          >
+                            <span className="material-symbols-outlined text-lg">edit</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (window.confirm("Are you sure you want to delete this staff member?")) {
+                                deleteOfficeStaff(s.id);
                               }
                             }}
                             className="p-1 text-error hover:bg-error/5 rounded"

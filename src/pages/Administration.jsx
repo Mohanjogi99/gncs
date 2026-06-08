@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
 export default function Administration() {
-  const { t, language } = useContext(AppContext);
+  const { t, language, janbhagidari, officeStaff } = useContext(AppContext);
 
   const committees = [
     { titleEn: "Admission Committee", titleHi: "प्रवेश समिति", convenerEn: "Dr. Rajeshwari Patel", membersEn: "Shri Vinod Dewangan, Smt. Shweta Soni" },
@@ -11,21 +11,6 @@ export default function Administration() {
     { titleEn: "NSS Committee", titleHi: "रा.से.यो. (NSS) समिति", convenerEn: "Dr. Kamlesh Chandra", membersEn: "Ku. Preeti Tiwari" },
     { titleEn: "Grievance Redressal Cell", titleHi: "शिकायत निवारण सेल", convenerEn: "Dr. Rajeshwari Patel", membersEn: "Shri Vinod Dewangan, Smt. Shweta Soni" },
     { titleEn: "Discipline Committee", titleHi: "अनुशासन समिति", convenerEn: "Shri Vinod Dewangan", membersEn: "Dr. Rajeshwari Patel, Dr. Kamlesh Chandra" }
-  ];
-
-  const janbhagidari = [
-    { nameEn: "Shri Rajesh Patel", nameHi: "श्री राजेश पटेल", roleEn: "President (Janbhagidari)", roleHi: "अध्यक्ष (जनभागीदारी समिति)" },
-    { nameEn: "Prof. B. K. Patel", nameHi: "प्रो. बी. के. पटेल", roleEn: "Ex-Officio Member Secretary", roleHi: "पदेन सदस्य सचिव (प्राचार्य)" },
-    { nameEn: "Shri Santosh Kumar", nameHi: "श्री संतोष कुमार", roleEn: "Donor Member", roleHi: "दाता सदस्य" },
-    { nameEn: "Smt. Anita Sahu", nameHi: "श्रीमती अनीता साहू", roleEn: "Public Representative", roleHi: "जनप्रतिनिधि" },
-    { nameEn: "Shri Vinod Dewangan", nameHi: "श्री विनोद देवांगन", roleEn: "Teacher Representative", roleHi: "शिक्षक प्रतिनिधि" }
-  ];
-
-  const officeStaff = [
-    { nameEn: "Shri Santosh Sahu", nameHi: "श्री संतोष साहू", roleEn: "Office Superintendent / Assistant Grade-I", roleHi: "मुख्य लिपिक / सहायक वर्ग-1" },
-    { nameEn: "Smt. Pushpa Rathore", nameHi: "श्रीमती पुष्पा राठौर", roleEn: "Assistant Grade-II", roleHi: "सहायक वर्ग-2" },
-    { nameEn: "Shri Tilochan Yadav", nameHi: "श्री त्रिलोचन यादव", roleEn: "Laboratory Technician", roleHi: "प्रयोगशाला तकनीशियन" },
-    { nameEn: "Shri Hemant Sahu", nameHi: "श्री हेमंत साहू", roleEn: "Peon / Attendant", roleHi: "भृत्य" }
   ];
 
   return (
