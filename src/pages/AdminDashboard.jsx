@@ -43,7 +43,9 @@ export default function AdminDashboard() {
     committees,
     addCommittee,
     updateCommittee,
-    deleteCommittee
+    deleteCommittee,
+    departments,
+    updateDepartment
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -137,12 +139,33 @@ export default function AdminDashboard() {
     membersEn: ""
   });
 
+  // Department and Subject state
+  const [selectedDeptId, setSelectedDeptId] = useState("dept-arts");
+  const [deptHod, setDeptHod] = useState("");
+  const [deptDescEn, setDeptDescEn] = useState("");
+  const [deptDescHi, setDeptDescHi] = useState("");
+  const [isAddingSubject, setIsAddingSubject] = useState(false);
+  const [editingSubjectIndex, setEditingSubjectIndex] = useState(null);
+  const [subjectInput, setSubjectInput] = useState("");
+
   // Redirect if not logged in
   React.useEffect(() => {
     if (!currentUser) {
       navigate("/admin-login");
     }
   }, [currentUser, navigate]);
+
+  // Sync department info form when selected department changes
+  React.useEffect(() => {
+    if (departments && departments.length > 0) {
+      const dept = departments.find((d) => d.id === selectedDeptId);
+      if (dept) {
+        setDeptHod(dept.hodName || "");
+        setDeptDescEn(dept.descriptionEnglish || "");
+        setDeptDescHi(dept.descriptionHindi || "");
+      }
+    }
+  }, [selectedDeptId, departments]);
 
   if (!currentUser) return null;
 
@@ -274,6 +297,51 @@ export default function AdminDashboard() {
     closeForm();
   };
 
+  const handleSaveDeptInfo = (e) => {
+    e.preventDefault();
+    updateDepartment(selectedDeptId, {
+      hodName: deptHod,
+      descriptionEnglish: deptDescEn,
+      descriptionHindi: deptDescHi
+    });
+    alert("Department info updated successfully!");
+  };
+
+  const handleAddSubject = (e) => {
+    e.preventDefault();
+    if (!subjectInput.trim()) return;
+    const dept = departments.find((d) => d.id === selectedDeptId);
+    if (dept) {
+      const updatedSubjects = [...(dept.subjects || []), subjectInput.trim()];
+      updateDepartment(selectedDeptId, { subjects: updatedSubjects });
+      setSubjectInput("");
+      setIsAddingSubject(false);
+    }
+  };
+
+  const handleUpdateSubject = (e) => {
+    e.preventDefault();
+    if (!subjectInput.trim() || editingSubjectIndex === null) return;
+    const dept = departments.find((d) => d.id === selectedDeptId);
+    if (dept) {
+      const updatedSubjects = [...(dept.subjects || [])];
+      updatedSubjects[editingSubjectIndex] = subjectInput.trim();
+      updateDepartment(selectedDeptId, { subjects: updatedSubjects });
+      setSubjectInput("");
+      setEditingSubjectIndex(null);
+    }
+  };
+
+  const handleDeleteSubject = (index) => {
+    if (window.confirm("Are you sure you want to delete this subject?")) {
+      const dept = departments.find((d) => d.id === selectedDeptId);
+      if (dept) {
+        const updatedSubjects = dept.subjects.filter((_, idx) => idx !== index);
+        updateDepartment(selectedDeptId, { subjects: updatedSubjects });
+      }
+    }
+  };
+
   const openAddForm = () => {
     setIsAdding(true);
     setEditingItem(null);
@@ -326,6 +394,7 @@ export default function AdminDashboard() {
     { key: "janbhagidari", label: "Janbhagidari Committee", icon: "diversity_3" },
     { key: "officeStaff", label: "Office Staff Directory", icon: "support_agent" },
     { key: "committees", label: "Manage Committees", icon: "badge" },
+    { key: "departments", label: "Manage Departments & Subjects", icon: "menu_book" },
     { key: "gallery", label: "Photo Gallery", icon: "photo_library" },
     { key: "news", label: "News & Campus Events", icon: "newspaper" },
     { key: "messages", label: "Contact Inquiries", icon: "mail" }
@@ -1756,6 +1825,170 @@ export default function AdminDashboard() {
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
+
+          {/* Departments Management Panel */}
+          {activeMenu === "departments" && (
+            <div className="space-y-6">
+              {/* Department Stream Tabs */}
+              <div className="flex border-b border-outline-variant gap-2 overflow-x-auto pb-1">
+                {departments.map((dept) => (
+                  <button
+                    key={dept.id}
+                    onClick={() => {
+                      setSelectedDeptId(dept.id);
+                      setIsAddingSubject(false);
+                      setEditingSubjectIndex(null);
+                      setSubjectInput("");
+                    }}
+                    className={`px-5 py-2.5 rounded-t-xl font-bold text-xs whitespace-nowrap transition-all ${
+                      selectedDeptId === dept.id
+                        ? "bg-primary text-white"
+                        : "bg-surface-container hover:bg-surface-container-high text-on-surface-variant"
+                    }`}
+                  >
+                    {dept.nameEnglish} | {dept.nameHindi}
+                  </button>
+                ))}
+              </div>
+
+              {/* Department Details and HOD Management Form */}
+              <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/80 space-y-4">
+                <h4 className="font-bold text-sm text-primary border-b border-outline-variant/60 pb-2 flex items-center gap-1.5">
+                  <span className="material-symbols-outlined text-secondary text-lg">settings</span>
+                  Department Details & Metadata
+                </h4>
+                <form onSubmit={handleSaveDeptInfo} className="space-y-4 text-xs sm:text-sm">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Head of Department (HOD) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={deptHod}
+                        onChange={(e) => setDeptHod(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Description (English) *</label>
+                      <textarea
+                        rows="3"
+                        required
+                        value={deptDescEn}
+                        onChange={(e) => setDeptDescEn(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      ></textarea>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Description (Hindi) *</label>
+                      <textarea
+                        rows="3"
+                        required
+                        value={deptDescHi}
+                        onChange={(e) => setDeptDescHi(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
+                    Save Details
+                  </button>
+                </form>
+              </div>
+
+              {/* Subject Management Section */}
+              <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/80 space-y-4">
+                <div className="flex justify-between items-center border-b border-outline-variant/60 pb-2">
+                  <h4 className="font-bold text-sm text-primary flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-secondary text-lg">menu_book</span>
+                    Core Subjects | विषय ({departments.find((d) => d.id === selectedDeptId)?.subjects?.length || 0})
+                  </h4>
+                  {!isAddingSubject && editingSubjectIndex === null && (
+                    <button
+                      onClick={() => {
+                        setIsAddingSubject(true);
+                        setSubjectInput("");
+                      }}
+                      className="bg-secondary hover:bg-secondary/95 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all"
+                    >
+                      <span className="material-symbols-outlined text-sm">add</span>
+                      Add Subject
+                    </button>
+                  )}
+                </div>
+
+                {/* Add / Edit Inline Subject Form */}
+                {(isAddingSubject || editingSubjectIndex !== null) && (
+                  <form
+                    onSubmit={isAddingSubject ? handleAddSubject : handleUpdateSubject}
+                    className="p-4 bg-white border border-outline-variant rounded-xl flex gap-3 items-end"
+                  >
+                    <div className="flex-1 space-y-1.5">
+                      <label className="font-bold text-xs">
+                        {isAddingSubject ? "Add New Subject Name" : "Edit Subject Name"} *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        autoFocus
+                        value={subjectInput}
+                        onChange={(e) => setSubjectInput(e.target.value)}
+                        className="w-full px-3 py-1.5 text-xs rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsAddingSubject(false);
+                          setEditingSubjectIndex(null);
+                          setSubjectInput("");
+                        }}
+                        className="px-3 py-1.5 border border-outline text-xs rounded-lg font-bold"
+                      >
+                        Cancel
+                      </button>
+                      <button type="submit" className="px-4 py-1.5 bg-primary text-white text-xs rounded-lg font-bold">
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                {/* Subjects Grid/List */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                  {(departments.find((d) => d.id === selectedDeptId)?.subjects || []).map((sub, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3 bg-white border border-outline-variant rounded-xl flex justify-between items-center shadow-sm"
+                    >
+                      <span className="text-xs font-semibold text-on-surface">{sub}</span>
+                      <div className="flex gap-1.5">
+                        <button
+                          onClick={() => {
+                            setEditingSubjectIndex(idx);
+                            setIsAddingSubject(false);
+                            setSubjectInput(sub);
+                          }}
+                          className="p-1 hover:bg-primary/5 text-primary rounded"
+                        >
+                          <span className="material-symbols-outlined text-sm">edit</span>
+                        </button>
+                        <button
+                          onClick={() => handleDeleteSubject(idx)}
+                          className="p-1 hover:bg-error/5 text-error rounded"
+                        >
+                          <span className="material-symbols-outlined text-sm">delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
         </div>
