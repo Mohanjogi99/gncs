@@ -63,7 +63,21 @@ export default function AdminDashboard() {
     libraryRules,
     addLibraryRule,
     updateLibraryRule,
-    deleteLibraryRule
+    deleteLibraryRule,
+    researchCommittee,
+    updateResearchCommittee,
+    researchPublications,
+    addResearchPublication,
+    updateResearchPublication,
+    deleteResearchPublication,
+    researchProjects,
+    addResearchProject,
+    updateResearchProject,
+    deleteResearchProject,
+    researchEvents,
+    addResearchEvent,
+    updateResearchEvent,
+    deleteResearchEvent
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -196,6 +210,41 @@ export default function AdminDashboard() {
   });
   const [editingSsr, setEditingSsr] = useState(null);
 
+  // Research state & form states
+  const [researchSubTab, setResearchSubTab] = useState("committee");
+  const [researchCommitteeForm, setResearchCommitteeForm] = useState({
+    convener: "",
+    coConvener: "",
+    members: ""
+  });
+  const [researchPublicationForm, setResearchPublicationForm] = useState({
+    title: "",
+    author: "",
+    journal: "",
+    year: "",
+    issn: "",
+    url: ""
+  });
+  const [researchProjectForm, setResearchProjectForm] = useState({
+    title: "",
+    investigator: "",
+    agency: "",
+    amount: "",
+    status: "Ongoing"
+  });
+  const [researchEventForm, setResearchEventForm] = useState({
+    title: "",
+    date: "",
+    coordinator: "",
+    theme: ""
+  });
+  const [isAddingPub, setIsAddingPub] = useState(false);
+  const [editingPub, setEditingPub] = useState(null);
+  const [isAddingProj, setIsAddingProj] = useState(false);
+  const [editingProj, setEditingProj] = useState(null);
+  const [isAddingEvent, setIsAddingEvent] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null);
+
   // Department and Subject state
   const [selectedDeptId, setSelectedDeptId] = useState("dept-arts");
   const [deptHod, setDeptHod] = useState("");
@@ -235,6 +284,17 @@ export default function AdminDashboard() {
       });
     }
   }, [iqacDetails]);
+
+  // Sync Research Committee form
+  React.useEffect(() => {
+    if (researchCommittee) {
+      setResearchCommitteeForm({
+        convener: researchCommittee.convener || "",
+        coConvener: researchCommittee.coConvener || "",
+        members: researchCommittee.members || ""
+      });
+    }
+  }, [researchCommittee]);
 
   if (!currentUser) return null;
 
@@ -459,6 +519,109 @@ export default function AdminDashboard() {
     setIsAddingSsr(false);
   };
 
+  // Research Save and Edit handlers
+  const handleSaveResearchCommittee = (e) => {
+    e.preventDefault();
+    updateResearchCommittee(researchCommitteeForm);
+    alert("Research committee details updated successfully!");
+  };
+
+  const handleSaveResearchPub = (e) => {
+    e.preventDefault();
+    if (editingPub) {
+      updateResearchPublication(editingPub.id, researchPublicationForm);
+      alert("Publication updated successfully!");
+    } else {
+      addResearchPublication(researchPublicationForm);
+      alert("Publication added successfully!");
+    }
+    setResearchPublicationForm({ title: "", author: "", journal: "", year: "", issn: "", url: "" });
+    setIsAddingPub(false);
+    setEditingPub(null);
+  };
+
+  const handleSaveResearchProject = (e) => {
+    e.preventDefault();
+    if (editingProj) {
+      updateResearchProject(editingProj.id, researchProjectForm);
+      alert("Research Project updated successfully!");
+    } else {
+      addResearchProject(researchProjectForm);
+      alert("Research Project added successfully!");
+    }
+    setResearchProjectForm({ title: "", investigator: "", agency: "", amount: "", status: "Ongoing" });
+    setIsAddingProj(false);
+    setEditingProj(null);
+  };
+
+  const handleSaveResearchEvent = (e) => {
+    e.preventDefault();
+    if (editingEvent) {
+      updateResearchEvent(editingEvent.id, researchEventForm);
+      alert("Research Seminar/Workshop updated successfully!");
+    } else {
+      addResearchEvent(researchEventForm);
+      alert("Research Seminar/Workshop added successfully!");
+    }
+    setResearchEventForm({ title: "", date: "", coordinator: "", theme: "" });
+    setIsAddingEvent(false);
+    setEditingEvent(null);
+  };
+
+  const openAddResearchPub = () => {
+    setResearchPublicationForm({ title: "", author: "", journal: "", year: "", issn: "", url: "" });
+    setEditingPub(null);
+    setIsAddingPub(true);
+  };
+
+  const openEditResearchPub = (item) => {
+    setResearchPublicationForm({
+      title: item.title || "",
+      author: item.author || "",
+      journal: item.journal || "",
+      year: item.year || "",
+      issn: item.issn || "",
+      url: item.url || ""
+    });
+    setEditingPub(item);
+    setIsAddingPub(false);
+  };
+
+  const openAddResearchProj = () => {
+    setResearchProjectForm({ title: "", investigator: "", agency: "", amount: "", status: "Ongoing" });
+    setEditingProj(null);
+    setIsAddingProj(true);
+  };
+
+  const openEditResearchProj = (item) => {
+    setResearchProjectForm({
+      title: item.title || "",
+      investigator: item.investigator || "",
+      agency: item.agency || "",
+      amount: item.amount || "",
+      status: item.status || "Ongoing"
+    });
+    setEditingProj(item);
+    setIsAddingProj(false);
+  };
+
+  const openAddResearchEvent = () => {
+    setResearchEventForm({ title: "", date: "", coordinator: "", theme: "" });
+    setEditingEvent(null);
+    setIsAddingEvent(true);
+  };
+
+  const openEditResearchEvent = (item) => {
+    setResearchEventForm({
+      title: item.title || "",
+      date: item.date || "",
+      coordinator: item.coordinator || "",
+      theme: item.theme || ""
+    });
+    setEditingEvent(item);
+    setIsAddingEvent(false);
+  };
+
   const handleSaveDeptInfo = (e) => {
     e.preventDefault();
     updateDepartment(selectedDeptId, {
@@ -565,6 +728,7 @@ export default function AdminDashboard() {
     { key: "departments", label: "Manage Departments & Subjects", icon: "menu_book" },
     { key: "reqDocs", label: "Admission Required Docs", icon: "assignment" },
     { key: "iqac", label: "Manage IQAC Cell", icon: "verified" },
+    { key: "research", label: "Research & Dev (R&D)", icon: "biotech" },
     { key: "library", label: "Manage Library Rules", icon: "local_library" },
     { key: "gallery", label: "Photo Gallery", icon: "photo_library" },
     { key: "news", label: "News & Campus Events", icon: "newspaper" },
@@ -2720,6 +2884,601 @@ export default function AdminDashboard() {
                             <tr>
                               <td colSpan="3" className="px-4 py-8 text-center text-on-surface-variant italic">
                                 No SSR reports or feedback added yet.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Research & Development Cell Management Panel */}
+          {activeMenu === "research" && (
+            <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/80 space-y-6">
+              {/* Tab Header */}
+              <div className="flex border-b border-outline-variant pb-2 gap-4 text-xs sm:text-sm overflow-x-auto">
+                <button
+                  onClick={() => {
+                    setResearchSubTab("committee");
+                    setIsAddingPub(false);
+                    setEditingPub(null);
+                    setIsAddingProj(false);
+                    setEditingProj(null);
+                    setIsAddingEvent(false);
+                    setEditingEvent(null);
+                  }}
+                  className={`pb-1 font-bold whitespace-nowrap transition-all ${
+                    researchSubTab === "committee"
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-on-surface-variant hover:text-primary"
+                  }`}
+                >
+                  Committee Structure | समिति संरचना
+                </button>
+                <button
+                  onClick={() => {
+                    setResearchSubTab("publications");
+                    setIsAddingPub(false);
+                    setEditingPub(null);
+                    setIsAddingProj(false);
+                    setEditingProj(null);
+                    setIsAddingEvent(false);
+                    setEditingEvent(null);
+                  }}
+                  className={`pb-1 font-bold whitespace-nowrap transition-all ${
+                    researchSubTab === "publications"
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-on-surface-variant hover:text-primary"
+                  }`}
+                >
+                  Publications | शोध पत्र
+                </button>
+                <button
+                  onClick={() => {
+                    setResearchSubTab("projects");
+                    setIsAddingPub(false);
+                    setEditingPub(null);
+                    setIsAddingProj(false);
+                    setEditingProj(null);
+                    setIsAddingEvent(false);
+                    setEditingEvent(null);
+                  }}
+                  className={`pb-1 font-bold whitespace-nowrap transition-all ${
+                    researchSubTab === "projects"
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-on-surface-variant hover:text-primary"
+                  }`}
+                >
+                  Research Projects | शोध परियोजनाएं
+                </button>
+                <button
+                  onClick={() => {
+                    setResearchSubTab("events");
+                    setIsAddingPub(false);
+                    setEditingPub(null);
+                    setIsAddingProj(false);
+                    setEditingProj(null);
+                    setIsAddingEvent(false);
+                    setEditingEvent(null);
+                  }}
+                  className={`pb-1 font-bold whitespace-nowrap transition-all ${
+                    researchSubTab === "events"
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-on-surface-variant hover:text-primary"
+                  }`}
+                >
+                  Seminars & Workshops | सेमीनार एवं कार्यशाला
+                </button>
+              </div>
+
+              {/* Subtab 1: Committee Members */}
+              {researchSubTab === "committee" && (
+                <div className="space-y-4">
+                  <h4 className="font-bold text-sm text-primary border-b border-outline-variant/60 pb-2 flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-secondary text-lg">groups</span>
+                    R&D Committee Members | अनुसंधान एवं विकास प्रकोष्ठ समिति
+                  </h4>
+                  <form onSubmit={handleSaveResearchCommittee} className="space-y-4 text-xs sm:text-sm">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="font-bold">Convener / संयोजक *</label>
+                        <input
+                          type="text"
+                          required
+                          value={researchCommitteeForm.convener}
+                          onChange={(e) => setResearchCommitteeForm({ ...researchCommitteeForm, convener: e.target.value })}
+                          className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="font-bold">Co-Convener / सह-संयोजक *</label>
+                        <input
+                          type="text"
+                          required
+                          value={researchCommitteeForm.coConvener}
+                          onChange={(e) => setResearchCommitteeForm({ ...researchCommitteeForm, coConvener: e.target.value })}
+                          className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Members (Comma-separated) / सदस्य *</label>
+                      <textarea
+                        required
+                        rows="2"
+                        value={researchCommitteeForm.members}
+                        onChange={(e) => setResearchCommitteeForm({ ...researchCommitteeForm, members: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none resize-none"
+                      />
+                    </div>
+                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
+                      Save Committee Details
+                    </button>
+                  </form>
+                </div>
+              )}
+
+              {/* Subtab 2: Publications */}
+              {researchSubTab === "publications" && (
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-bold text-sm text-primary flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-secondary text-lg">menu_book</span>
+                      Faculty Publications | संकाय शोध प्रकाशन
+                    </h4>
+                    {!isAddingPub && !editingPub && (
+                      <button
+                        onClick={openAddResearchPub}
+                        className="bg-secondary hover:bg-secondary/95 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"
+                      >
+                        <span className="material-symbols-outlined text-xs">add</span>
+                        Add Publication
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Add / Edit Form */}
+                  {(isAddingPub || editingPub) ? (
+                    <form onSubmit={handleSaveResearchPub} className="bg-surface-container-low p-4 rounded-xl border border-outline-variant space-y-4 text-xs sm:text-sm">
+                      <h5 className="font-bold text-xs text-primary">
+                        {editingPub ? "Edit Publication Details" : "Add New Publication"}
+                      </h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Paper Title *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchPublicationForm.title}
+                            onChange={(e) => setResearchPublicationForm({ ...researchPublicationForm, title: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Author *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchPublicationForm.author}
+                            onChange={(e) => setResearchPublicationForm({ ...researchPublicationForm, author: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Journal Name *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchPublicationForm.journal}
+                            onChange={(e) => setResearchPublicationForm({ ...researchPublicationForm, journal: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Year *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchPublicationForm.year}
+                            onChange={(e) => setResearchPublicationForm({ ...researchPublicationForm, year: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">ISSN / ISBN</label>
+                          <input
+                            type="text"
+                            value={researchPublicationForm.issn}
+                            onChange={(e) => setResearchPublicationForm({ ...researchPublicationForm, issn: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="font-bold">PDF Link / URL</label>
+                        <input
+                          type="url"
+                          value={researchPublicationForm.url}
+                          onChange={(e) => setResearchPublicationForm({ ...researchPublicationForm, url: e.target.value })}
+                          placeholder="https://example.com/paper.pdf"
+                          className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                        />
+                      </div>
+                      <div className="flex gap-2 justify-end">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsAddingPub(false);
+                            setEditingPub(null);
+                          }}
+                          className="px-3 py-1.5 border border-outline rounded-lg font-bold"
+                        >
+                          Cancel
+                        </button>
+                        <button type="submit" className="px-4 py-1.5 bg-primary text-white rounded-lg font-bold">
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    /* Table List */
+                    <div className="border border-outline-variant rounded-xl overflow-hidden overflow-x-auto">
+                      <table className="w-full text-left text-xs sm:text-sm min-w-[600px]">
+                        <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                          <tr>
+                            <th className="px-4 py-2.5">Paper Title</th>
+                            <th className="px-4 py-2.5">Author</th>
+                            <th className="px-4 py-2.5">Journal</th>
+                            <th className="px-4 py-2.5 text-center">Year</th>
+                            <th className="px-4 py-2.5 text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-outline-variant/60 bg-white">
+                          {(researchPublications || []).map((pub) => (
+                            <tr key={pub.id} className="hover:bg-surface-container-low/40">
+                              <td className="px-4 py-2.5 font-semibold text-primary truncate max-w-xs">{pub.title}</td>
+                              <td className="px-4 py-2.5 text-on-surface">{pub.author}</td>
+                              <td className="px-4 py-2.5 text-on-surface-variant italic">{pub.journal}</td>
+                              <td className="px-4 py-2.5 text-center text-on-surface">{pub.year}</td>
+                              <td className="px-4 py-2.5">
+                                <div className="flex gap-2 justify-center">
+                                  <button
+                                    onClick={() => openEditResearchPub(pub)}
+                                    className="p-1 text-primary hover:bg-primary/5 rounded"
+                                  >
+                                    <span className="material-symbols-outlined text-lg">edit</span>
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      if (window.confirm("Are you sure you want to delete this publication?")) {
+                                        deleteResearchPublication(pub.id);
+                                      }
+                                    }}
+                                    className="p-1 text-error hover:bg-error/5 rounded"
+                                  >
+                                    <span className="material-symbols-outlined text-lg">delete</span>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                          {(researchPublications || []).length === 0 && (
+                            <tr>
+                              <td colSpan="5" className="px-4 py-8 text-center text-on-surface-variant italic">
+                                No publications added yet.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Subtab 3: Projects */}
+              {researchSubTab === "projects" && (
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-bold text-sm text-primary flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-secondary text-lg">account_balance_wallet</span>
+                      Research Projects | शोध परियोजनाएं
+                    </h4>
+                    {!isAddingProj && !editingProj && (
+                      <button
+                        onClick={openAddResearchProj}
+                        className="bg-secondary hover:bg-secondary/95 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"
+                      >
+                        <span className="material-symbols-outlined text-xs">add</span>
+                        Add Project
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Add / Edit Form */}
+                  {(isAddingProj || editingProj) ? (
+                    <form onSubmit={handleSaveResearchProject} className="bg-surface-container-low p-4 rounded-xl border border-outline-variant space-y-4 text-xs sm:text-sm">
+                      <h5 className="font-bold text-xs text-primary">
+                        {editingProj ? "Edit Project Details" : "Add New Project"}
+                      </h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Project Title *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchProjectForm.title}
+                            onChange={(e) => setResearchProjectForm({ ...researchProjectForm, title: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Principal Investigator *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchProjectForm.investigator}
+                            onChange={(e) => setResearchProjectForm({ ...researchProjectForm, investigator: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Funding Agency *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchProjectForm.agency}
+                            onChange={(e) => setResearchProjectForm({ ...researchProjectForm, agency: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Grant Amount (e.g. ₹1,50,000) *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchProjectForm.amount}
+                            onChange={(e) => setResearchProjectForm({ ...researchProjectForm, amount: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Status *</label>
+                          <select
+                            value={researchProjectForm.status}
+                            onChange={(e) => setResearchProjectForm({ ...researchProjectForm, status: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          >
+                            <option value="Ongoing">Ongoing</option>
+                            <option value="Completed">Completed</option>
+                            <option value="सक्रिय">सक्रिय (Ongoing)</option>
+                            <option value="पूर्ण">पूर्ण (Completed)</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 justify-end">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsAddingProj(false);
+                            setEditingProj(null);
+                          }}
+                          className="px-3 py-1.5 border border-outline rounded-lg font-bold"
+                        >
+                          Cancel
+                        </button>
+                        <button type="submit" className="px-4 py-1.5 bg-primary text-white rounded-lg font-bold">
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    /* Table List */
+                    <div className="border border-outline-variant rounded-xl overflow-hidden overflow-x-auto">
+                      <table className="w-full text-left text-xs sm:text-sm min-w-[600px]">
+                        <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                          <tr>
+                            <th className="px-4 py-2.5">Project Title</th>
+                            <th className="px-4 py-2.5">Investigator</th>
+                            <th className="px-4 py-2.5">Agency</th>
+                            <th className="px-4 py-2.5">Amount</th>
+                            <th className="px-4 py-2.5">Status</th>
+                            <th className="px-4 py-2.5 text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-outline-variant/60 bg-white">
+                          {(researchProjects || []).map((proj) => (
+                            <tr key={proj.id} className="hover:bg-surface-container-low/40">
+                              <td className="px-4 py-2.5 font-semibold text-primary truncate max-w-xs">{proj.title}</td>
+                              <td className="px-4 py-2.5 text-on-surface">{proj.investigator}</td>
+                              <td className="px-4 py-2.5 text-on-surface-variant">{proj.agency}</td>
+                              <td className="px-4 py-2.5 text-on-surface font-bold">{proj.amount}</td>
+                              <td className="px-4 py-2.5">
+                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                  proj.status === "Ongoing" || proj.status === "सक्रिय" 
+                                    ? "bg-secondary-container text-on-secondary-container" 
+                                    : "bg-surface-container-high text-on-surface-variant"
+                                }`}>
+                                  {proj.status}
+                                </span>
+                              </td>
+                              <td className="px-4 py-2.5">
+                                <div className="flex gap-2 justify-center">
+                                  <button
+                                    onClick={() => openEditResearchProj(proj)}
+                                    className="p-1 text-primary hover:bg-primary/5 rounded"
+                                  >
+                                    <span className="material-symbols-outlined text-lg">edit</span>
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      if (window.confirm("Are you sure you want to delete this project?")) {
+                                        deleteResearchProject(proj.id);
+                                      }
+                                    }}
+                                    className="p-1 text-error hover:bg-error/5 rounded"
+                                  >
+                                    <span className="material-symbols-outlined text-lg">delete</span>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                          {(researchProjects || []).length === 0 && (
+                            <tr>
+                              <td colSpan="6" className="px-4 py-8 text-center text-on-surface-variant italic">
+                                No projects added yet.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Subtab 4: Events */}
+              {researchSubTab === "events" && (
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-bold text-sm text-primary flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-secondary text-lg">event_available</span>
+                      Seminars & Workshops Organized | सेमिनार और कार्यशालाएं
+                    </h4>
+                    {!isAddingEvent && !editingEvent && (
+                      <button
+                        onClick={openAddResearchEvent}
+                        className="bg-secondary hover:bg-secondary/95 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1"
+                      >
+                        <span className="material-symbols-outlined text-xs">add</span>
+                        Add Event
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Add / Edit Form */}
+                  {(isAddingEvent || editingEvent) ? (
+                    <form onSubmit={handleSaveResearchEvent} className="bg-surface-container-low p-4 rounded-xl border border-outline-variant space-y-4 text-xs sm:text-sm">
+                      <h5 className="font-bold text-xs text-primary">
+                        {editingEvent ? "Edit Event Details" : "Add New Event"}
+                      </h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Event Title *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchEventForm.title}
+                            onChange={(e) => setResearchEventForm({ ...researchEventForm, title: e.target.value })}
+                            placeholder="e.g. National Seminar on Green Chemistry"
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Date *</label>
+                          <input
+                            type="date"
+                            required
+                            value={researchEventForm.date}
+                            onChange={(e) => setResearchEventForm({ ...researchEventForm, date: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Coordinator / Convener *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchEventForm.coordinator}
+                            onChange={(e) => setResearchEventForm({ ...researchEventForm, coordinator: e.target.value })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Focus Theme / Topic *</label>
+                          <input
+                            type="text"
+                            required
+                            value={researchEventForm.theme}
+                            onChange={(e) => setResearchEventForm({ ...researchEventForm, theme: e.target.value })}
+                            placeholder="e.g. Intellectual Property Rights"
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex gap-2 justify-end">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsAddingEvent(false);
+                            setEditingEvent(null);
+                          }}
+                          className="px-3 py-1.5 border border-outline rounded-lg font-bold"
+                        >
+                          Cancel
+                        </button>
+                        <button type="submit" className="px-4 py-1.5 bg-primary text-white rounded-lg font-bold">
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    /* Table List */
+                    <div className="border border-outline-variant rounded-xl overflow-hidden overflow-x-auto">
+                      <table className="w-full text-left text-xs sm:text-sm min-w-[600px]">
+                        <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                          <tr>
+                            <th className="px-4 py-2.5">Event Title</th>
+                            <th className="px-4 py-2.5">Date</th>
+                            <th className="px-4 py-2.5">Coordinator</th>
+                            <th className="px-4 py-2.5">Theme</th>
+                            <th className="px-4 py-2.5 text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-outline-variant/60 bg-white">
+                          {(researchEvents || []).map((ev) => (
+                            <tr key={ev.id} className="hover:bg-surface-container-low/40">
+                              <td className="px-4 py-2.5 font-semibold text-primary truncate max-w-xs">{ev.title}</td>
+                              <td className="px-4 py-2.5 text-on-surface font-mono">{ev.date}</td>
+                              <td className="px-4 py-2.5 text-on-surface">{ev.coordinator}</td>
+                              <td className="px-4 py-2.5 text-on-surface-variant truncate max-w-xs">{ev.theme}</td>
+                              <td className="px-4 py-2.5">
+                                <div className="flex gap-2 justify-center">
+                                  <button
+                                    onClick={() => openEditResearchEvent(ev)}
+                                    className="p-1 text-primary hover:bg-primary/5 rounded"
+                                  >
+                                    <span className="material-symbols-outlined text-lg">edit</span>
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      if (window.confirm("Are you sure you want to delete this event?")) {
+                                        deleteResearchEvent(ev.id);
+                                      }
+                                    }}
+                                    className="p-1 text-error hover:bg-error/5 rounded"
+                                  >
+                                    <span className="material-symbols-outlined text-lg">delete</span>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                          {(researchEvents || []).length === 0 && (
+                            <tr>
+                              <td colSpan="5" className="px-4 py-8 text-center text-on-surface-variant italic">
+                                No events added yet.
                               </td>
                             </tr>
                           )}

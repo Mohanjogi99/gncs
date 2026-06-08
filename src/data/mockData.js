@@ -652,6 +652,27 @@ export const initialLibraryRules = [
   { id: "lr-4", ruleEn: "Reference books, journals, and dictionaries are reserved for in-library reading only.", ruleHi: "संदर्भ ग्रंथ, शब्दकोश और पत्र-पत्रिकाएं पुस्तकालय से बाहर ले जाने की अनुमति नहीं है।" }
 ];
 
+export const initialResearchCommittee = {
+  convener: "Dr. Rajeshwari Patel (Assistant Professor, Chemistry)",
+  coConvener: "Dr. Chandra (Assistant Professor, Sociology)",
+  members: "Shri Vinod Dewangan (Assistant Professor, Physics), Smt. Shweta Soni (Assistant Professor, English)"
+};
+
+export const initialResearchPublications = [
+  { id: "pub-1", title: "Synthesis of Green Nanoparticles and Catalytic Activity", author: "Dr. Rajeshwari Patel", journal: "Journal of Chemical Sciences", year: "2025", issn: "0974-3626", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
+  { id: "pub-2", title: "Social Impact of Rural Industrialization in Chhattisgarh", author: "Dr. Chandra", journal: "Indian Journal of Sociology", year: "2024", issn: "0971-846X", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" }
+];
+
+export const initialResearchProjects = [
+  { id: "proj-1", title: "Water Quality Analysis of Saragaon Region", investigator: "Dr. Rajeshwari Patel", agency: "CGCOST Raipur", amount: "₹1,50,000", status: "Ongoing" },
+  { id: "proj-2", title: "Ethnographic Study of Tribal Communities in Janjgir-Champa", investigator: "Dr. Chandra", agency: "UGC Minor Research Project", amount: "₹95,000", status: "Completed" }
+];
+
+export const initialResearchEvents = [
+  { id: "rev-1", title: "National Seminar on Recent Trends in Chemical Sciences & Green Audit", date: "2025-11-12", coordinator: "Dr. Rajeshwari Patel", theme: "Green Chemistry & Sustainable Development" },
+  { id: "rev-2", title: "Workshop on Intellectual Property Rights (IPR) & Research Methodology", date: "2025-02-25", coordinator: "Dr. Chandra", theme: "IPR and Patent Filing Guidelines" }
+];
+
 
 
 // Translations dictionary for dynamic text translation (UI Labels, Headers)
@@ -670,6 +691,7 @@ export const translations = {
     studentCorner: "Student Corner",
     facultyCorner: "Faculty Corner",
     iqac: "IQAC / NAAC",
+    research: "Research & Dev",
     library: "Library",
     gallery: "Gallery",
     downloads: "Downloads",
@@ -755,6 +777,7 @@ export const translations = {
     studentCorner: "छात्र कोना",
     facultyCorner: "शिक्षक कोना",
     iqac: "आई.क्यू.ए.सी. / नैक",
+    research: "अनुसंधान एवं विकास",
     library: "पुस्तकालय",
     gallery: "गैलरी",
     downloads: "डाउनलोड",

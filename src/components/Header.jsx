@@ -21,6 +21,7 @@ export default function Header() {
     { path: "/admission", labelKey: "admission", icon: "school" },
     { path: "/student-corner", labelKey: "studentCorner", icon: "person_search" },
     { path: "/iqac", labelKey: "iqac", icon: "verified" },
+    { path: "/research", labelKey: "research", icon: "biotech" },
     { path: "/library", labelKey: "library", icon: "local_library" },
     { path: "/gallery", labelKey: "gallery", icon: "photo_library" },
     { path: "/downloads", labelKey: "downloads", icon: "download" },

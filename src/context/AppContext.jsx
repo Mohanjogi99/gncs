@@ -17,7 +17,11 @@ import {
   initialIqacDetails,
   initialAqarDocs,
   initialSsrDocs,
-  initialLibraryRules
+  initialLibraryRules,
+  initialResearchCommittee,
+  initialResearchPublications,
+  initialResearchProjects,
+  initialResearchEvents
 } from "../data/mockData";
 
 export const AppContext = createContext();
@@ -51,15 +55,19 @@ export const AppProvider = ({ children }) => {
   const [aqarDocs, setAqarDocs] = useState([]);
   const [ssrDocs, setSsrDocs] = useState([]);
   const [libraryRules, setLibraryRules] = useState([]);
+  const [researchCommittee, setResearchCommittee] = useState({});
+  const [researchPublications, setResearchPublications] = useState([]);
+  const [researchProjects, setResearchProjects] = useState([]);
+  const [researchEvents, setResearchEvents] = useState([]);
 
   // Initialize DB from LocalStorage or mockData
   useEffect(() => {
-    const CURRENT_DB_VERSION = "v16";
+    const CURRENT_DB_VERSION = "v17";
     const storedVersion = localStorage.getItem("gncs_db_version");
 
     if (storedVersion !== CURRENT_DB_VERSION) {
       // Clear old collection keys to force reload fallbacks
-      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees", "reqDocs", "iqacDetails", "aqarDocs", "ssrDocs", "libraryRules"];
+      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees", "reqDocs", "iqacDetails", "aqarDocs", "ssrDocs", "libraryRules", "researchCommittee", "researchPublications", "researchProjects", "researchEvents"];
       keysToClear.forEach(key => localStorage.removeItem(`gncs_db_${key}`));
       localStorage.setItem("gncs_db_version", CURRENT_DB_VERSION);
     }
@@ -90,6 +98,10 @@ export const AppProvider = ({ children }) => {
     setAqarDocs(loadCollection("aqarDocs", initialAqarDocs));
     setSsrDocs(loadCollection("ssrDocs", initialSsrDocs));
     setLibraryRules(loadCollection("libraryRules", initialLibraryRules));
+    setResearchCommittee(loadCollection("researchCommittee", initialResearchCommittee));
+    setResearchPublications(loadCollection("researchPublications", initialResearchPublications));
+    setResearchProjects(loadCollection("researchProjects", initialResearchProjects));
+    setResearchEvents(loadCollection("researchEvents", initialResearchEvents));
   }, []);
 
   // Save collections to LocalStorage whenever they change
@@ -449,6 +461,73 @@ export const AppProvider = ({ children }) => {
     saveCollection("libraryRules", updated);
   };
 
+  // Research Committee CRUD
+  const updateResearchCommittee = (updatedFields) => {
+    const updated = { ...researchCommittee, ...updatedFields };
+    setResearchCommittee(updated);
+    saveCollection("researchCommittee", updated);
+  };
+
+  // Research Publications CRUD
+  const addResearchPublication = (pub) => {
+    const newPub = { id: `pub-${Date.now()}`, ...pub };
+    const updated = [...researchPublications, newPub];
+    setResearchPublications(updated);
+    saveCollection("researchPublications", updated);
+  };
+
+  const updateResearchPublication = (id, updatedFields) => {
+    const updated = researchPublications.map((p) => (p.id === id ? { ...p, ...updatedFields } : p));
+    setResearchPublications(updated);
+    saveCollection("researchPublications", updated);
+  };
+
+  const deleteResearchPublication = (id) => {
+    const updated = researchPublications.filter((p) => p.id !== id);
+    setResearchPublications(updated);
+    saveCollection("researchPublications", updated);
+  };
+
+  // Research Projects CRUD
+  const addResearchProject = (proj) => {
+    const newProj = { id: `proj-${Date.now()}`, ...proj };
+    const updated = [...researchProjects, newProj];
+    setResearchProjects(updated);
+    saveCollection("researchProjects", updated);
+  };
+
+  const updateResearchProject = (id, updatedFields) => {
+    const updated = researchProjects.map((p) => (p.id === id ? { ...p, ...updatedFields } : p));
+    setResearchProjects(updated);
+    saveCollection("researchProjects", updated);
+  };
+
+  const deleteResearchProject = (id) => {
+    const updated = researchProjects.filter((p) => p.id !== id);
+    setResearchProjects(updated);
+    saveCollection("researchProjects", updated);
+  };
+
+  // Research Events CRUD
+  const addResearchEvent = (rev) => {
+    const newRev = { id: `rev-${Date.now()}`, ...rev };
+    const updated = [...researchEvents, newRev];
+    setResearchEvents(updated);
+    saveCollection("researchEvents", updated);
+  };
+
+  const updateResearchEvent = (id, updatedFields) => {
+    const updated = researchEvents.map((r) => (r.id === id ? { ...r, ...updatedFields } : r));
+    setResearchEvents(updated);
+    saveCollection("researchEvents", updated);
+  };
+
+  const deleteResearchEvent = (id) => {
+    const updated = researchEvents.filter((r) => r.id !== id);
+    setResearchEvents(updated);
+    saveCollection("researchEvents", updated);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -515,7 +594,21 @@ export const AppProvider = ({ children }) => {
         libraryRules,
         addLibraryRule,
         updateLibraryRule,
-        deleteLibraryRule
+        deleteLibraryRule,
+        researchCommittee,
+        updateResearchCommittee,
+        researchPublications,
+        addResearchPublication,
+        updateResearchPublication,
+        deleteResearchPublication,
+        researchProjects,
+        addResearchProject,
+        updateResearchProject,
+        deleteResearchProject,
+        researchEvents,
+        addResearchEvent,
+        updateResearchEvent,
+        deleteResearchEvent
       }}
     >
       {children}
