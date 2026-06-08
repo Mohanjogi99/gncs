@@ -87,7 +87,8 @@ export default function AdminDashboard() {
   const [downloadForm, setDownloadForm] = useState({
     titleEnglish: "",
     titleHindi: "",
-    category: "Admission Forms"
+    category: "Admission Forms",
+    fileUrl: ""
   });
 
   // Faculty form states
@@ -284,10 +285,10 @@ export default function AdminDashboard() {
 
   const handleSaveDownload = (e) => {
     e.preventDefault();
-    triggerSimulatedUpload(() => {
+    const saveIt = () => {
       const data = {
         ...downloadForm,
-        fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        fileUrl: downloadForm.fileUrl || "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
         uploadedBy: currentUser.name
       };
       if (editingItem) {
@@ -296,7 +297,13 @@ export default function AdminDashboard() {
         addDownload(data);
       }
       closeForm();
-    });
+    };
+
+    if (!downloadForm.fileUrl) {
+      triggerSimulatedUpload(saveIt);
+    } else {
+      saveIt();
+    }
   };
 
   const handleSaveFaculty = (e) => {
@@ -502,7 +509,7 @@ export default function AdminDashboard() {
     setEditingItem(null);
     // Reset forms
     setNoticeForm({ titleEnglish: "", titleHindi: "", category: "Admission", isImportant: false });
-    setDownloadForm({ titleEnglish: "", titleHindi: "", category: "Admission Forms" });
+    setDownloadForm({ titleEnglish: "", titleHindi: "", category: "Admission Forms", fileUrl: "" });
     setFacultyForm({ name: "", designation: "Assistant Professor", department: "Arts", qualification: "", email: "", phone: "", bioEnglish: "", bioHindi: "", photoUrl: "" });
     setCourseForm({ name: "", stream: "Arts", duration: "3 Years / 3 वर्ष", eligibility: "", seats: 60, fee: "₹2,500 per annum" });
     setGalleryForm({ albumTitle: "", caption: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA72eXokI1lfD95EVEcAR3osAynjp5wfvMvtugkG0bOK_1g7YRvPOwJ9wt9EJEZ3Y_BmjOJaIOxTaTTAvU5DXyuczs0S2DFGtNUoqki8h5n4vVrke8WF1PhFl1l-JCcRYdRvFwUK4JeXDTYSNJfu3QYoW78eZe6BHq7D86Cz2tSUTBb36y99fbjn7vNRs9HjRIxAKwB-ZVe43KBDGY5iP0Y3NY5TBsYHSzTW-XRE9yDpqIV4ABK9EMBoWzT1uHO4Fi6fYj4KIqe6lg" });
@@ -521,7 +528,7 @@ export default function AdminDashboard() {
     if (activeMenu === "notices") {
       setNoticeForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, category: item.category, isImportant: item.isImportant });
     } else if (activeMenu === "downloads") {
-      setDownloadForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, category: item.category });
+      setDownloadForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, category: item.category, fileUrl: item.fileUrl || "" });
     } else if (activeMenu === "faculty") {
       setFacultyForm({ name: item.name, designation: item.designation, department: item.department, qualification: item.qualification, email: item.email, phone: item.phone, bioEnglish: item.bioEnglish, bioHindi: item.bioHindi, photoUrl: item.photoUrl || "" });
     } else if (activeMenu === "courses") {
@@ -788,19 +795,31 @@ export default function AdminDashboard() {
                       />
                     </div>
                   </div>
-                  <div className="space-y-1.5">
-                    <label className="font-bold">Category</label>
-                    <select
-                      value={downloadForm.category}
-                      onChange={(e) => setDownloadForm({ ...downloadForm, category: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
-                    >
-                      <option>Admission Forms</option>
-                      <option>Scholarship Forms</option>
-                      <option>Prospectus</option>
-                      <option>Academic Calendar</option>
-                      <option>Syllabus</option>
-                    </select>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Category</label>
+                      <select
+                        value={downloadForm.category}
+                        onChange={(e) => setDownloadForm({ ...downloadForm, category: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      >
+                        <option>Admission Forms</option>
+                        <option>Scholarship Forms</option>
+                        <option>Prospectus</option>
+                        <option>Academic Calendar</option>
+                        <option>Syllabus</option>
+                      </select>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Document PDF Link / URL (Optional)</label>
+                      <input
+                        type="url"
+                        value={downloadForm.fileUrl}
+                        onChange={(e) => setDownloadForm({ ...downloadForm, fileUrl: e.target.value })}
+                        placeholder="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
                   </div>
                   <div className="flex gap-2 justify-end pt-4">
                     <button
