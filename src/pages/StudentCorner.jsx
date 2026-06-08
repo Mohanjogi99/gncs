@@ -48,7 +48,7 @@ export default function StudentCorner() {
         </a>
 
         <a
-          href="https://snpv.ac.in/results"
+          href="https://www.snpvraigarh.in/"
           target="_blank"
           rel="noopener noreferrer"
           className="p-5 rounded-2xl border border-outline-variant/60 bg-white hover:border-secondary hover:shadow-sm transition-all flex items-center gap-4 group"
