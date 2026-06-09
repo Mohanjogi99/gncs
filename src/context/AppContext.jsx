@@ -70,51 +70,66 @@ export const AppProvider = ({ children }) => {
   const [researchProjects, setResearchProjects] = useState([]);
   const [researchEvents, setResearchEvents] = useState([]);
 
-  // Initialize DB from Firestore and migrate if first-time setup
+  // Initialize DB from Firestore and migrate if first-time setup for this browser
   useEffect(() => {
     const initializeAppDatabase = async () => {
       try {
-        const metaRef = doc(db, "metadata", "db_init");
-        const metaSnap = await getDoc(metaRef);
+        const isMigrated = localStorage.getItem("gncs_firestore_migrated");
 
-        if (!metaSnap.exists()) {
-          console.log("Initializing Firestore with mock data...");
+        if (!isMigrated) {
+          console.log("Migrating local storage data to Firestore...");
           
-          // Migrate collections
-          const migrations = [
-            { col: "notices", data: initialNotices },
-            { col: "newsEvents", data: initialNewsEvents },
-            { col: "departments", data: initialDepartments },
-            { col: "faculty", data: initialFaculty },
-            { col: "courses", data: initialCourses },
-            { col: "downloads", data: initialDownloads },
-            { col: "gallery", data: initialGallery },
-            { col: "contactMessages", data: initialContactMessages },
-            { col: "janbhagidari", data: initialJanbhagidari },
-            { col: "officeStaff", data: initialOfficeStaff },
-            { col: "committees", data: initialCommittees },
-            { col: "reqDocs", data: initialReqDocs },
-            { col: "aqarDocs", data: initialAqarDocs },
-            { col: "ssrDocs", data: initialSsrDocs },
-            { col: "libraryRules", data: initialLibraryRules },
-            { col: "researchPublications", data: initialResearchPublications },
-            { col: "researchProjects", data: initialResearchProjects },
-            { col: "researchEvents", data: initialResearchEvents }
+          const loadLocalOrFallback = (key, fallback) => {
+            const localData = localStorage.getItem(`gncs_db_${key}`);
+            if (localData) {
+              try {
+                return JSON.parse(localData);
+              } catch (e) {
+                console.error("Error parsing local storage key", key, e);
+              }
+            }
+            return fallback;
+          };
+
+          const migrationData = [
+            { col: "notices", data: loadLocalOrFallback("notices", initialNotices) },
+            { col: "newsEvents", data: loadLocalOrFallback("newsEvents", initialNewsEvents) },
+            { col: "departments", data: loadLocalOrFallback("departments", initialDepartments) },
+            { col: "faculty", data: loadLocalOrFallback("faculty", initialFaculty) },
+            { col: "courses", data: loadLocalOrFallback("courses", initialCourses) },
+            { col: "downloads", data: loadLocalOrFallback("downloads", initialDownloads) },
+            { col: "gallery", data: loadLocalOrFallback("gallery", initialGallery) },
+            { col: "contactMessages", data: loadLocalOrFallback("contactMessages", initialContactMessages) },
+            { col: "janbhagidari", data: loadLocalOrFallback("janbhagidari", initialJanbhagidari) },
+            { col: "officeStaff", data: loadLocalOrFallback("officeStaff", initialOfficeStaff) },
+            { col: "committees", data: loadLocalOrFallback("committees", initialCommittees) },
+            { col: "reqDocs", data: loadLocalOrFallback("reqDocs", initialReqDocs) },
+            { col: "aqarDocs", data: loadLocalOrFallback("aqarDocs", initialAqarDocs) },
+            { col: "ssrDocs", data: loadLocalOrFallback("ssrDocs", initialSsrDocs) },
+            { col: "libraryRules", data: loadLocalOrFallback("libraryRules", initialLibraryRules) },
+            { col: "researchPublications", data: loadLocalOrFallback("researchPublications", initialResearchPublications) },
+            { col: "researchProjects", data: loadLocalOrFallback("researchProjects", initialResearchProjects) },
+            { col: "researchEvents", data: loadLocalOrFallback("researchEvents", initialResearchEvents) }
           ];
 
-          for (const m of migrations) {
+          for (const m of migrationData) {
             for (const item of m.data) {
-              await setDoc(doc(db, m.col, item.id), item);
+              if (item && item.id) {
+                await setDoc(doc(db, m.col, item.id), item);
+              }
             }
           }
 
           // Migrate objects
-          await setDoc(doc(db, "iqacDetails", "details"), initialIqacDetails);
-          await setDoc(doc(db, "researchCommittee", "details"), initialResearchCommittee);
+          const iqacLocal = loadLocalOrFallback("iqacDetails", initialIqacDetails);
+          await setDoc(doc(db, "iqacDetails", "details"), iqacLocal);
 
-          // Mark metadata as initialized
-          await setDoc(metaRef, { initialized: true });
-          console.log("Firestore initialization complete!");
+          const researchCommLocal = loadLocalOrFallback("researchCommittee", initialResearchCommittee);
+          await setDoc(doc(db, "researchCommittee", "details"), researchCommLocal);
+
+          // Mark as migrated locally so it doesn't run again
+          localStorage.setItem("gncs_firestore_migrated", "true");
+          console.log("Migration to Firestore complete!");
         }
 
         // Now load everything from Firestore
