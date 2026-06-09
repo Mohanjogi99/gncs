@@ -1,4 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
+import { db } from "../firebase";
+import {
+  collection,
+  getDocs,
+  getDoc,
+  setDoc,
+  doc,
+  deleteDoc,
+  updateDoc
+} from "firebase/firestore";
 import {
   initialUsers,
   initialNotices,
@@ -60,54 +70,101 @@ export const AppProvider = ({ children }) => {
   const [researchProjects, setResearchProjects] = useState([]);
   const [researchEvents, setResearchEvents] = useState([]);
 
-  // Initialize DB from LocalStorage or mockData
+  // Initialize DB from Firestore and migrate if first-time setup
   useEffect(() => {
-    const CURRENT_DB_VERSION = "v17";
-    const storedVersion = localStorage.getItem("gncs_db_version");
+    const initializeAppDatabase = async () => {
+      try {
+        const metaRef = doc(db, "metadata", "db_init");
+        const metaSnap = await getDoc(metaRef);
 
-    if (storedVersion !== CURRENT_DB_VERSION) {
-      // Clear old collection keys to force reload fallbacks
-      const keysToClear = ["notices", "newsEvents", "departments", "faculty", "courses", "downloads", "gallery", "contactMessages", "janbhagidari", "officeStaff", "committees", "reqDocs", "iqacDetails", "aqarDocs", "ssrDocs", "libraryRules", "researchCommittee", "researchPublications", "researchProjects", "researchEvents"];
-      keysToClear.forEach(key => localStorage.removeItem(`gncs_db_${key}`));
-      localStorage.setItem("gncs_db_version", CURRENT_DB_VERSION);
-    }
+        if (!metaSnap.exists()) {
+          console.log("Initializing Firestore with mock data...");
+          
+          // Migrate collections
+          const migrations = [
+            { col: "notices", data: initialNotices },
+            { col: "newsEvents", data: initialNewsEvents },
+            { col: "departments", data: initialDepartments },
+            { col: "faculty", data: initialFaculty },
+            { col: "courses", data: initialCourses },
+            { col: "downloads", data: initialDownloads },
+            { col: "gallery", data: initialGallery },
+            { col: "contactMessages", data: initialContactMessages },
+            { col: "janbhagidari", data: initialJanbhagidari },
+            { col: "officeStaff", data: initialOfficeStaff },
+            { col: "committees", data: initialCommittees },
+            { col: "reqDocs", data: initialReqDocs },
+            { col: "aqarDocs", data: initialAqarDocs },
+            { col: "ssrDocs", data: initialSsrDocs },
+            { col: "libraryRules", data: initialLibraryRules },
+            { col: "researchPublications", data: initialResearchPublications },
+            { col: "researchProjects", data: initialResearchProjects },
+            { col: "researchEvents", data: initialResearchEvents }
+          ];
 
-    const loadCollection = (key, fallback) => {
-      const data = localStorage.getItem(`gncs_db_${key}`);
-      if (data) {
-        return JSON.parse(data);
-      } else {
-        localStorage.setItem(`gncs_db_${key}`, JSON.stringify(fallback));
-        return fallback;
+          for (const m of migrations) {
+            for (const item of m.data) {
+              await setDoc(doc(db, m.col, item.id), item);
+            }
+          }
+
+          // Migrate objects
+          await setDoc(doc(db, "iqacDetails", "details"), initialIqacDetails);
+          await setDoc(doc(db, "researchCommittee", "details"), initialResearchCommittee);
+
+          // Mark metadata as initialized
+          await setDoc(metaRef, { initialized: true });
+          console.log("Firestore initialization complete!");
+        }
+
+        // Now load everything from Firestore
+        const fetchCollection = async (colName) => {
+          const snap = await getDocs(collection(db, colName));
+          const list = [];
+          snap.forEach((doc) => {
+            list.push(doc.data());
+          });
+          return list;
+        };
+
+        const loadedNotices = await fetchCollection("notices");
+        setNotices(loadedNotices.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+
+        const loadedNews = await fetchCollection("newsEvents");
+        setNewsEvents(loadedNews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+
+        setDepartments(await fetchCollection("departments"));
+        setFaculty(await fetchCollection("faculty"));
+        setCourses(await fetchCollection("courses"));
+        setDownloads(await fetchCollection("downloads"));
+        setGallery(await fetchCollection("gallery"));
+        setContactMessages(await fetchCollection("contactMessages"));
+        setJanbhagidari(await fetchCollection("janbhagidari"));
+        setOfficeStaff(await fetchCollection("officeStaff"));
+        setCommittees(await fetchCollection("committees"));
+        setReqDocs(await fetchCollection("reqDocs"));
+
+        const iqacDoc = await getDoc(doc(db, "iqacDetails", "details"));
+        if (iqacDoc.exists()) setIqacDetails(iqacDoc.data());
+
+        setAqarDocs(await fetchCollection("aqarDocs"));
+        setSsrDocs(await fetchCollection("ssrDocs"));
+        setLibraryRules(await fetchCollection("libraryRules"));
+
+        const resCommDoc = await getDoc(doc(db, "researchCommittee", "details"));
+        if (resCommDoc.exists()) setResearchCommittee(resCommDoc.data());
+
+        setResearchPublications(await fetchCollection("researchPublications"));
+        setResearchProjects(await fetchCollection("researchProjects"));
+        setResearchEvents(await fetchCollection("researchEvents"));
+
+      } catch (error) {
+        console.error("Error loading Firestore database:", error);
       }
     };
 
-    setNotices(loadCollection("notices", initialNotices));
-    setNewsEvents(loadCollection("newsEvents", initialNewsEvents));
-    setDepartments(loadCollection("departments", initialDepartments));
-    setFaculty(loadCollection("faculty", initialFaculty));
-    setCourses(loadCollection("courses", initialCourses));
-    setDownloads(loadCollection("downloads", initialDownloads));
-    setGallery(loadCollection("gallery", initialGallery));
-    setContactMessages(loadCollection("contactMessages", initialContactMessages));
-    setJanbhagidari(loadCollection("janbhagidari", initialJanbhagidari));
-    setOfficeStaff(loadCollection("officeStaff", initialOfficeStaff));
-    setCommittees(loadCollection("committees", initialCommittees));
-    setReqDocs(loadCollection("reqDocs", initialReqDocs));
-    setIqacDetails(loadCollection("iqacDetails", initialIqacDetails));
-    setAqarDocs(loadCollection("aqarDocs", initialAqarDocs));
-    setSsrDocs(loadCollection("ssrDocs", initialSsrDocs));
-    setLibraryRules(loadCollection("libraryRules", initialLibraryRules));
-    setResearchCommittee(loadCollection("researchCommittee", initialResearchCommittee));
-    setResearchPublications(loadCollection("researchPublications", initialResearchPublications));
-    setResearchProjects(loadCollection("researchProjects", initialResearchProjects));
-    setResearchEvents(loadCollection("researchEvents", initialResearchEvents));
+    initializeAppDatabase();
   }, []);
-
-  // Save collections to LocalStorage whenever they change
-  const saveCollection = (key, data) => {
-    localStorage.setItem(`gncs_db_${key}`, JSON.stringify(data));
-  };
 
   const handleSetLanguage = (lang) => {
     setLanguage(lang);
@@ -141,391 +198,549 @@ export const AppProvider = ({ children }) => {
   };
 
   // CRUD for Notices
-  const addNotice = (notice) => {
+  const addNotice = async (notice) => {
     const newNotice = {
       ...notice,
       id: `notice-${Date.now()}`,
       createdAt: new Date().toISOString()
     };
-    const updated = [newNotice, ...notices];
-    setNotices(updated);
-    saveCollection("notices", updated);
+    try {
+      await setDoc(doc(db, "notices", newNotice.id), newNotice);
+      setNotices((prev) => [newNotice, ...prev]);
+    } catch (e) {
+      console.error("Error adding notice:", e);
+    }
   };
 
-  const updateNotice = (id, updatedFields) => {
-    const updated = notices.map((n) => (n.id === id ? { ...n, ...updatedFields } : n));
-    setNotices(updated);
-    saveCollection("notices", updated);
+  const updateNotice = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "notices", id), updatedFields);
+      setNotices((prev) => prev.map((n) => (n.id === id ? { ...n, ...updatedFields } : n)));
+    } catch (e) {
+      console.error("Error updating notice:", e);
+    }
   };
 
-  const deleteNotice = (id) => {
-    const updated = notices.filter((n) => n.id !== id);
-    setNotices(updated);
-    saveCollection("notices", updated);
+  const deleteNotice = async (id) => {
+    try {
+      await deleteDoc(doc(db, "notices", id));
+      setNotices((prev) => prev.filter((n) => n.id !== id));
+    } catch (e) {
+      console.error("Error deleting notice:", e);
+    }
   };
 
   // CRUD for News & Events
-  const addNewsEvent = (event) => {
+  const addNewsEvent = async (event) => {
     const newEvent = {
       ...event,
       id: `news-${Date.now()}`,
       createdAt: new Date().toISOString()
     };
-    const updated = [newEvent, ...newsEvents];
-    setNewsEvents(updated);
-    saveCollection("newsEvents", updated);
+    try {
+      await setDoc(doc(db, "newsEvents", newEvent.id), newEvent);
+      setNewsEvents((prev) => [newEvent, ...prev]);
+    } catch (e) {
+      console.error("Error adding news event:", e);
+    }
   };
 
-  const updateNewsEvent = (id, updatedFields) => {
-    const updated = newsEvents.map((e) => (e.id === id ? { ...e, ...updatedFields } : e));
-    setNewsEvents(updated);
-    saveCollection("newsEvents", updated);
+  const updateNewsEvent = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "newsEvents", id), updatedFields);
+      setNewsEvents((prev) => prev.map((e) => (e.id === id ? { ...e, ...updatedFields } : e)));
+    } catch (e) {
+      console.error("Error updating news event:", e);
+    }
   };
 
-  const deleteNewsEvent = (id) => {
-    const updated = newsEvents.filter((e) => e.id !== id);
-    setNewsEvents(updated);
-    saveCollection("newsEvents", updated);
+  const deleteNewsEvent = async (id) => {
+    try {
+      await deleteDoc(doc(db, "newsEvents", id));
+      setNewsEvents((prev) => prev.filter((e) => e.id !== id));
+    } catch (e) {
+      console.error("Error deleting news event:", e);
+    }
   };
 
   // CRUD for Faculty
-  const addFaculty = (fac) => {
+  const addFaculty = async (fac) => {
     const newFac = {
       ...fac,
       id: `fac-${Date.now()}`
     };
-    const updated = [...faculty, newFac];
-    setFaculty(updated);
-    saveCollection("faculty", updated);
+    try {
+      await setDoc(doc(db, "faculty", newFac.id), newFac);
+      setFaculty((prev) => [...prev, newFac]);
+    } catch (e) {
+      console.error("Error adding faculty:", e);
+    }
   };
 
-  const updateFaculty = (id, updatedFields) => {
-    const updated = faculty.map((f) => (f.id === id ? { ...f, ...updatedFields } : f));
-    setFaculty(updated);
-    saveCollection("faculty", updated);
+  const updateFaculty = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "faculty", id), updatedFields);
+      setFaculty((prev) => prev.map((f) => (f.id === id ? { ...f, ...updatedFields } : f)));
+    } catch (e) {
+      console.error("Error updating faculty:", e);
+    }
   };
 
-  const deleteFaculty = (id) => {
-    const updated = faculty.filter((f) => f.id !== id);
-    setFaculty(updated);
-    saveCollection("faculty", updated);
+  const deleteFaculty = async (id) => {
+    try {
+      await deleteDoc(doc(db, "faculty", id));
+      setFaculty((prev) => prev.filter((f) => f.id !== id));
+    } catch (e) {
+      console.error("Error deleting faculty:", e);
+    }
   };
 
   // CRUD for Courses
-  const addCourse = (course) => {
+  const addCourse = async (course) => {
     const newCourse = {
       ...course,
       id: `course-${Date.now()}`
     };
-    const updated = [...courses, newCourse];
-    setCourses(updated);
-    saveCollection("courses", updated);
+    try {
+      await setDoc(doc(db, "courses", newCourse.id), newCourse);
+      setCourses((prev) => [...prev, newCourse]);
+    } catch (e) {
+      console.error("Error adding course:", e);
+    }
   };
 
-  const updateCourse = (id, updatedFields) => {
-    const updated = courses.map((c) => (c.id === id ? { ...c, ...updatedFields } : c));
-    setCourses(updated);
-    saveCollection("courses", updated);
+  const updateCourse = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "courses", id), updatedFields);
+      setCourses((prev) => prev.map((c) => (c.id === id ? { ...c, ...updatedFields } : c)));
+    } catch (e) {
+      console.error("Error updating course:", e);
+    }
   };
 
-  const deleteCourse = (id) => {
-    const updated = courses.filter((c) => c.id !== id);
-    setCourses(updated);
-    saveCollection("courses", updated);
+  const deleteCourse = async (id) => {
+    try {
+      await deleteDoc(doc(db, "courses", id));
+      setCourses((prev) => prev.filter((c) => c.id !== id));
+    } catch (e) {
+      console.error("Error deleting course:", e);
+    }
   };
 
   // CRUD for Downloads
-  const addDownload = (down) => {
+  const addDownload = async (down) => {
     const newDown = {
       ...down,
       id: `down-${Date.now()}`,
       createdAt: new Date().toISOString().split("T")[0]
     };
-    const updated = [newDown, ...downloads];
-    setDownloads(updated);
-    saveCollection("downloads", updated);
+    try {
+      await setDoc(doc(db, "downloads", newDown.id), newDown);
+      setDownloads((prev) => [newDown, ...prev]);
+    } catch (e) {
+      console.error("Error adding download:", e);
+    }
   };
 
-  const updateDownload = (id, updatedFields) => {
-    const updated = downloads.map((d) => (d.id === id ? { ...d, ...updatedFields } : d));
-    setDownloads(updated);
-    saveCollection("downloads", updated);
+  const updateDownload = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "downloads", id), updatedFields);
+      setDownloads((prev) => prev.map((d) => (d.id === id ? { ...d, ...updatedFields } : d)));
+    } catch (e) {
+      console.error("Error updating download:", e);
+    }
   };
 
-  const deleteDownload = (id) => {
-    const updated = downloads.filter((d) => d.id !== id);
-    setDownloads(updated);
-    saveCollection("downloads", updated);
+  const deleteDownload = async (id) => {
+    try {
+      await deleteDoc(doc(db, "downloads", id));
+      setDownloads((prev) => prev.filter((d) => d.id !== id));
+    } catch (e) {
+      console.error("Error deleting download:", e);
+    }
   };
 
   // CRUD for Gallery
-  const addGalleryItem = (item) => {
+  const addGalleryItem = async (item) => {
     const newItem = {
       ...item,
       id: `gal-${Date.now()}`,
       createdAt: new Date().toISOString()
     };
-    const updated = [newItem, ...gallery];
-    setGallery(updated);
-    saveCollection("gallery", updated);
+    try {
+      await setDoc(doc(db, "gallery", newItem.id), newItem);
+      setGallery((prev) => [newItem, ...prev]);
+    } catch (e) {
+      console.error("Error adding gallery item:", e);
+    }
   };
 
-  const deleteGalleryItem = (id) => {
-    const updated = gallery.filter((g) => g.id !== id);
-    setGallery(updated);
-    saveCollection("gallery", updated);
+  const deleteGalleryItem = async (id) => {
+    try {
+      await deleteDoc(doc(db, "gallery", id));
+      setGallery((prev) => prev.filter((g) => g.id !== id));
+    } catch (e) {
+      console.error("Error deleting gallery item:", e);
+    }
   };
 
   // CRUD for Contact Messages
-  const addContactMessage = (msg) => {
+  const addContactMessage = async (msg) => {
     const newMsg = {
       ...msg,
       id: `msg-${Date.now()}`,
       status: "Pending",
       createdAt: new Date().toISOString()
     };
-    const updated = [newMsg, ...contactMessages];
-    setContactMessages(updated);
-    saveCollection("contactMessages", updated);
+    try {
+      await setDoc(doc(db, "contactMessages", newMsg.id), newMsg);
+      setContactMessages((prev) => [newMsg, ...prev]);
+    } catch (e) {
+      console.error("Error adding contact message:", e);
+    }
   };
 
-  const updateContactMessageStatus = (id, status) => {
-    const updated = contactMessages.map((m) => (m.id === id ? { ...m, status } : m));
-    setContactMessages(updated);
-    saveCollection("contactMessages", updated);
+  const updateContactMessageStatus = async (id, status) => {
+    try {
+      await updateDoc(doc(db, "contactMessages", id), { status });
+      setContactMessages((prev) => prev.map((m) => (m.id === id ? { ...m, status } : m)));
+    } catch (e) {
+      console.error("Error updating contact message status:", e);
+    }
   };
 
   // CRUD for Departments
-  const updateDepartment = (id, updatedFields) => {
-    const updated = departments.map((d) => (d.id === id ? { ...d, ...updatedFields } : d));
-    setDepartments(updated);
-    saveCollection("departments", updated);
+  const updateDepartment = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "departments", id), updatedFields);
+      setDepartments((prev) => prev.map((d) => (d.id === id ? { ...d, ...updatedFields } : d)));
+    } catch (e) {
+      console.error("Error updating department:", e);
+    }
   };
 
   // CRUD for Janbhagidari
-  const addJanbhagidari = (member) => {
+  const addJanbhagidari = async (member) => {
     const newMember = {
       ...member,
       id: `jb-${Date.now()}`
     };
-    const updated = [...janbhagidari, newMember];
-    setJanbhagidari(updated);
-    saveCollection("janbhagidari", updated);
+    try {
+      await setDoc(doc(db, "janbhagidari", newMember.id), newMember);
+      setJanbhagidari((prev) => [...prev, newMember]);
+    } catch (e) {
+      console.error("Error adding janbhagidari member:", e);
+    }
   };
 
-  const updateJanbhagidari = (id, updatedFields) => {
-    const updated = janbhagidari.map((m) => (m.id === id ? { ...m, ...updatedFields } : m));
-    setJanbhagidari(updated);
-    saveCollection("janbhagidari", updated);
+  const updateJanbhagidari = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "janbhagidari", id), updatedFields);
+      setJanbhagidari((prev) => prev.map((m) => (m.id === id ? { ...m, ...updatedFields } : m)));
+    } catch (e) {
+      console.error("Error updating janbhagidari member:", e);
+    }
   };
 
-  const deleteJanbhagidari = (id) => {
-    const updated = janbhagidari.filter((m) => m.id !== id);
-    setJanbhagidari(updated);
-    saveCollection("janbhagidari", updated);
+  const deleteJanbhagidari = async (id) => {
+    try {
+      await deleteDoc(doc(db, "janbhagidari", id));
+      setJanbhagidari((prev) => prev.filter((m) => m.id !== id));
+    } catch (e) {
+      console.error("Error deleting janbhagidari member:", e);
+    }
   };
 
   // CRUD for Office Staff
-  const addOfficeStaff = (staff) => {
+  const addOfficeStaff = async (staff) => {
     const newStaff = {
       ...staff,
       id: `os-${Date.now()}`
     };
-    const updated = [...officeStaff, newStaff];
-    setOfficeStaff(updated);
-    saveCollection("officeStaff", updated);
+    try {
+      await setDoc(doc(db, "officeStaff", newStaff.id), newStaff);
+      setOfficeStaff((prev) => [...prev, newStaff]);
+    } catch (e) {
+      console.error("Error adding office staff:", e);
+    }
   };
 
-  const updateOfficeStaff = (id, updatedFields) => {
-    const updated = officeStaff.map((s) => (s.id === id ? { ...s, ...updatedFields } : s));
-    setOfficeStaff(updated);
-    saveCollection("officeStaff", updated);
+  const updateOfficeStaff = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "officeStaff", id), updatedFields);
+      setOfficeStaff((prev) => prev.map((s) => (s.id === id ? { ...s, ...updatedFields } : s)));
+    } catch (e) {
+      console.error("Error updating office staff:", e);
+    }
   };
 
-  const deleteOfficeStaff = (id) => {
-    const updated = officeStaff.filter((s) => s.id !== id);
-    setOfficeStaff(updated);
-    saveCollection("officeStaff", updated);
+  const deleteOfficeStaff = async (id) => {
+    try {
+      await deleteDoc(doc(db, "officeStaff", id));
+      setOfficeStaff((prev) => prev.filter((s) => s.id !== id));
+    } catch (e) {
+      console.error("Error deleting office staff:", e);
+    }
   };
 
   // CRUD for Committees
-  const addCommittee = (committee) => {
+  const addCommittee = async (committee) => {
     const newCommittee = {
       ...committee,
       id: `com-${Date.now()}`
     };
-    const updated = [...committees, newCommittee];
-    setCommittees(updated);
-    saveCollection("committees", updated);
+    try {
+      await setDoc(doc(db, "committees", newCommittee.id), newCommittee);
+      setCommittees((prev) => [...prev, newCommittee]);
+    } catch (e) {
+      console.error("Error adding committee:", e);
+    }
   };
 
-  const updateCommittee = (id, updatedFields) => {
-    const updated = committees.map((c) => (c.id === id ? { ...c, ...updatedFields } : c));
-    setCommittees(updated);
-    saveCollection("committees", updated);
+  const updateCommittee = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "committees", id), updatedFields);
+      setCommittees((prev) => prev.map((c) => (c.id === id ? { ...c, ...updatedFields } : c)));
+    } catch (e) {
+      console.error("Error updating committee:", e);
+    }
   };
 
-  const deleteCommittee = (id) => {
-    const updated = committees.filter((c) => c.id !== id);
-    setCommittees(updated);
-    saveCollection("committees", updated);
+  const deleteCommittee = async (id) => {
+    try {
+      await deleteDoc(doc(db, "committees", id));
+      setCommittees((prev) => prev.filter((c) => c.id !== id));
+    } catch (e) {
+      console.error("Error deleting committee:", e);
+    }
   };
 
   // CRUD for Required Documents
-  const addReqDoc = (doc) => {
+  const addReqDoc = async (docData) => {
     const newDoc = {
-      ...doc,
+      ...docData,
       id: `rd-${Date.now()}`
     };
-    const updated = [...reqDocs, newDoc];
-    setReqDocs(updated);
-    saveCollection("reqDocs", updated);
+    try {
+      await setDoc(doc(db, "reqDocs", newDoc.id), newDoc);
+      setReqDocs((prev) => [...prev, newDoc]);
+    } catch (e) {
+      console.error("Error adding required document:", e);
+    }
   };
 
-  const updateReqDoc = (id, updatedFields) => {
-    const updated = reqDocs.map((d) => (d.id === id ? { ...d, ...updatedFields } : d));
-    setReqDocs(updated);
-    saveCollection("reqDocs", updated);
+  const updateReqDoc = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "reqDocs", id), updatedFields);
+      setReqDocs((prev) => prev.map((d) => (d.id === id ? { ...d, ...updatedFields } : d)));
+    } catch (e) {
+      console.error("Error updating required document:", e);
+    }
   };
 
-  const deleteReqDoc = (id) => {
-    const updated = reqDocs.filter((d) => d.id !== id);
-    setReqDocs(updated);
-    saveCollection("reqDocs", updated);
+  const deleteReqDoc = async (id) => {
+    try {
+      await deleteDoc(doc(db, "reqDocs", id));
+      setReqDocs((prev) => prev.filter((d) => d.id !== id));
+    } catch (e) {
+      console.error("Error deleting required document:", e);
+    }
   };
 
   // Update IQAC details
-  const updateIqacDetails = (updatedFields) => {
-    const updated = { ...iqacDetails, ...updatedFields };
-    setIqacDetails(updated);
-    saveCollection("iqacDetails", updated);
+  const updateIqacDetails = async (updatedFields) => {
+    try {
+      const updated = { ...iqacDetails, ...updatedFields };
+      await setDoc(doc(db, "iqacDetails", "details"), updated);
+      setIqacDetails(updated);
+    } catch (e) {
+      console.error("Error updating IQAC details:", e);
+    }
   };
 
   // AQAR CRUD
-  const addAqarDoc = (doc) => {
-    const newDoc = { id: `aqar-${Date.now()}`, ...doc };
-    const updated = [...aqarDocs, newDoc];
-    setAqarDocs(updated);
-    saveCollection("aqarDocs", updated);
+  const addAqarDoc = async (docData) => {
+    const newDoc = { id: `aqar-${Date.now()}`, ...docData };
+    try {
+      await setDoc(doc(db, "aqarDocs", newDoc.id), newDoc);
+      setAqarDocs((prev) => [...prev, newDoc]);
+    } catch (e) {
+      console.error("Error adding AQAR document:", e);
+    }
   };
 
-  const updateAqarDoc = (id, updatedFields) => {
-    const updated = aqarDocs.map((d) => (d.id === id ? { ...d, ...updatedFields } : d));
-    setAqarDocs(updated);
-    saveCollection("aqarDocs", updated);
+  const updateAqarDoc = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "aqarDocs", id), updatedFields);
+      setAqarDocs((prev) => prev.map((d) => (d.id === id ? { ...d, ...updatedFields } : d)));
+    } catch (e) {
+      console.error("Error updating AQAR document:", e);
+    }
   };
 
-  const deleteAqarDoc = (id) => {
-    const updated = aqarDocs.filter((d) => d.id !== id);
-    setAqarDocs(updated);
-    saveCollection("aqarDocs", updated);
+  const deleteAqarDoc = async (id) => {
+    try {
+      await deleteDoc(doc(db, "aqarDocs", id));
+      setAqarDocs((prev) => prev.filter((d) => d.id !== id));
+    } catch (e) {
+      console.error("Error deleting AQAR document:", e);
+    }
   };
 
   // SSR CRUD
-  const addSsrDoc = (doc) => {
-    const newDoc = { id: `ssr-${Date.now()}`, ...doc };
-    const updated = [...ssrDocs, newDoc];
-    setSsrDocs(updated);
-    saveCollection("ssrDocs", updated);
+  const addSsrDoc = async (docData) => {
+    const newDoc = { id: `ssr-${Date.now()}`, ...docData };
+    try {
+      await setDoc(doc(db, "ssrDocs", newDoc.id), newDoc);
+      setSsrDocs((prev) => [...prev, newDoc]);
+    } catch (e) {
+      console.error("Error adding SSR document:", e);
+    }
   };
 
-  const updateSsrDoc = (id, updatedFields) => {
-    const updated = ssrDocs.map((d) => (d.id === id ? { ...d, ...updatedFields } : d));
-    setSsrDocs(updated);
-    saveCollection("ssrDocs", updated);
+  const updateSsrDoc = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "ssrDocs", id), updatedFields);
+      setSsrDocs((prev) => prev.map((d) => (d.id === id ? { ...d, ...updatedFields } : d)));
+    } catch (e) {
+      console.error("Error updating SSR document:", e);
+    }
   };
 
-  const deleteSsrDoc = (id) => {
-    const updated = ssrDocs.filter((d) => d.id !== id);
-    setSsrDocs(updated);
-    saveCollection("ssrDocs", updated);
+  const deleteSsrDoc = async (id) => {
+    try {
+      await deleteDoc(doc(db, "ssrDocs", id));
+      setSsrDocs((prev) => prev.filter((d) => d.id !== id));
+    } catch (e) {
+      console.error("Error deleting SSR document:", e);
+    }
   };
 
   // Library Rules CRUD
-  const addLibraryRule = (rule) => {
+  const addLibraryRule = async (rule) => {
     const newRule = { id: `lr-${Date.now()}`, ...rule };
-    const updated = [...libraryRules, newRule];
-    setLibraryRules(updated);
-    saveCollection("libraryRules", updated);
+    try {
+      await setDoc(doc(db, "libraryRules", newRule.id), newRule);
+      setLibraryRules((prev) => [...prev, newRule]);
+    } catch (e) {
+      console.error("Error adding library rule:", e);
+    }
   };
 
-  const updateLibraryRule = (id, updatedFields) => {
-    const updated = libraryRules.map((r) => (r.id === id ? { ...r, ...updatedFields } : r));
-    setLibraryRules(updated);
-    saveCollection("libraryRules", updated);
+  const updateLibraryRule = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "libraryRules", id), updatedFields);
+      setLibraryRules((prev) => prev.map((r) => (r.id === id ? { ...r, ...updatedFields } : r)));
+    } catch (e) {
+      console.error("Error updating library rule:", e);
+    }
   };
 
-  const deleteLibraryRule = (id) => {
-    const updated = libraryRules.filter((r) => r.id !== id);
-    setLibraryRules(updated);
-    saveCollection("libraryRules", updated);
+  const deleteLibraryRule = async (id) => {
+    try {
+      await deleteDoc(doc(db, "libraryRules", id));
+      setLibraryRules((prev) => prev.filter((r) => r.id !== id));
+    } catch (e) {
+      console.error("Error deleting library rule:", e);
+    }
   };
 
   // Research Committee CRUD
-  const updateResearchCommittee = (updatedFields) => {
-    const updated = { ...researchCommittee, ...updatedFields };
-    setResearchCommittee(updated);
-    saveCollection("researchCommittee", updated);
+  const updateResearchCommittee = async (updatedFields) => {
+    try {
+      const updated = { ...researchCommittee, ...updatedFields };
+      await setDoc(doc(db, "researchCommittee", "details"), updated);
+      setResearchCommittee(updated);
+    } catch (e) {
+      console.error("Error updating research committee:", e);
+    }
   };
 
   // Research Publications CRUD
-  const addResearchPublication = (pub) => {
+  const addResearchPublication = async (pub) => {
     const newPub = { id: `pub-${Date.now()}`, ...pub };
-    const updated = [...researchPublications, newPub];
-    setResearchPublications(updated);
-    saveCollection("researchPublications", updated);
+    try {
+      await setDoc(doc(db, "researchPublications", newPub.id), newPub);
+      setResearchPublications((prev) => [...prev, newPub]);
+    } catch (e) {
+      console.error("Error adding research publication:", e);
+    }
   };
 
-  const updateResearchPublication = (id, updatedFields) => {
-    const updated = researchPublications.map((p) => (p.id === id ? { ...p, ...updatedFields } : p));
-    setResearchPublications(updated);
-    saveCollection("researchPublications", updated);
+  const updateResearchPublication = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "researchPublications", id), updatedFields);
+      setResearchPublications((prev) => prev.map((p) => (p.id === id ? { ...p, ...updatedFields } : p)));
+    } catch (e) {
+      console.error("Error updating research publication:", e);
+    }
   };
 
-  const deleteResearchPublication = (id) => {
-    const updated = researchPublications.filter((p) => p.id !== id);
-    setResearchPublications(updated);
-    saveCollection("researchPublications", updated);
+  const deleteResearchPublication = async (id) => {
+    try {
+      await deleteDoc(doc(db, "researchPublications", id));
+      setResearchPublications((prev) => prev.filter((p) => p.id !== id));
+    } catch (e) {
+      console.error("Error deleting research publication:", e);
+    }
   };
 
   // Research Projects CRUD
-  const addResearchProject = (proj) => {
+  const addResearchProject = async (proj) => {
     const newProj = { id: `proj-${Date.now()}`, ...proj };
-    const updated = [...researchProjects, newProj];
-    setResearchProjects(updated);
-    saveCollection("researchProjects", updated);
+    try {
+      await setDoc(doc(db, "researchProjects", newProj.id), newProj);
+      setResearchProjects((prev) => [...prev, newProj]);
+    } catch (e) {
+      console.error("Error adding research project:", e);
+    }
   };
 
-  const updateResearchProject = (id, updatedFields) => {
-    const updated = researchProjects.map((p) => (p.id === id ? { ...p, ...updatedFields } : p));
-    setResearchProjects(updated);
-    saveCollection("researchProjects", updated);
+  const updateResearchProject = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "researchProjects", id), updatedFields);
+      setResearchProjects((prev) => prev.map((p) => (p.id === id ? { ...p, ...updatedFields } : p)));
+    } catch (e) {
+      console.error("Error updating research project:", e);
+    }
   };
 
-  const deleteResearchProject = (id) => {
-    const updated = researchProjects.filter((p) => p.id !== id);
-    setResearchProjects(updated);
-    saveCollection("researchProjects", updated);
+  const deleteResearchProject = async (id) => {
+    try {
+      await deleteDoc(doc(db, "researchProjects", id));
+      setResearchProjects((prev) => prev.filter((p) => p.id !== id));
+    } catch (e) {
+      console.error("Error deleting research project:", e);
+    }
   };
 
   // Research Events CRUD
-  const addResearchEvent = (rev) => {
+  const addResearchEvent = async (rev) => {
     const newRev = { id: `rev-${Date.now()}`, ...rev };
-    const updated = [...researchEvents, newRev];
-    setResearchEvents(updated);
-    saveCollection("researchEvents", updated);
+    try {
+      await setDoc(doc(db, "researchEvents", newRev.id), newRev);
+      setResearchEvents((prev) => [...prev, newRev]);
+    } catch (e) {
+      console.error("Error adding research event:", e);
+    }
   };
 
-  const updateResearchEvent = (id, updatedFields) => {
-    const updated = researchEvents.map((r) => (r.id === id ? { ...r, ...updatedFields } : r));
-    setResearchEvents(updated);
-    saveCollection("researchEvents", updated);
+  const updateResearchEvent = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "researchEvents", id), updatedFields);
+      setResearchEvents((prev) => prev.map((r) => (r.id === id ? { ...r, ...updatedFields } : r)));
+    } catch (e) {
+      console.error("Error updating research event:", e);
+    }
   };
 
-  const deleteResearchEvent = (id) => {
-    const updated = researchEvents.filter((r) => r.id !== id);
-    setResearchEvents(updated);
-    saveCollection("researchEvents", updated);
+  const deleteResearchEvent = async (id) => {
+    try {
+      await deleteDoc(doc(db, "researchEvents", id));
+      setResearchEvents((prev) => prev.filter((r) => r.id !== id));
+    } catch (e) {
+      console.error("Error deleting research event:", e);
+    }
   };
 
   return (

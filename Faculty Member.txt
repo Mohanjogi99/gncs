@@ -1,0 +1,47 @@
+01-	Super Admin
+User ID: mohan.jogi@live.com
+Password: Mohan@2026!Private
+
+02-	Principal Login:
+UserID: govtcollegesaragaon@gmail.com
+Password: PatelBK@2026!Admin
+
+
+Faculty Member Login ID & passwords
+User ID: kaushikpraveen90@gmail.com
+Password: Kaushik!Faculty@90
+User ID: chandrassi@gmail.com
+Password: chandra!ssi@28India 
+User ID: navalajgalley101@gmail.com
+Password: naval101@56Bharat
+User ID: yogeshkumarsahurc@gmail.com
+Password: yogesh26!Saragaon@ 
+User ID: ppradeep730@gmail.com
+Password: pradeep!730!India
+लॉगिन ईमेल (ID): ashishpatel6358@gmail.com
+पासवर्ड (Password): Ashish!Sports@63
+
+Government Naveen College Logo
+शासकीय नवीन महाविद्यालय, सारागांव
+
+
+Name: Chumman Lal 
+Designation - Lab Attendant 
+Qualification - M. Sc. Chemistry 
+Phone no - 9165384682
+Email - chummanlahare8@gmail.com
+
+Name - Satrupa Gond 
+Designation - Guest Lecturer (Botany) 
+Qualification -   M.Sc Botany, SET
+Phone No.: 8839835497
+Email: satrupagond24121997@gmail.com
+
+Name - Sangita Kumari Suryawanshi 
+Designation - Guest Lecturer (Zoology)
+Qualification - M.Sc. Zoology, M.Phil.
+Phone No - 9343113707
+Email - suryawanshisangita089@gmail.com
+
+https://gncs-henna.vercel.app/
+https://gncs.ink/
