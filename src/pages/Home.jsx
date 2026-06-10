@@ -431,7 +431,7 @@ export default function Home() {
             </div>
 
             {/* Modal content body */}
-            <div className="p-6 sm:p-8 overflow-y-auto space-y-4 text-justify">
+            <div className="p-6 sm:p-8 overflow-y-auto space-y-4 text-justify flex-1 min-h-0">
               <h3 className="text-lg sm:text-2xl font-bold text-primary font-hindi leading-tight">
                 {language === "hi" ? selectedNews.titleHindi : selectedNews.titleEnglish}
               </h3>
