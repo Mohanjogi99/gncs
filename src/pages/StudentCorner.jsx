@@ -330,7 +330,7 @@ export default function StudentCorner() {
                 <table className="w-full text-left text-xs sm:text-sm min-w-[650px] border-collapse">
                   <thead className="bg-surface-container-low border-b border-outline-variant font-bold text-on-surface-variant uppercase">
                     <tr>
-                      <th className="px-4 py-3 text-center w-16">SNo. / क्र.सं.</th>
+                      <th className="px-4 py-3 text-center w-16">क्र.सं.</th>
                       <th className="px-4 py-3">{language === "hi" ? "प्रयोग का विवरण" : "Experiment Name & Description"}</th>
                       <th className="px-4 py-3">{language === "hi" ? "आवश्यक उपकरण/संसाधन" : "Required Instruments/Resources"}</th>
                     </tr>
