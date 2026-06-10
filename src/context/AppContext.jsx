@@ -69,6 +69,7 @@ export const AppProvider = ({ children }) => {
   const [researchCommittee, setResearchCommittee] = useState({});
   const [researchPublications, setResearchPublications] = useState([]);
   const [researchProjects, setResearchProjects] = useState([]);
+  const [researchEvents, setResearchEvents] = useState([]);
   const [admissionHelpDesk, setAdmissionHelpDesk] = useState([]);
   const [labFacilities, setLabFacilities] = useState([]);
 
@@ -115,6 +116,7 @@ export const AppProvider = ({ children }) => {
 
         setResearchPublications(await fetchCollection("researchPublications"));
         setResearchProjects(await fetchCollection("researchProjects"));
+        setResearchEvents(await fetchCollection("researchEvents"));
         setAdmissionHelpDesk(await fetchCollection("admissionHelpDesk"));
         setLabFacilities(await fetchCollection("labFacilities"));
 
