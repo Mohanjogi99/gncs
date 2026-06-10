@@ -117,7 +117,7 @@ export default function FacultyCorner() {
               className="bg-white p-6 rounded-3xl border border-outline-variant/60 shadow-sm flex flex-col justify-between space-y-4 group hover:border-secondary transition-all"
             >
               <div className="flex gap-4">
-                {fac.biodataUrl ? (
+                {fac.biodataUrl && fac.biodataUrl.length > 50 ? (
                   <a
                     href={`/biodata/${fac.id}`}
                     target="_blank"

@@ -232,7 +232,7 @@ export default function Home() {
               key={fac.id}
               className="min-w-[260px] max-w-[260px] bg-white p-5 rounded-3xl border border-outline-variant/60 shadow-sm hover:shadow-md hover:border-secondary transition-all snap-start flex flex-col items-center text-center space-y-4 group"
             >
-              {fac.biodataUrl ? (
+              {fac.biodataUrl && fac.biodataUrl.length > 50 ? (
                 <a
                   href={`/biodata/${fac.id}`}
                   target="_blank"

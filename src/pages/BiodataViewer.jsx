@@ -21,7 +21,7 @@ export default function BiodataViewer() {
     );
   }
 
-  if (!member.biodataUrl) {
+  if (!member.biodataUrl || member.biodataUrl.length <= 50) {
     return (
       <div className="max-w-md mx-auto my-12 p-8 text-center bg-white rounded-3xl border border-outline-variant/60 shadow-sm space-y-4">
         <span className="material-symbols-outlined text-secondary text-5xl">description</span>
