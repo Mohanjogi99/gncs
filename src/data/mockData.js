@@ -252,7 +252,11 @@ export const initialFaculty = [
     phone: "9893907415",
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-2.png",
     bioEnglish: "Dr. Chandra specializes in Solid State Ionics with extensive teaching and research experience.",
-    bioHindi: "डॉ. चंद्र व्यापक अध्यापन और अनुसंधान अनुभव के साथ सॉलिड स्टेट आयोनिक्स में विशेषज्ञ हैं।"
+    bioHindi: "डॉ. चंद्र व्यापक अध्यापन और अनुसंधान अनुभव के साथ सॉलिड स्टेट आयोनिक्स में विशेषज्ञ हैं।",
+    patentCount: 1,
+    booksCount: 0,
+    bookChaptersCount: 2,
+    researchPapersCount: 5
   },
   {
     id: "fac-4",
@@ -264,7 +268,11 @@ export const initialFaculty = [
     phone: "9893907415",
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-4.png",
     bioEnglish: "Instructs inorganic and physical chemistry, encouraging laboratory research.",
-    bioHindi: "अकार्बनिक और भौतिक रसायन विज्ञान पढ़ाते हैं, प्रयोगशाला अनुसंधान को बढ़ावा देते हैं।"
+    bioHindi: "अकार्बनिक और भौतिक रसायन विज्ञान पढ़ाते हैं, प्रयोगशाला अनुसंधान को बढ़ावा देते हैं।",
+    patentCount: 0,
+    booksCount: 1,
+    bookChaptersCount: 1,
+    researchPapersCount: 4
   },
   {
     id: "fac-5",
@@ -276,7 +284,11 @@ export const initialFaculty = [
     phone: "9893907415",
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-5.png",
     bioEnglish: "Teaches physical geography and GIS applications, organizing field study tours.",
-    bioHindi: "भौतिक भूगोल और जीआईएस अनुप्रयोगों को पढ़ाते हैं, फील्ड अध्ययन दौरों का आयोजन करते हैं।"
+    bioHindi: "भौतिक भूगोल और जीआईएस अनुप्रयोगों को पढ़ाते हैं, फील्ड अध्ययन दौरों का आयोजन करते हैं।",
+    patentCount: 0,
+    booksCount: 0,
+    bookChaptersCount: 1,
+    researchPapersCount: 2
   },
   {
     id: "fac-6",
@@ -288,7 +300,11 @@ export const initialFaculty = [
     phone: "9893907415",
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-7.png",
     bioEnglish: "Specializes in public administration and Indian political thought.",
-    bioHindi: "लोक प्रशासन और भारतीय राजनीतिक विचारों में विशेषज्ञता रखते हैं।"
+    bioHindi: "लोक प्रशासन और भारतीय राजनीतिक विचारों में विशेषज्ञता रखते हैं।",
+    patentCount: 0,
+    booksCount: 0,
+    bookChaptersCount: 0,
+    researchPapersCount: 3
   },
   {
     id: "fac-7",
@@ -300,7 +316,11 @@ export const initialFaculty = [
     phone: "9893907415",
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-8.png",
     bioEnglish: "Conducts sociology and rural community studies, guiding student research projects.",
-    bioHindi: "समाजशास्त्र और ग्रामीण सामुदायिक अध्ययन का संचालन करते हैं, छात्र अनुसंधान परियोजनाओं का मार्गदर्शन करते हैं।"
+    bioHindi: "समाजशास्त्र और ग्रामीण सामुदायिक अध्ययन का संचालन करते हैं, छात्र अनुसंधान परियोजनाओं का मार्गदर्शन करते हैं।",
+    patentCount: 0,
+    booksCount: 1,
+    bookChaptersCount: 1,
+    researchPapersCount: 3
   },
   {
     id: "fac-8",
@@ -312,7 +332,11 @@ export const initialFaculty = [
     phone: "9893907415",
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-9.png",
     bioEnglish: "Instructs financial accounting, business statistics, and taxation systems.",
-    bioHindi: "वित्तीय लेखांकन, व्यावसायिक सांख्यिकी और कराधान प्रणाली पढ़ाते हैं।"
+    bioHindi: "वित्तीय लेखांकन, व्यावसायिक सांख्यिकी और कराधान प्रणाली पढ़ाते हैं।",
+    patentCount: 0,
+    booksCount: 0,
+    bookChaptersCount: 0,
+    researchPapersCount: 1
   },
   {
     id: "fac-9",
@@ -324,7 +348,11 @@ export const initialFaculty = [
     phone: "9893907415",
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-18.jpg",
     bioEnglish: "Guides students in English communication skills and classic English literature studies.",
-    bioHindi: "अंग्रेजी संचार कौशल और शास्त्रीय अंग्रेजी साहित्य अध्ययन में छात्रों का मार्गदर्शन करती हैं।"
+    bioHindi: "अंग्रेजी संचार कौशल और शास्त्रीय अंग्रेजी साहित्य अध्ययन में छात्रों का मार्गदर्शन करती हैं।",
+    patentCount: 0,
+    booksCount: 0,
+    bookChaptersCount: 0,
+    researchPapersCount: 2
   },
   {
     id: "fac-10",
@@ -336,7 +364,11 @@ export const initialFaculty = [
     phone: "9893907415",
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-19.jpg",
     bioEnglish: "Focuses on business economics, corporate management, and auditing principles.",
-    bioHindi: "व्यावसायिक अर्थशास्त्र, कॉर्पोरेट प्रबंधन और ऑडिटिंग सिद्धांतों पर ध्यान केंद्रित करती हैं।"
+    bioHindi: "व्यावसायिक अर्थशास्त्र, कॉर्पोरेट प्रबंधन और ऑडिटिंग सिद्धांतों पर ध्यान केंद्रित करती हैं।",
+    patentCount: 0,
+    booksCount: 0,
+    bookChaptersCount: 0,
+    researchPapersCount: 0
   },
   {
     id: "fac-11",
@@ -348,7 +380,11 @@ export const initialFaculty = [
     phone: "9893907415",
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-20.png",
     bioEnglish: "Manages the college central library, digital archives, and reference services.",
-    bioHindi: "महाविद्यालय के केंद्रीय पुस्तकालय, डिजिटल अभिलेखागार और संदर्भ सेवाओं का प्रबंधन करती हैं।"
+    bioHindi: "महाविद्यालय के केंद्रीय पुस्तकालय, डिजिटल अभिलेखागार और संदर्भ सेवाओं का प्रबंधन करती हैं।",
+    patentCount: 0,
+    booksCount: 0,
+    bookChaptersCount: 0,
+    researchPapersCount: 0
   },
   {
     id: "fac-12",
@@ -372,7 +408,11 @@ export const initialFaculty = [
     phone: "9893907415",
     photoUrl: "https://gncsaragaon.in/public/uploads/team-member-23.png",
     bioEnglish: "Teaches Hindi literature, grammar, and regional language history.",
-    bioHindi: "हिंदी साहित्य, व्याकरण और क्षेत्रीय भाषा के इतिहास का अध्यापन करते हैं।"
+    bioHindi: "हिंदी साहित्य, व्याकरण और क्षेत्रीय भाषा के इतिहास का अध्यापन करते हैं।",
+    patentCount: 0,
+    booksCount: 2,
+    bookChaptersCount: 0,
+    researchPapersCount: 2
   },
   {
     id: "fac-15",

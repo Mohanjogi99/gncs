@@ -2,9 +2,14 @@ import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 
 export default function Research() {
-  const { language, t, researchCommittee, researchPublications, researchProjects, researchEvents } = useContext(AppContext);
+  const { language, t, researchCommittee, researchPublications, researchProjects, researchEvents, faculty } = useContext(AppContext);
   
   const [pubSearch, setPubSearch] = useState("");
+
+  const targetFacultyIds = ["fac-2", "fac-7", "fac-6", "fac-14", "fac-4", "fac-5", "fac-8", "fac-10", "fac-9", "fac-11"];
+  const summaryFaculty = targetFacultyIds
+    .map(id => (faculty || []).find(fac => fac.id === id))
+    .filter(Boolean);
 
   const currentCommittee = researchCommittee || {};
   const currentPublications = researchPublications || [];
@@ -136,6 +141,87 @@ export default function Research() {
             ))}
           </div>
         )}
+      </section>
+
+      {/* Publications Summary Report (docx style) */}
+      <section className="bg-white p-6 sm:p-8 rounded-3xl border border-outline-variant/60 shadow-sm space-y-4">
+        <h3 className="text-lg sm:text-xl font-bold text-primary border-b border-outline-variant pb-2 flex items-center gap-2">
+          <span className="material-symbols-outlined text-secondary">analytics</span>
+          {language === "hi" ? "संकाय प्रकाशनों का संक्षिप्त विवरण" : "Summary of Faculty Publications"}
+        </h3>
+        <p className="text-xs text-on-surface-variant leading-relaxed">
+          {language === "hi" 
+            ? "विभिन्न संकायों द्वारा पेटेंट, पुस्तकें, पुस्तक अध्याय और शोध पत्रों के प्रकाशन का समेकित विवरण नीचे दिया गया है (List of PublicationsDate.docx के अनुसार):"
+            : "Consolidated report of Patents, Books, Book Chapters, and Research Papers published by the college faculty members (as per List of PublicationsDate.docx):"}
+        </p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="border-b border-outline-variant text-secondary font-bold bg-surface-container-low/50">
+                <th className="py-3 px-3 text-center w-12">SNo.</th>
+                <th className="py-3 px-3">{language === "hi" ? "संकाय सदस्य का नाम" : "Name of Faculty"}</th>
+                <th className="py-3 px-3">{language === "hi" ? "पद" : "Designation"}</th>
+                <th className="py-3 px-3 text-center">{language === "hi" ? "पेटेंट" : "Patent"}</th>
+                <th className="py-3 px-3 text-center">{language === "hi" ? "पुस्तकें" : "Books"}</th>
+                <th className="py-3 px-3 text-center">{language === "hi" ? "पुस्तक अध्याय" : "Book Chapters"}</th>
+                <th className="py-3 px-3 text-center">{language === "hi" ? "शोध पत्र" : "Research Papers"}</th>
+                <th className="py-3 px-3 text-center bg-secondary-container/10 font-extrabold">{language === "hi" ? "कुल योग" : "Total"}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-outline-variant/40">
+              {summaryFaculty.map((fac, idx) => {
+                const patent = fac.patentCount || 0;
+                const books = fac.booksCount || 0;
+                const chapters = fac.bookChaptersCount || 0;
+                const papers = fac.researchPapersCount || 0;
+                const total = patent + books + chapters + papers;
+                return (
+                  <tr key={fac.id} className="hover:bg-surface-container-lowest transition-colors">
+                    <td className="py-3 px-3 text-center font-medium text-on-surface-variant">{idx + 1}</td>
+                    <td className="py-3 px-3 font-bold text-on-surface">{fac.name}</td>
+                    <td className="py-3 px-3 text-on-surface-variant">{fac.designation}</td>
+                    <td className="py-3 px-3 text-center font-semibold text-on-surface-variant">{patent}</td>
+                    <td className="py-3 px-3 text-center font-semibold text-on-surface-variant">{books}</td>
+                    <td className="py-3 px-3 text-center font-semibold text-on-surface-variant">{chapters}</td>
+                    <td className="py-3 px-3 text-center font-semibold text-on-surface-variant">{papers}</td>
+                    <td className="py-3 px-3 text-center font-extrabold text-primary bg-secondary-container/5">{total}</td>
+                  </tr>
+                );
+              })}
+              
+              {/* Aggregates Row */}
+              {summaryFaculty.length > 0 && (
+                <tr className="bg-surface-container-low font-bold border-t-2 border-outline-variant">
+                  <td className="py-3.5 px-3 text-center"></td>
+                  <td className="py-3.5 px-3 text-primary uppercase text-[10px] tracking-wider" colSpan={2}>
+                    {language === "hi" ? "कुल योग" : "Aggregate Total"}
+                  </td>
+                  <td className="py-3.5 px-3 text-center text-on-surface">
+                    {summaryFaculty.reduce((acc, fac) => acc + (fac.patentCount || 0), 0)}
+                  </td>
+                  <td className="py-3.5 px-3 text-center text-on-surface">
+                    {summaryFaculty.reduce((acc, fac) => acc + (fac.booksCount || 0), 0)}
+                  </td>
+                  <td className="py-3.5 px-3 text-center text-on-surface">
+                    {summaryFaculty.reduce((acc, fac) => acc + (fac.bookChaptersCount || 0), 0)}
+                  </td>
+                  <td className="py-3.5 px-3 text-center text-on-surface">
+                    {summaryFaculty.reduce((acc, fac) => acc + (fac.researchPapersCount || 0), 0)}
+                  </td>
+                  <td className="py-3.5 px-3 text-center text-primary font-black bg-secondary-container/20">
+                    {summaryFaculty.reduce((acc, fac) => {
+                      const p = fac.patentCount || 0;
+                      const b = fac.booksCount || 0;
+                      const c = fac.bookChaptersCount || 0;
+                      const r = fac.researchPapersCount || 0;
+                      return acc + p + b + c + r;
+                    }, 0)}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </section>
 
       {/* Academic Publications */}

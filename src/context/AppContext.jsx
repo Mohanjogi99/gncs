@@ -399,6 +399,15 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const updateGalleryItem = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "gallery", id), updatedFields);
+      setGallery((prev) => prev.map((g) => (g.id === id ? { ...g, ...updatedFields } : g)));
+    } catch (e) {
+      console.error("Error updating gallery item:", e);
+    }
+  };
+
   // CRUD for Contact Messages
   const addContactMessage = async (msg) => {
     const newMsg = {
@@ -791,6 +800,7 @@ export const AppProvider = ({ children }) => {
         deleteDownload,
         gallery,
         addGalleryItem,
+        updateGalleryItem,
         deleteGalleryItem,
         contactMessages,
         addContactMessage,

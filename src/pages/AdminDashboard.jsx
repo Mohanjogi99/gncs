@@ -26,6 +26,7 @@ export default function AdminDashboard() {
     updateContactMessageStatus,
     gallery,
     addGalleryItem,
+    updateGalleryItem,
     deleteGalleryItem,
     newsEvents,
     addNewsEvent,
@@ -244,6 +245,13 @@ export default function AdminDashboard() {
   const [editingProj, setEditingProj] = useState(null);
   const [isAddingEvent, setIsAddingEvent] = useState(false);
   const [editingEvent, setEditingEvent] = useState(null);
+  const [editingSummaryFac, setEditingSummaryFac] = useState(null); // holds faculty object for summary editing
+  const [summaryForm, setSummaryForm] = useState({
+    patentCount: 0,
+    booksCount: 0,
+    bookChaptersCount: 0,
+    researchPapersCount: 0
+  });
 
   // Department and Subject state
   const [selectedDeptId, setSelectedDeptId] = useState("dept-arts");
@@ -307,7 +315,7 @@ export default function AdminDashboard() {
       return ["overview", "notices", "downloads"].includes(moduleName);
     }
     if (role === "Faculty") {
-      return ["overview", "downloads", "messages", "gallery", "news"].includes(moduleName);
+      return ["overview", "downloads", "messages", "gallery", "news", "research"].includes(moduleName);
     }
     return false;
   };
@@ -388,7 +396,11 @@ export default function AdminDashboard() {
 
   const handleSaveGallery = (e) => {
     e.preventDefault();
-    addGalleryItem(galleryForm);
+    if (editingItem) {
+      updateGalleryItem(editingItem.id, galleryForm);
+    } else {
+      addGalleryItem(galleryForm);
+    }
     closeForm();
   };
 
@@ -622,6 +634,24 @@ export default function AdminDashboard() {
     setIsAddingEvent(false);
   };
 
+  const handleSaveSummary = async (e) => {
+    e.preventDefault();
+    if (!editingSummaryFac) return;
+    try {
+      await updateFaculty(editingSummaryFac.id, {
+        patentCount: parseInt(summaryForm.patentCount) || 0,
+        booksCount: parseInt(summaryForm.booksCount) || 0,
+        bookChaptersCount: parseInt(summaryForm.bookChaptersCount) || 0,
+        researchPapersCount: parseInt(summaryForm.researchPapersCount) || 0
+      });
+      alert("Publication counts updated successfully!");
+      setEditingSummaryFac(null);
+    } catch (err) {
+      console.error("Error updating publication summary:", err);
+      alert("Failed to update publication counts.");
+    }
+  };
+
   const handleSaveDeptInfo = (e) => {
     e.preventDefault();
     updateDepartment(selectedDeptId, {
@@ -708,6 +738,13 @@ export default function AdminDashboard() {
       setReqDocForm({ labelEn: item.labelEn, labelHi: item.labelHi });
     } else if (activeMenu === "library") {
       setLibraryRuleForm({ ruleEn: item.ruleEn, ruleHi: item.ruleHi });
+    } else if (activeMenu === "gallery") {
+      setGalleryForm({
+        albumTitle: item.albumTitle || "",
+        caption: item.caption || "",
+        eventDate: item.eventDate || new Date().toISOString().split("T")[0],
+        imageUrl: item.imageUrl || ""
+      });
     }
   };
 
@@ -2046,16 +2083,24 @@ export default function AdminDashboard() {
                     </div>
                     <div className="flex justify-between items-center mt-2">
                       <span className="text-[9px] text-outline font-bold">{g.eventDate}</span>
-                      <button
-                        onClick={() => {
-                          if (window.confirm("Are you sure you want to delete this photo?")) {
-                            deleteGalleryItem(g.id);
-                          }
-                        }}
-                        className="text-error hover:bg-error/5 p-1 rounded"
-                      >
-                        <span className="material-symbols-outlined text-base">delete</span>
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => openEditForm(g)}
+                          className="text-primary hover:bg-primary/5 p-1 rounded"
+                        >
+                          <span className="material-symbols-outlined text-base">edit</span>
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (window.confirm("Are you sure you want to delete this photo?")) {
+                              deleteGalleryItem(g.id);
+                            }
+                          }}
+                          className="text-error hover:bg-error/5 p-1 rounded"
+                        >
+                          <span className="material-symbols-outlined text-base">delete</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2910,6 +2955,7 @@ export default function AdminDashboard() {
                     setEditingProj(null);
                     setIsAddingEvent(false);
                     setEditingEvent(null);
+                    setEditingSummaryFac(null);
                   }}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 ${
                     researchSubTab === "committee"
@@ -2929,6 +2975,7 @@ export default function AdminDashboard() {
                     setEditingProj(null);
                     setIsAddingEvent(false);
                     setEditingEvent(null);
+                    setEditingSummaryFac(null);
                   }}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 ${
                     researchSubTab === "publications"
@@ -2948,6 +2995,7 @@ export default function AdminDashboard() {
                     setEditingProj(null);
                     setIsAddingEvent(false);
                     setEditingEvent(null);
+                    setEditingSummaryFac(null);
                   }}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 ${
                     researchSubTab === "projects"
@@ -2967,6 +3015,7 @@ export default function AdminDashboard() {
                     setEditingProj(null);
                     setIsAddingEvent(false);
                     setEditingEvent(null);
+                    setEditingSummaryFac(null);
                   }}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 ${
                     researchSubTab === "events"
@@ -2976,6 +3025,26 @@ export default function AdminDashboard() {
                 >
                   <span className="material-symbols-outlined text-lg">event_available</span>
                   Seminars & Workshops | सेमीनार एवं कार्यशाला
+                </button>
+                <button
+                  onClick={() => {
+                    setResearchSubTab("summaryReport");
+                    setIsAddingPub(false);
+                    setEditingPub(null);
+                    setIsAddingProj(false);
+                    setEditingProj(null);
+                    setIsAddingEvent(false);
+                    setEditingEvent(null);
+                    setEditingSummaryFac(null);
+                  }}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 ${
+                    researchSubTab === "summaryReport"
+                      ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/15"
+                      : "bg-white text-indigo-900 border border-indigo-100 hover:bg-indigo-50/50"
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-lg">analytics</span>
+                  Publications Summary | प्रकाशन सारांश
                 </button>
               </div>
 
@@ -3486,6 +3555,160 @@ export default function AdminDashboard() {
                               </td>
                             </tr>
                           )}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Subtab 5: Publications Summary Report */}
+              {researchSubTab === "summaryReport" && (
+                <div className="space-y-4 animate-fadeIn">
+                  <h4 className="font-bold text-sm text-primary border-b border-outline-variant/60 pb-2 flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-secondary text-lg">analytics</span>
+                    Publications Summary Report | संकाय प्रकाशन रिपोर्ट सारांश
+                  </h4>
+
+                  {editingSummaryFac ? (
+                    <form onSubmit={handleSaveSummary} className="bg-surface-container-low p-5 rounded-xl border border-outline-variant space-y-4 text-xs sm:text-sm max-w-xl animate-fadeIn">
+                      <h5 className="font-bold text-xs text-primary flex items-center gap-1">
+                        <span className="material-symbols-outlined text-base">edit</span>
+                        Edit Counts for {editingSummaryFac.name}
+                      </h5>
+                      <p className="text-[11px] text-on-surface-variant font-medium">Designation: {editingSummaryFac.designation}</p>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Patents / पेटेंट *</label>
+                          <input
+                            type="number"
+                            min="0"
+                            required
+                            value={summaryForm.patentCount}
+                            onChange={(e) => setSummaryForm({ ...summaryForm, patentCount: parseInt(e.target.value) || 0 })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Books / पुस्तकें *</label>
+                          <input
+                            type="number"
+                            min="0"
+                            required
+                            value={summaryForm.booksCount}
+                            onChange={(e) => setSummaryForm({ ...summaryForm, booksCount: parseInt(e.target.value) || 0 })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Book Chapters / पुस्तक अध्याय *</label>
+                          <input
+                            type="number"
+                            min="0"
+                            required
+                            value={summaryForm.bookChaptersCount}
+                            onChange={(e) => setSummaryForm({ ...summaryForm, bookChaptersCount: parseInt(e.target.value) || 0 })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="font-bold">Research Papers / शोध पत्र *</label>
+                          <input
+                            type="number"
+                            min="0"
+                            required
+                            value={summaryForm.researchPapersCount}
+                            onChange={(e) => setSummaryForm({ ...summaryForm, researchPapersCount: parseInt(e.target.value) || 0 })}
+                            className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex gap-2 justify-end pt-2">
+                        <button
+                          type="button"
+                          onClick={() => setEditingSummaryFac(null)}
+                          className="px-3 py-1.5 border border-outline rounded-lg font-bold"
+                        >
+                          Cancel
+                        </button>
+                        <button type="submit" className="px-4 py-1.5 bg-primary text-white rounded-lg font-bold shadow hover:bg-primary/95 transition-all">
+                          Save Counts
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="border border-outline-variant rounded-xl overflow-hidden overflow-x-auto">
+                      <table className="w-full text-left text-xs sm:text-sm min-w-[700px]">
+                        <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                          <tr>
+                            <th className="px-3 py-2.5 text-center w-12">SNo.</th>
+                            <th className="px-3 py-2.5">Faculty Name</th>
+                            <th className="px-3 py-2.5">Designation</th>
+                            <th className="px-3 py-2.5 text-center">Patent</th>
+                            <th className="px-3 py-2.5 text-center">Books</th>
+                            <th className="px-3 py-2.5 text-center">Book Chapters</th>
+                            <th className="px-3 py-2.5 text-center">Research Papers</th>
+                            <th className="px-3 py-2.5 text-center">Total</th>
+                            <th className="px-3 py-2.5 text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-outline-variant/60 bg-white">
+                          {(() => {
+                            const targetIds = ["fac-2", "fac-7", "fac-6", "fac-14", "fac-4", "fac-5", "fac-8", "fac-10", "fac-9", "fac-11"];
+                            const summaryFacList = targetIds
+                              .map(id => (faculty || []).find(fac => fac.id === id))
+                              .filter(Boolean);
+                            
+                            return (
+                              <>
+                                {summaryFacList.map((fac, idx) => {
+                                  const patent = fac.patentCount || 0;
+                                  const books = fac.booksCount || 0;
+                                  const chapters = fac.bookChaptersCount || 0;
+                                  const papers = fac.researchPapersCount || 0;
+                                  const total = patent + books + chapters + papers;
+                                  return (
+                                    <tr key={fac.id} className="hover:bg-surface-container-low/40">
+                                      <td className="px-3 py-2.5 text-center font-medium text-on-surface-variant">{idx + 1}</td>
+                                      <td className="px-3 py-2.5 font-bold text-primary">{fac.name}</td>
+                                      <td className="px-3 py-2.5 text-on-surface-variant">{fac.designation}</td>
+                                      <td className="px-3 py-2.5 text-center font-semibold">{patent}</td>
+                                      <td className="px-3 py-2.5 text-center font-semibold">{books}</td>
+                                      <td className="px-3 py-2.5 text-center font-semibold">{chapters}</td>
+                                      <td className="px-3 py-2.5 text-center font-semibold">{papers}</td>
+                                      <td className="px-3 py-2.5 text-center font-bold text-primary bg-secondary-container/5">{total}</td>
+                                      <td className="px-3 py-2.5 text-center">
+                                        <button
+                                          onClick={() => {
+                                            setEditingSummaryFac(fac);
+                                            setSummaryForm({
+                                              patentCount: fac.patentCount || 0,
+                                              booksCount: fac.booksCount || 0,
+                                              bookChaptersCount: fac.bookChaptersCount || 0,
+                                              researchPapersCount: fac.researchPapersCount || 0
+                                            });
+                                          }}
+                                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold text-white bg-secondary hover:bg-secondary/95 rounded-lg transition-all shadow-sm"
+                                        >
+                                          <span className="material-symbols-outlined text-[14px]">edit</span>
+                                          Edit Counts
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                                {summaryFacList.length === 0 && (
+                                  <tr>
+                                    <td colSpan="9" className="px-4 py-8 text-center text-on-surface-variant italic">
+                                      No academic faculty records found.
+                                    </td>
+                                  </tr>
+                                )}
+                              </>
+                            );
+                          })()}
                         </tbody>
                       </table>
                     </div>
