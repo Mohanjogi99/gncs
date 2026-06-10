@@ -1,0 +1,20 @@
+{
+  "collegeNameEn": "Govt Naveen College, Saragaon",
+  "collegeNameHi": "शासकीय नवीन महाविद्यालय, सारागांव",
+  "affiliatedUniversityEn": "Affiliated to Shaheed Nandkumar Patel Vishwavidyalaya, Raigarh",
+  "affiliatedUniversityHi": "शहीद नंदकुमार पटेल विश्वविद्यालय, रायगढ़ से संबद्ध",
+  "campusDetailsEn": "J.D.M. Govt. Girls School Campus, Saragaon",
+  "campusDetailsHi": "जे.डी.एम. शासकीय कन्या शाला परिसर, सारागांव",
+  "districtNameEn": "Janjgir-Champa (Chhattisgarh)",
+  "districtNameHi": "जांजगीर-चांपा (छत्तीसगढ़)",
+  "phoneNumbers": "7722861400",
+  "emailAddress": "govtcollegesaragaon@gmail.com",
+  "firebaseConfig": {
+    "apiKey": "AIzaSyBgE0E4jx5mkPvehLi0WMe8whsmE-i6PS0",
+    "authDomain": "gncs-portal.firebaseapp.com",
+    "projectId": "gncs-portal",
+    "storageBucket": "gncs-portal.firebasestorage.app",
+    "messagingSenderId": "809412263741",
+    "appId": "1:809412263741:web:48df8970c87335d9490f54"
+  }
+}
