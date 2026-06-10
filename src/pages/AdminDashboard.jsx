@@ -116,7 +116,8 @@ export default function AdminDashboard() {
     phone: "",
     bioEnglish: "",
     bioHindi: "",
-    photoUrl: ""
+    photoUrl: "",
+    biodataUrl: ""
   });
 
   // Course form states
@@ -704,7 +705,7 @@ export default function AdminDashboard() {
     // Reset forms
     setNoticeForm({ titleEnglish: "", titleHindi: "", category: "Admission", isImportant: false });
     setDownloadForm({ titleEnglish: "", titleHindi: "", category: "Admission Forms", fileUrl: "" });
-    setFacultyForm({ name: "", designation: "Assistant Professor", department: "Arts", qualification: "", email: "", phone: "", bioEnglish: "", bioHindi: "", photoUrl: "" });
+    setFacultyForm({ name: "", designation: "Assistant Professor", department: "Arts", qualification: "", email: "", phone: "", bioEnglish: "", bioHindi: "", photoUrl: "", biodataUrl: "" });
     setCourseForm({ name: "", stream: "Arts", duration: "3 Years / 3 वर्ष", eligibility: "", seats: 60, fee: "₹2,500 per annum", level: "UG" });
     setGalleryForm({ albumTitle: "", caption: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA72eXokI1lfD95EVEcAR3osAynjp5wfvMvtugkG0bOK_1g7YRvPOwJ9wt9EJEZ3Y_BmjOJaIOxTaTTAvU5DXyuczs0S2DFGtNUoqki8h5n4vVrke8WF1PhFl1l-JCcRYdRvFwUK4JeXDTYSNJfu3QYoW78eZe6BHq7D86Cz2tSUTBb36y99fbjn7vNRs9HjRIxAKwB-ZVe43KBDGY5iP0Y3NY5TBsYHSzTW-XRE9yDpqIV4ABK9EMBoWzT1uHO4Fi6fYj4KIqe6lg" });
     setNewsForm({ titleEnglish: "", titleHindi: "", descriptionEnglish: "", descriptionHindi: "", contentEnglish: "", contentHindi: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg" });
@@ -724,7 +725,7 @@ export default function AdminDashboard() {
     } else if (activeMenu === "downloads") {
       setDownloadForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, category: item.category, fileUrl: item.fileUrl || "" });
     } else if (activeMenu === "faculty") {
-      setFacultyForm({ name: item.name, designation: item.designation, department: item.department, qualification: item.qualification, email: item.email, phone: item.phone, bioEnglish: item.bioEnglish, bioHindi: item.bioHindi, photoUrl: item.photoUrl || "" });
+      setFacultyForm({ name: item.name, designation: item.designation, department: item.department, qualification: item.qualification, email: item.email, phone: item.phone, bioEnglish: item.bioEnglish, bioHindi: item.bioHindi, photoUrl: item.photoUrl || "", biodataUrl: item.biodataUrl || "" });
     } else if (activeMenu === "courses") {
       setCourseForm({ name: item.name, stream: item.stream, duration: item.duration, eligibility: item.eligibility, seats: item.seats, fee: item.fee, level: item.level || "UG" });
     } else if (activeMenu === "news") {
@@ -1178,6 +1179,59 @@ export default function AdminDashboard() {
                           />
                         ) : (
                           <span className="material-symbols-outlined text-outline text-3xl font-light">person</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center">
+                      <label className="font-bold">Biodata PDF (अपलोड या URL)</label>
+                      {facultyForm.biodataUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setFacultyForm(prev => ({ ...prev, biodataUrl: "" }))}
+                          className="text-xs text-error hover:underline flex items-center gap-0.5"
+                        >
+                          <span className="material-symbols-outlined text-xs">delete</span>
+                          Remove PDF
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                      <div className="flex-1 w-full space-y-2">
+                        <input
+                          type="file"
+                          accept="application/pdf"
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              triggerSimulatedUpload(() => {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                  setFacultyForm(prev => ({ ...prev, biodataUrl: reader.result }));
+                                };
+                                reader.readAsDataURL(file);
+                              });
+                            }
+                          }}
+                          className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer"
+                        />
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-on-surface-variant font-bold">OR URL:</span>
+                          <input
+                            type="url"
+                            placeholder="https://example.com/biodata.pdf"
+                            value={facultyForm.biodataUrl || ""}
+                            onChange={(e) => setFacultyForm({ ...facultyForm, biodataUrl: e.target.value })}
+                            className="w-full flex-1 px-3 py-1.5 rounded-lg border border-outline-variant bg-white outline-none text-xs"
+                          />
+                        </div>
+                      </div>
+                      <div className="w-16 h-16 rounded-xl shrink-0 border-2 border-primary/20 bg-surface-container-low flex items-center justify-center shadow-inner">
+                        {facultyForm.biodataUrl ? (
+                          <span className="material-symbols-outlined text-secondary text-3xl">picture_as_pdf</span>
+                        ) : (
+                          <span className="material-symbols-outlined text-outline text-3xl font-light">description</span>
                         )}
                       </div>
                     </div>

@@ -232,13 +232,32 @@ export default function Home() {
               key={fac.id}
               className="min-w-[260px] max-w-[260px] bg-white p-5 rounded-3xl border border-outline-variant/60 shadow-sm hover:shadow-md hover:border-secondary transition-all snap-start flex flex-col items-center text-center space-y-4 group"
             >
-              <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-secondary transition-all shadow-inner">
-                <img
-                  src={fac.photoUrl || "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"}
-                  alt={fac.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300"
-                />
-              </div>
+              {fac.biodataUrl ? (
+                <a
+                  href={fac.biodataUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-secondary hover:scale-105 hover:shadow-md transition-all duration-300 shadow-inner relative block cursor-pointer group/photo"
+                  title={language === "hi" ? "बायोडाटा देखने के लिए क्लिक करें" : "Click to view Biodata"}
+                >
+                  <img
+                    src={fac.photoUrl || "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"}
+                    alt={fac.name}
+                    className="w-full h-full object-cover group-hover/photo:scale-110 transition-all duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/photo:opacity-100 flex items-center justify-center transition-opacity">
+                    <span className="material-symbols-outlined text-white text-3xl">picture_as_pdf</span>
+                  </div>
+                </a>
+              ) : (
+                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-secondary transition-all shadow-inner">
+                  <img
+                    src={fac.photoUrl || "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"}
+                    alt={fac.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300"
+                  />
+                </div>
+              )}
               <div className="space-y-1 w-full">
                 <h4 className="font-bold text-base text-primary group-hover:text-secondary transition-colors truncate">
                   {fac.name}

@@ -117,16 +117,38 @@ export default function FacultyCorner() {
               className="bg-white p-6 rounded-3xl border border-outline-variant/60 shadow-sm flex flex-col justify-between space-y-4 group hover:border-secondary transition-all"
             >
               <div className="flex gap-4">
-                <div className="w-16 h-16 bg-surface-container rounded-2xl overflow-hidden shrink-0 border border-outline-variant">
-                  <img
-                    src={
-                      fac.photoUrl ||
-                      "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"
-                    }
-                    alt={fac.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                {fac.biodataUrl ? (
+                  <a
+                    href={fac.biodataUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-16 h-16 bg-surface-container rounded-2xl overflow-hidden shrink-0 border border-outline-variant hover:border-secondary hover:scale-105 transition-all relative block cursor-pointer group/photo"
+                    title={language === "hi" ? "बायोडाटा देखने के लिए क्लिक करें" : "Click to view Biodata"}
+                  >
+                    <img
+                      src={
+                        fac.photoUrl ||
+                        "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"
+                      }
+                      alt={fac.name}
+                      className="w-full h-full object-cover group-hover/photo:scale-110 transition-all duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/photo:opacity-100 flex items-center justify-center transition-opacity">
+                      <span className="material-symbols-outlined text-white text-base">picture_as_pdf</span>
+                    </div>
+                  </a>
+                ) : (
+                  <div className="w-16 h-16 bg-surface-container rounded-2xl overflow-hidden shrink-0 border border-outline-variant">
+                    <img
+                      src={
+                        fac.photoUrl ||
+                        "https://lh3.googleusercontent.com/aida-public/AB6AXuASu860rwU_J3qXiuLE_I5HtOlHyL0uuIzE7nBbtQv3LB3CHGsQcaHOVdVEjMg4CIkDiQ_VEqdt-zFAoVx9CepHUV45AaX88Sum1Fize-5P68db1e13gFimHEl0ivfASQsVmTthyUzcGasoIl0Kr45PrrJNWDvEQq6yq9l1X7C91TCee_UACX5tF5n8aRTZy80Ps6V5LqGd2dP0pXQ2ryiSNZc_YgRtgIY6_AvSBL7ulAPHhrEzfaipPhfmdasVFWTWlmFSAMLt3HM"
+                      }
+                      alt={fac.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
                 <div className="space-y-1">
                   <h4 className="font-bold text-base text-primary group-hover:text-secondary transition-colors">
                     {fac.name}
