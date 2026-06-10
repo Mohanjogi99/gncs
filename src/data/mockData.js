@@ -523,7 +523,8 @@ export const initialCourses = [
     eligibility: "12th Pass (Any Stream) / 12वीं उत्तीर्ण (किसी भी विषय में)",
     seats: 90,
     fee: "₹2,450 per annum / प्रति वर्ष",
-    syllabusUrl: "https://www.snpvraigarh.in/"
+    syllabusUrl: "https://www.snpvraigarh.in/",
+    level: "UG"
   },
   {
     id: "course-bsc",
@@ -533,7 +534,8 @@ export const initialCourses = [
     eligibility: "12th Pass with Science stream / 12वीं उत्तीर्ण (विज्ञान विषय के साथ)",
     seats: 60,
     fee: "₹3,120 per annum / प्रति वर्ष",
-    syllabusUrl: "https://www.snpvraigarh.in/"
+    syllabusUrl: "https://www.snpvraigarh.in/",
+    level: "UG"
   },
   {
     id: "course-bcom",
@@ -543,7 +545,41 @@ export const initialCourses = [
     eligibility: "12th Pass with Commerce/Maths / 12वीं उत्तीर्ण (वाणिज्य या गणित के साथ)",
     seats: 60,
     fee: "₹2,680 per annum / प्रति वर्ष",
-    syllabusUrl: "https://www.snpvraigarh.in/"
+    syllabusUrl: "https://www.snpvraigarh.in/",
+    level: "UG"
+  },
+  {
+    id: "course-ma-soc",
+    name: "Master of Arts (M.A. - Sociology)",
+    stream: "Arts",
+    duration: "2 Years / 2 वर्ष",
+    eligibility: "Graduation (B.A. or equivalent) / स्नातक (बी.ए. या समकक्ष)",
+    seats: 30,
+    fee: "₹3,200 per annum / प्रति वर्ष",
+    syllabusUrl: "https://www.snpvraigarh.in/",
+    level: "PG"
+  },
+  {
+    id: "course-msc-chem",
+    name: "Master of Science (M.Sc. - Chemistry)",
+    stream: "Science",
+    duration: "2 Years / 2 वर्ष",
+    eligibility: "Graduation with Chemistry / स्नातक (रसायन विज्ञान विषय के साथ)",
+    seats: 25,
+    fee: "₹4,500 per annum / प्रति वर्ष",
+    syllabusUrl: "https://www.snpvraigarh.in/",
+    level: "PG"
+  },
+  {
+    id: "course-mcom",
+    name: "Master of Commerce (M.Com.)",
+    stream: "Commerce",
+    duration: "2 Years / 2 वर्ष",
+    eligibility: "Graduation (B.Com. or equivalent) / स्नातक (बी.कॉम. या समकक्ष)",
+    seats: 30,
+    fee: "₹3,600 per annum / प्रति वर्ष",
+    syllabusUrl: "https://www.snpvraigarh.in/",
+    level: "PG"
   }
 ];
 

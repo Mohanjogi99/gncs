@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 export default function Courses() {
   const { courses, language, t } = useContext(AppContext);
 
+  const ugCourses = courses.filter((c) => !c.level || c.level === "UG");
+  const pgCourses = courses.filter((c) => c.level === "PG");
+
   return (
     <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 space-y-8 flex-1">
       {/* Title */}
@@ -17,7 +20,7 @@ export default function Courses() {
         </p>
       </section>
 
-      {/* Courses Table Section */}
+      {/* UG Courses Table Section */}
       <section className="bg-white rounded-3xl border border-outline-variant/60 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-outline-variant/60 flex justify-between items-center">
           <div>
@@ -44,7 +47,7 @@ export default function Courses() {
               </tr>
             </thead>
             <tbody className="divide-y divide-outline-variant/60 text-xs sm:text-sm">
-              {courses.map((course) => (
+              {ugCourses.map((course) => (
                 <tr key={course.id} className="hover:bg-surface-container-low/50 transition-colors">
                   <td className="px-6 py-4 font-bold text-primary">{course.name}</td>
                   <td className="px-6 py-4 text-on-surface-variant font-medium">{course.duration}</td>
@@ -70,6 +73,73 @@ export default function Courses() {
                   </td>
                 </tr>
               ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* PG Courses Table Section */}
+      <section className="bg-white rounded-3xl border border-outline-variant/60 shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-outline-variant/60 flex justify-between items-center">
+          <div>
+            <h3 className="text-base sm:text-lg font-bold text-primary">
+              {language === "hi" ? "स्नातकोत्तर पाठ्यक्रम" : "Postgraduate Programs"}
+            </h3>
+            <p className="text-xs text-on-surface-variant">Postgraduate degree programs offered for session 2026-27</p>
+          </div>
+          <span className="text-xs font-bold text-secondary bg-secondary/10 px-3 py-1 rounded-full uppercase">
+            Regular Co-Ed
+          </span>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left min-w-[700px]">
+            <thead className="bg-surface-container-low border-b border-outline-variant">
+              <tr className="text-xs font-bold text-on-surface-variant uppercase">
+                <th className="px-6 py-4">{t("stream")} | संकाय</th>
+                <th className="px-6 py-4">{t("duration")}</th>
+                <th className="px-6 py-4">{t("seats")}</th>
+                <th className="px-6 py-4">{t("eligibility")}</th>
+                <th className="px-6 py-4">{t("fee")}</th>
+                <th className="px-6 py-4">{t("syllabus")}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-outline-variant/60 text-xs sm:text-sm">
+              {pgCourses.map((course) => (
+                <tr key={course.id} className="hover:bg-surface-container-low/50 transition-colors">
+                  <td className="px-6 py-4 font-bold text-primary">{course.name}</td>
+                  <td className="px-6 py-4 text-on-surface-variant font-medium">{course.duration}</td>
+                  <td className="px-6 py-4 text-center font-bold text-primary">
+                    <span className="bg-primary/5 text-primary px-3 py-1 rounded-full">{course.seats}</span>
+                  </td>
+                  <td className="px-6 py-4 text-on-surface-variant max-w-[200px] leading-relaxed">
+                    {course.eligibility}
+                  </td>
+                  <td className="px-6 py-4 font-semibold text-secondary">{course.fee}</td>
+                  <td className="px-6 py-4">
+                    {course.syllabusUrl && (
+                      <a
+                        href={course.syllabusUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 text-red-600 hover:text-red-700 font-bold hover:scale-[1.03] transition-all"
+                      >
+                        <span className="material-symbols-outlined text-base">picture_as_pdf</span>
+                        Syllabus
+                      </a>
+                    )}
+                  </td>
+                </tr>
+              ))}
+              {pgCourses.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-on-surface-variant italic">
+                    {language === "hi" 
+                      ? "स्नातकोत्तर स्तर पर नए पाठ्यक्रमों की अनुमति प्रक्रियाधीन है।"
+                      : "No Postgraduate courses are currently listed or awaiting approval."}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

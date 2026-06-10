@@ -126,7 +126,8 @@ export default function AdminDashboard() {
     duration: "3 Years / 3 वर्ष",
     eligibility: "",
     seats: 60,
-    fee: "₹2,500 per annum"
+    fee: "₹2,500 per annum",
+    level: "UG"
   });
 
   // Gallery form states
@@ -704,7 +705,7 @@ export default function AdminDashboard() {
     setNoticeForm({ titleEnglish: "", titleHindi: "", category: "Admission", isImportant: false });
     setDownloadForm({ titleEnglish: "", titleHindi: "", category: "Admission Forms", fileUrl: "" });
     setFacultyForm({ name: "", designation: "Assistant Professor", department: "Arts", qualification: "", email: "", phone: "", bioEnglish: "", bioHindi: "", photoUrl: "" });
-    setCourseForm({ name: "", stream: "Arts", duration: "3 Years / 3 वर्ष", eligibility: "", seats: 60, fee: "₹2,500 per annum" });
+    setCourseForm({ name: "", stream: "Arts", duration: "3 Years / 3 वर्ष", eligibility: "", seats: 60, fee: "₹2,500 per annum", level: "UG" });
     setGalleryForm({ albumTitle: "", caption: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA72eXokI1lfD95EVEcAR3osAynjp5wfvMvtugkG0bOK_1g7YRvPOwJ9wt9EJEZ3Y_BmjOJaIOxTaTTAvU5DXyuczs0S2DFGtNUoqki8h5n4vVrke8WF1PhFl1l-JCcRYdRvFwUK4JeXDTYSNJfu3QYoW78eZe6BHq7D86Cz2tSUTBb36y99fbjn7vNRs9HjRIxAKwB-ZVe43KBDGY5iP0Y3NY5TBsYHSzTW-XRE9yDpqIV4ABK9EMBoWzT1uHO4Fi6fYj4KIqe6lg" });
     setNewsForm({ titleEnglish: "", titleHindi: "", descriptionEnglish: "", descriptionHindi: "", contentEnglish: "", contentHindi: "", eventDate: new Date().toISOString().split("T")[0], imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg" });
     setJanbhagidariForm({ nameEn: "", nameHi: "", roleEn: "", roleHi: "" });
@@ -725,7 +726,7 @@ export default function AdminDashboard() {
     } else if (activeMenu === "faculty") {
       setFacultyForm({ name: item.name, designation: item.designation, department: item.department, qualification: item.qualification, email: item.email, phone: item.phone, bioEnglish: item.bioEnglish, bioHindi: item.bioHindi, photoUrl: item.photoUrl || "" });
     } else if (activeMenu === "courses") {
-      setCourseForm({ name: item.name, stream: item.stream, duration: item.duration, eligibility: item.eligibility, seats: item.seats, fee: item.fee });
+      setCourseForm({ name: item.name, stream: item.stream, duration: item.duration, eligibility: item.eligibility, seats: item.seats, fee: item.fee, level: item.level || "UG" });
     } else if (activeMenu === "news") {
       setNewsForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, descriptionEnglish: item.descriptionEnglish, descriptionHindi: item.descriptionHindi, contentEnglish: item.contentEnglish || "", contentHindi: item.contentHindi || "", eventDate: item.eventDate, imageUrl: item.imageUrl });
     } else if (activeMenu === "janbhagidari") {
@@ -1199,7 +1200,7 @@ export default function AdminDashboard() {
               {/* Course Form */}
               {activeMenu === "courses" && (
                 <form onSubmit={handleSaveCourse} className="space-y-4 text-xs sm:text-sm">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="space-y-1.5">
                       <label className="font-bold">Course Title *</label>
                       <input
@@ -1212,7 +1213,7 @@ export default function AdminDashboard() {
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="font-bold">Stream Stream</label>
+                      <label className="font-bold">Stream</label>
                       <select
                         value={courseForm.stream}
                         onChange={(e) => setCourseForm({ ...courseForm, stream: e.target.value })}
@@ -1221,6 +1222,17 @@ export default function AdminDashboard() {
                         <option>Arts</option>
                         <option>Science</option>
                         <option>Commerce</option>
+                      </select>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Program Level *</label>
+                      <select
+                        value={courseForm.level || "UG"}
+                        onChange={(e) => setCourseForm({ ...courseForm, level: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      >
+                        <option value="UG">Undergraduate (UG)</option>
+                        <option value="PG">Postgraduate (PG)</option>
                       </select>
                     </div>
                   </div>
@@ -1978,6 +1990,7 @@ export default function AdminDashboard() {
                 <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
                   <tr>
                     <th className="px-5 py-3">Course / Stream Name</th>
+                    <th className="px-5 py-3">Level</th>
                     <th className="px-5 py-3">Duration</th>
                     <th className="px-5 py-3">Seats</th>
                     <th className="px-5 py-3">Fee Structure</th>
@@ -1988,6 +2001,7 @@ export default function AdminDashboard() {
                   {courses.map((c) => (
                     <tr key={c.id} className="hover:bg-surface-container-low/40">
                       <td className="px-5 py-3 font-bold text-primary">{c.name}</td>
+                      <td className="px-5 py-3 font-bold text-secondary">{c.level || "UG"}</td>
                       <td className="px-5 py-3">{c.duration}</td>
                       <td className="px-5 py-3 font-semibold">{c.seats} Seats</td>
                       <td className="px-5 py-3 text-secondary font-semibold">{c.fee}</td>
