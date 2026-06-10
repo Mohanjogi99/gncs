@@ -265,17 +265,53 @@ export default function StudentCorner() {
             )}
           </div>
 
-          {/* NSS/NCC Activities */}
-          <div className="bg-white p-6 rounded-3xl border border-outline-variant/60 shadow-sm space-y-3">
+          {/* NSS, RRC & Cultural Activities */}
+          <div className="bg-white p-6 rounded-3xl border border-outline-variant/60 shadow-sm space-y-4">
             <h3 className="text-base sm:text-lg font-bold text-primary border-b border-outline-variant pb-2 flex items-center gap-2">
               <span className="material-symbols-outlined text-secondary">volunteer_activism</span>
-              NSS & Cultural Units
+              {language === "hi" ? "गतिविधियाँ एवं क्लब" : "Activities & Clubs"}
             </h3>
-            <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-              {language === "hi"
-                ? "महाविद्यालय में राष्ट्रीय सेवा योजना (NSS) की एक सक्रिय इकाई संचालित है, जिसके तहत वृक्षारोपण, स्वास्थ्य शिविर, स्वच्छता अभियान और साक्षरता रैलियां आयोजित की जाती हैं। नवीन सत्र के प्रवेशार्थी इकाई समन्वयक डॉ. कमलेश चंद्र से संपर्क कर पंजीयन करा सकते हैं।"
-                : "The college runs a highly active NSS unit promoting community welfare, health camps, tree plantation, and cleanliness drives. New students can enroll by contacting the NSS Programme Coordinator Dr. Kamlesh Chandra."}
-            </p>
+            
+            <div className="space-y-4">
+              {/* NSS */}
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary">
+                  <span className="material-symbols-outlined text-secondary text-base">volunteer_activism</span>
+                  <span>{language === "hi" ? "राष्ट्रीय सेवा योजना (NSS)" : "National Service Scheme (NSS)"}</span>
+                </div>
+                <p className="text-[11px] sm:text-xs text-on-surface-variant leading-relaxed">
+                  {language === "hi"
+                    ? "वृक्षारोपण, स्वास्थ्य शिविर, स्वच्छता और साक्षरता रैलियों का आयोजन करने वाली सक्रिय इकाई। संपर्क: समन्वयक डॉ. कमलेश चंद्र।"
+                    : "Active unit conducting tree plantation, health camps, cleanliness drives, and social awareness. Contact: Dr. Kamlesh Chandra."}
+                </p>
+              </div>
+
+              {/* Red Ribbon Club */}
+              <div className="space-y-1 pt-3 border-t border-outline-variant/40">
+                <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary">
+                  <span className="material-symbols-outlined text-red-500 text-base">favorite</span>
+                  <span>{language === "hi" ? "रेड रिबन क्लब (RRC)" : "Red Ribbon Club (RRC)"}</span>
+                </div>
+                <p className="text-[11px] sm:text-xs text-on-surface-variant leading-relaxed">
+                  {language === "hi"
+                    ? "युवाओं में स्वैच्छिक रक्तदान, एचआईवी/एड्स जागरूकता और स्वास्थ्य शिक्षा को बढ़ावा देने के लिए संगोष्ठियों एवं शिविरों का आयोजन करता है।"
+                    : "Organizes seminars and campaigns to promote voluntary blood donation, HIV/AIDS awareness, and health education among youth."}
+                </p>
+              </div>
+
+              {/* Cultural Units */}
+              <div className="space-y-1 pt-3 border-t border-outline-variant/40">
+                <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary">
+                  <span className="material-symbols-outlined text-secondary text-base">theater_comedy</span>
+                  <span>{language === "hi" ? "सांस्कृतिक इकाई" : "Cultural Unit"}</span>
+                </div>
+                <p className="text-[11px] sm:text-xs text-on-surface-variant leading-relaxed">
+                  {language === "hi"
+                    ? "वार्षिक उत्सव, युवा उत्सव, वाद-विवाद, नाटक और पारंपरिक नृत्य व संगीत कार्यक्रमों के माध्यम से छात्र प्रतिभाओं को मंच प्रदान करता है।"
+                    : "Showcases student talents through annual functions, youth festivals, debate competitions, drama, and traditional music and dance events."}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
