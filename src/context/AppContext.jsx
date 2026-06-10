@@ -69,8 +69,8 @@ export const AppProvider = ({ children }) => {
   const [researchCommittee, setResearchCommittee] = useState({});
   const [researchPublications, setResearchPublications] = useState([]);
   const [researchProjects, setResearchProjects] = useState([]);
-  const [researchEvents, setResearchEvents] = useState([]);
   const [admissionHelpDesk, setAdmissionHelpDesk] = useState([]);
+  const [labFacilities, setLabFacilities] = useState([]);
 
   // Initialize DB from Firestore
   useEffect(() => {
@@ -115,8 +115,8 @@ export const AppProvider = ({ children }) => {
 
         setResearchPublications(await fetchCollection("researchPublications"));
         setResearchProjects(await fetchCollection("researchProjects"));
-        setResearchEvents(await fetchCollection("researchEvents"));
         setAdmissionHelpDesk(await fetchCollection("admissionHelpDesk"));
+        setLabFacilities(await fetchCollection("labFacilities"));
 
       } catch (error) {
         console.error("Error loading Firestore database:", error);
@@ -647,6 +647,58 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // Lab Experiments CRUD
+  const addLabExperiment = async (labId, experiment) => {
+    const newExperiment = { id: `exp-${Date.now()}`, ...experiment };
+    try {
+      const labRef = doc(db, "labFacilities", labId);
+      const lab = labFacilities.find((l) => l.id === labId);
+      if (lab) {
+        const updatedExperiments = [...(lab.experiments || []), newExperiment];
+        await updateDoc(labRef, { experiments: updatedExperiments });
+        setLabFacilities((prev) =>
+          prev.map((l) => (l.id === labId ? { ...l, experiments: updatedExperiments } : l))
+        );
+      }
+    } catch (e) {
+      console.error("Error adding lab experiment:", e);
+    }
+  };
+
+  const updateLabExperiment = async (labId, experimentId, updatedFields) => {
+    try {
+      const labRef = doc(db, "labFacilities", labId);
+      const lab = labFacilities.find((l) => l.id === labId);
+      if (lab) {
+        const updatedExperiments = (lab.experiments || []).map((exp) =>
+          exp.id === experimentId ? { ...exp, ...updatedFields } : exp
+        );
+        await updateDoc(labRef, { experiments: updatedExperiments });
+        setLabFacilities((prev) =>
+          prev.map((l) => (l.id === labId ? { ...l, experiments: updatedExperiments } : l))
+        );
+      }
+    } catch (e) {
+      console.error("Error updating lab experiment:", e);
+    }
+  };
+
+  const deleteLabExperiment = async (labId, experimentId) => {
+    try {
+      const labRef = doc(db, "labFacilities", labId);
+      const lab = labFacilities.find((l) => l.id === labId);
+      if (lab) {
+        const updatedExperiments = (lab.experiments || []).filter((exp) => exp.id !== experimentId);
+        await updateDoc(labRef, { experiments: updatedExperiments });
+        setLabFacilities((prev) =>
+          prev.map((l) => (l.id === labId ? { ...l, experiments: updatedExperiments } : l))
+        );
+      }
+    } catch (e) {
+      console.error("Error deleting lab experiment:", e);
+    }
+  };
+
   // Research Committee CRUD
   const updateResearchCommittee = async (updatedFields) => {
     try {
@@ -817,6 +869,10 @@ export const AppProvider = ({ children }) => {
         addAdmissionHelpDeskItem,
         updateAdmissionHelpDeskItem,
         deleteAdmissionHelpDeskItem,
+        labFacilities,
+        addLabExperiment,
+        updateLabExperiment,
+        deleteLabExperiment,
         researchCommittee,
         updateResearchCommittee,
         researchPublications,
