@@ -31,7 +31,8 @@ import {
   initialResearchCommittee,
   initialResearchPublications,
   initialResearchProjects,
-  initialResearchEvents
+  initialResearchEvents,
+  initialHelpDesk
 } from "../data/mockData";
 
 export const AppContext = createContext();
@@ -69,6 +70,7 @@ export const AppProvider = ({ children }) => {
   const [researchPublications, setResearchPublications] = useState([]);
   const [researchProjects, setResearchProjects] = useState([]);
   const [researchEvents, setResearchEvents] = useState([]);
+  const [admissionHelpDesk, setAdmissionHelpDesk] = useState([]);
 
   // Initialize DB from Firestore and migrate if first-time setup for this browser
   useEffect(() => {
@@ -109,7 +111,8 @@ export const AppProvider = ({ children }) => {
             { col: "libraryRules", data: loadLocalOrFallback("libraryRules", initialLibraryRules) },
             { col: "researchPublications", data: loadLocalOrFallback("researchPublications", initialResearchPublications) },
             { col: "researchProjects", data: loadLocalOrFallback("researchProjects", initialResearchProjects) },
-            { col: "researchEvents", data: loadLocalOrFallback("researchEvents", initialResearchEvents) }
+            { col: "researchEvents", data: loadLocalOrFallback("researchEvents", initialResearchEvents) },
+            { col: "admissionHelpDesk", data: loadLocalOrFallback("admissionHelpDesk", initialHelpDesk) }
           ];
 
           for (const m of migrationData) {
@@ -172,6 +175,7 @@ export const AppProvider = ({ children }) => {
         setResearchPublications(await fetchCollection("researchPublications"));
         setResearchProjects(await fetchCollection("researchProjects"));
         setResearchEvents(await fetchCollection("researchEvents"));
+        setAdmissionHelpDesk(await fetchCollection("admissionHelpDesk"));
 
       } catch (error) {
         console.error("Error loading Firestore database:", error);
@@ -669,6 +673,35 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // Admission Help Desk CRUD
+  const addAdmissionHelpDeskItem = async (item) => {
+    const newItem = { id: `hd-${Date.now()}`, ...item };
+    try {
+      await setDoc(doc(db, "admissionHelpDesk", newItem.id), newItem);
+      setAdmissionHelpDesk((prev) => [...prev, newItem]);
+    } catch (e) {
+      console.error("Error adding help desk item:", e);
+    }
+  };
+
+  const updateAdmissionHelpDeskItem = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "admissionHelpDesk", id), updatedFields);
+      setAdmissionHelpDesk((prev) => prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item)));
+    } catch (e) {
+      console.error("Error updating help desk item:", e);
+    }
+  };
+
+  const deleteAdmissionHelpDeskItem = async (id) => {
+    try {
+      await deleteDoc(doc(db, "admissionHelpDesk", id));
+      setAdmissionHelpDesk((prev) => prev.filter((item) => item.id !== id));
+    } catch (e) {
+      console.error("Error deleting help desk item:", e);
+    }
+  };
+
   // Research Committee CRUD
   const updateResearchCommittee = async (updatedFields) => {
     try {
@@ -835,6 +868,10 @@ export const AppProvider = ({ children }) => {
         addLibraryRule,
         updateLibraryRule,
         deleteLibraryRule,
+        admissionHelpDesk,
+        addAdmissionHelpDeskItem,
+        updateAdmissionHelpDeskItem,
+        deleteAdmissionHelpDeskItem,
         researchCommittee,
         updateResearchCommittee,
         researchPublications,

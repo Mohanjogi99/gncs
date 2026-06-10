@@ -692,6 +692,33 @@ export const initialLibraryRules = [
   { id: "lr-4", ruleEn: "Reference books, journals, and dictionaries are reserved for in-library reading only.", ruleHi: "संदर्भ ग्रंथ, शब्दकोश और पत्र-पत्रिकाएं पुस्तकालय से बाहर ले जाने की अनुमति नहीं है।" }
 ];
 
+export const initialHelpDesk = [
+  {
+    id: "hd-1",
+    streamEn: "Science Stream (B.Sc. - Bio/Maths Group)",
+    streamHi: "विज्ञान संकाय (B.Sc. - Bio/Maths Group)",
+    nameEn: "Dr. Angesh Chandra (Physics)",
+    nameHi: "डॉ. अंगेश चंद्र (Physics)",
+    phone: "+91 98939 07415"
+  },
+  {
+    id: "hd-2",
+    streamEn: "Arts Stream (B.A. Group)",
+    streamHi: "कला संकाय (B.A. Group)",
+    nameEn: "Pravin Kumar Kaushik (Geography)",
+    nameHi: "प्रवीण कुमार कौशिक (Geography)",
+    phone: "+91 98939 07415"
+  },
+  {
+    id: "hd-3",
+    streamEn: "Commerce Stream (B.Com. Group)",
+    streamHi: "वाणिज्य संकाय (B.Com. Group)",
+    nameEn: "Ashutosh Painkra",
+    nameHi: "आशुतोष पैंकरा",
+    phone: "+91 98939 07415"
+  }
+];
+
 export const initialResearchCommittee = {
   convener: "Dr. Rajeshwari Patel (Assistant Professor, Chemistry)",
   coConvener: "Dr. Chandra (Assistant Professor, Sociology)",

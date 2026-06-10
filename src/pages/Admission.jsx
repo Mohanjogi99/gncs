@@ -11,7 +11,11 @@ export default function Admission() {
     addContactMessage,
     language,
     t,
-    reqDocs
+    reqDocs,
+    admissionHelpDesk,
+    addAdmissionHelpDeskItem,
+    updateAdmissionHelpDeskItem,
+    deleteAdmissionHelpDeskItem
   } = useContext(AppContext);
 
   const [formData, setFormData] = useState({
@@ -33,6 +37,71 @@ export default function Admission() {
     isImportant: false,
     publishDate: "",
   });
+
+  // Help Desk Management Modal States
+  const [showHelpDeskModal, setShowHelpDeskModal] = useState(false);
+  const [editingHelpDesk, setEditingHelpDesk] = useState(null);
+  const [helpDeskForm, setHelpDeskForm] = useState({
+    streamEnglish: "",
+    streamHindi: "",
+    nameEnglish: "",
+    nameHindi: "",
+    phone: ""
+  });
+
+  const openAddHelpDeskModal = () => {
+    setEditingHelpDesk(null);
+    setHelpDeskForm({
+      streamEnglish: "",
+      streamHindi: "",
+      nameEnglish: "",
+      nameHindi: "",
+      phone: ""
+    });
+    setShowHelpDeskModal(true);
+  };
+
+  const openEditHelpDeskModal = (item) => {
+    setEditingHelpDesk(item);
+    setHelpDeskForm({
+      streamEnglish: item.streamEn || "",
+      streamHindi: item.streamHi || "",
+      nameEnglish: item.nameEn || "",
+      nameHindi: item.nameHi || "",
+      phone: item.phone || ""
+    });
+    setShowHelpDeskModal(true);
+  };
+
+  const handleDeleteHelpDeskClick = (id) => {
+    const confirmMsg = language === "hi"
+      ? "क्या आप वाकई इस प्रवेश सहायता संपर्क को हटाना चाहते हैं?"
+      : "Are you sure you want to delete this help desk contact?";
+    if (window.confirm(confirmMsg)) {
+      deleteAdmissionHelpDeskItem(id);
+    }
+  };
+
+  const handleHelpDeskFormSubmit = (e) => {
+    e.preventDefault();
+    if (!helpDeskForm.streamEnglish || !helpDeskForm.nameEnglish || !helpDeskForm.phone) {
+      alert("Required fields are missing!");
+      return;
+    }
+    const data = {
+      streamEn: helpDeskForm.streamEnglish,
+      streamHi: helpDeskForm.streamHindi || helpDeskForm.streamEnglish,
+      nameEn: helpDeskForm.nameEnglish,
+      nameHi: helpDeskForm.nameHindi || helpDeskForm.nameEnglish,
+      phone: helpDeskForm.phone
+    };
+    if (editingHelpDesk) {
+      updateAdmissionHelpDeskItem(editingHelpDesk.id, data);
+    } else {
+      addAdmissionHelpDeskItem(data);
+    }
+    setShowHelpDeskModal(false);
+  };
 
   const isPrincipal = currentUser && (currentUser.role === "Principal" || currentUser.role === "Super Admin");
 
@@ -323,44 +392,58 @@ export default function Admission() {
 
         {/* Admission Help desk */}
         <div className="bg-white p-6 sm:p-8 rounded-3xl border border-outline-variant/60 shadow-sm space-y-4">
-          <h3 className="text-base sm:text-lg font-bold text-primary border-b border-outline-variant/40 pb-2 flex items-center gap-2">
-            <span className="material-symbols-outlined text-secondary">contact_support</span>
-            Admission Help Desk | प्रवेश सहायता केंद्र
-          </h3>
+          <div className="border-b border-outline-variant pb-2 flex justify-between items-center flex-wrap gap-2">
+            <h3 className="text-base sm:text-lg font-bold text-primary flex items-center gap-2">
+              <span className="material-symbols-outlined text-secondary">contact_support</span>
+              Admission Help Desk | प्रवेश सहायता केंद्र
+            </h3>
+            {isPrincipal && (
+              <button
+                onClick={openAddHelpDeskModal}
+                className="bg-secondary hover:bg-secondary/95 text-white px-3 py-1 rounded-xl text-xs font-bold flex items-center gap-1 transition-all shadow-sm cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-sm font-bold">add</span>
+                {language === "hi" ? "नया संपर्क जोड़ें" : "Add Contact"}
+              </button>
+            )}
+          </div>
           <div className="divide-y divide-outline-variant/50 text-xs sm:text-sm">
-            <div className="py-2.5 flex justify-between gap-4">
-              <div className="flex flex-col">
-                <span className="font-bold text-on-surface">
-                  {language === "hi" ? "विज्ञान संकाय (B.Sc. - Bio/Maths Group):" : "Science Stream (B.Sc. - Bio/Maths Group):"}
-                </span>
-                <span className="text-on-surface-variant font-medium mt-0.5">
-                  {language === "hi" ? "डॉ. अंगेश चंद्र (Physics)" : "Dr. Angesh Chandra (Physics)"}
-                </span>
+            {(admissionHelpDesk || []).map((item) => (
+              <div key={item.id} className="py-2.5 flex justify-between items-center gap-4">
+                <div className="flex flex-col">
+                  <span className="font-bold text-on-surface">
+                    {language === "hi" ? item.streamHi : item.streamEn}
+                  </span>
+                  <span className="text-on-surface-variant font-medium mt-0.5">
+                    {language === "hi" ? item.nameHi : item.nameEn}
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <span className="text-on-surface-variant font-semibold">{item.phone}</span>
+                  {isPrincipal && (
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => openEditHelpDeskModal(item)}
+                        className="bg-primary/10 hover:bg-primary/20 text-primary p-1.5 rounded-lg text-xs transition-all flex items-center justify-center cursor-pointer"
+                        title={language === "hi" ? "संपादित करें" : "Edit"}
+                      >
+                        <span className="material-symbols-outlined text-sm">edit</span>
+                      </button>
+                      <button
+                        onClick={() => handleDeleteHelpDeskClick(item.id)}
+                        className="bg-red-50 hover:bg-red-100 text-red-600 p-1.5 rounded-lg text-xs transition-all flex items-center justify-center cursor-pointer"
+                        title={language === "hi" ? "हटाएं" : "Delete"}
+                      >
+                        <span className="material-symbols-outlined text-sm">delete</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-              <span className="text-on-surface-variant font-semibold flex items-center">+91 98939 07415</span>
-            </div>
-            <div className="py-2.5 flex justify-between gap-4">
-              <div className="flex flex-col">
-                <span className="font-bold text-on-surface">
-                  {language === "hi" ? "कला संकाय (B.A. Group):" : "Arts Stream (B.A. Group):"}
-                </span>
-                <span className="text-on-surface-variant font-medium mt-0.5">
-                  {language === "hi" ? "प्रवीण कुमार कौशिक (Geography)" : "Pravin Kumar Kaushik (Geography)"}
-                </span>
-              </div>
-              <span className="text-on-surface-variant font-semibold flex items-center">+91 98939 07415</span>
-            </div>
-            <div className="py-2.5 flex justify-between gap-4">
-              <div className="flex flex-col">
-                <span className="font-bold text-on-surface">
-                  {language === "hi" ? "वाणिज्य संकाय (B.Com. Group):" : "Commerce Stream (B.Com. Group):"}
-                </span>
-                <span className="text-on-surface-variant font-medium mt-0.5">
-                  {language === "hi" ? "आशुतोष पैंकरा" : "Ashutosh Painkra"}
-                </span>
-              </div>
-              <span className="text-on-surface-variant font-semibold flex items-center">+91 98939 07415</span>
-            </div>
+            ))}
+            {(admissionHelpDesk || []).length === 0 && (
+              <p className="text-xs text-on-surface-variant italic py-4">No help desk contacts configured.</p>
+            )}
           </div>
         </div>
       </section>
@@ -462,6 +545,121 @@ export default function Admission() {
                 <button
                   type="button"
                   onClick={() => setShowNoticeModal(false)}
+                  className="px-5 py-2.5 border border-outline text-on-surface hover:bg-surface-container rounded-xl font-bold transition-all cursor-pointer"
+                >
+                  {language === "hi" ? "रद्द करें" : "Cancel"}
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary rounded-xl font-bold transition-all shadow cursor-pointer"
+                >
+                  {language === "hi" ? "सहेजें" : "Save"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal for Add / Edit Help Desk Contact */}
+      {showHelpDeskModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-lg rounded-3xl border border-outline-variant shadow-2xl p-6 sm:p-8 space-y-6 relative animate-in fade-in zoom-in-95 duration-200 animate-duration-150">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center border-b border-outline-variant pb-4">
+              <h3 className="text-lg font-bold text-primary flex items-center gap-2">
+                <span className="material-symbols-outlined text-secondary">
+                  {editingHelpDesk ? "contact_phone" : "person_add"}
+                </span>
+                {editingHelpDesk
+                  ? (language === "hi" ? "सहायता संपर्क संपादित करें" : "Edit Help Desk Contact")
+                  : (language === "hi" ? "नया सहायता संपर्क जोड़ें" : "Add Help Desk Contact")}
+              </h3>
+              <button
+                onClick={() => setShowHelpDeskModal(false)}
+                className="text-on-surface-variant hover:text-primary transition-all p-1 hover:bg-surface-container rounded-full cursor-pointer"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+
+            {/* Modal Body / Form */}
+            <form onSubmit={handleHelpDeskFormSubmit} className="space-y-4 text-xs sm:text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="font-bold text-on-surface">
+                    Stream/Subject (English) *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={helpDeskForm.streamEnglish}
+                    onChange={(e) => setHelpDeskForm({ ...helpDeskForm, streamEnglish: e.target.value })}
+                    placeholder="e.g. Science Stream"
+                    className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="font-bold text-on-surface">
+                    Stream/Subject (Hindi)
+                  </label>
+                  <input
+                    type="text"
+                    value={helpDeskForm.streamHindi}
+                    onChange={(e) => setHelpDeskForm({ ...helpDeskForm, streamHindi: e.target.value })}
+                    placeholder="जैसे: विज्ञान संकाय"
+                    className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all font-hindi"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="font-bold text-on-surface">
+                    Teacher/Contact Person (English) *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={helpDeskForm.nameEnglish}
+                    onChange={(e) => setHelpDeskForm({ ...helpDeskForm, nameEnglish: e.target.value })}
+                    placeholder="e.g. Dr. Angesh Chandra"
+                    className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="font-bold text-on-surface">
+                    Teacher/Contact Person (Hindi)
+                  </label>
+                  <input
+                    type="text"
+                    value={helpDeskForm.nameHindi}
+                    onChange={(e) => setHelpDeskForm({ ...helpDeskForm, nameHindi: e.target.value })}
+                    placeholder="जैसे: डॉ. अंगेश चंद्र"
+                    className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all font-hindi"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="font-bold text-on-surface">
+                  Phone Number / मोबाइल नंबर *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={helpDeskForm.phone}
+                  onChange={(e) => setHelpDeskForm({ ...helpDeskForm, phone: e.target.value })}
+                  placeholder="+91 XXXXX XXXXX"
+                  className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all"
+                />
+              </div>
+
+              {/* Modal Footer / Actions */}
+              <div className="flex gap-3 justify-end pt-4 border-t border-outline-variant/60 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setShowHelpDeskModal(false)}
                   className="px-5 py-2.5 border border-outline text-on-surface hover:bg-surface-container rounded-xl font-bold transition-all cursor-pointer"
                 >
                   {language === "hi" ? "रद्द करें" : "Cancel"}
