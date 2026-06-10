@@ -234,7 +234,7 @@ export default function Home() {
             >
               {fac.biodataUrl ? (
                 <a
-                  href={fac.biodataUrl}
+                  href={`/biodata/${fac.id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/10 group-hover:border-secondary hover:scale-105 hover:shadow-md transition-all duration-300 shadow-inner relative block cursor-pointer group/photo"

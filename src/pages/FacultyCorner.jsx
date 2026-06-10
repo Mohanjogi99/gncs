@@ -119,7 +119,7 @@ export default function FacultyCorner() {
               <div className="flex gap-4">
                 {fac.biodataUrl ? (
                   <a
-                    href={fac.biodataUrl}
+                    href={`/biodata/${fac.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-16 h-16 bg-surface-container rounded-2xl overflow-hidden shrink-0 border border-outline-variant hover:border-secondary hover:scale-105 transition-all relative block cursor-pointer group/photo"

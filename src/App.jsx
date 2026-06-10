@@ -15,6 +15,7 @@ import Courses from "./pages/Courses";
 import Admission from "./pages/Admission";
 import StudentCorner from "./pages/StudentCorner";
 import FacultyCorner from "./pages/FacultyCorner";
+import BiodataViewer from "./pages/BiodataViewer";
 import IQAC from "./pages/IQAC";
 import Research from "./pages/Research";
 import Library from "./pages/Library";
@@ -40,6 +41,7 @@ function AppContent() {
           <Route path="/admission" element={<Admission />} />
           <Route path="/student-corner" element={<StudentCorner />} />
           <Route path="/faculty-corner" element={<FacultyCorner />} />
+          <Route path="/biodata/:id" element={<BiodataViewer />} />
           <Route path="/iqac" element={<IQAC />} />
           <Route path="/research" element={<Research />} />
           <Route path="/library" element={<Library />} />
