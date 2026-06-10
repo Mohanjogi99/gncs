@@ -46,7 +46,7 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-sm text-secondary-container">call</span>
-              7722861400, 9893907415
+              7722861400
             </span>
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-sm text-secondary-container">mail</span>
