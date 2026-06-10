@@ -285,6 +285,10 @@ export const AppProvider = ({ children }) => {
   // CRUD for Faculty
   const addFaculty = async (fac) => {
     const newFac = {
+      patentCount: 0,
+      booksCount: 0,
+      bookChaptersCount: 0,
+      researchPapersCount: 0,
       ...fac,
       id: `fac-${Date.now()}`
     };

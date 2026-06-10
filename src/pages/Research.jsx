@@ -6,10 +6,7 @@ export default function Research() {
   
   const [pubSearch, setPubSearch] = useState("");
 
-  const targetFacultyIds = ["fac-2", "fac-7", "fac-6", "fac-14", "fac-4", "fac-5", "fac-8", "fac-10", "fac-9", "fac-11"];
-  const summaryFaculty = targetFacultyIds
-    .map(id => (faculty || []).find(fac => fac.id === id))
-    .filter(Boolean);
+  const summaryFaculty = faculty || [];
 
   const currentCommittee = researchCommittee || {};
   const currentPublications = researchPublications || [];

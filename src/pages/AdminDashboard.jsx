@@ -3670,10 +3670,7 @@ export default function AdminDashboard() {
                         </thead>
                         <tbody className="divide-y divide-outline-variant/60 bg-white">
                           {(() => {
-                            const targetIds = ["fac-2", "fac-7", "fac-6", "fac-14", "fac-4", "fac-5", "fac-8", "fac-10", "fac-9", "fac-11"];
-                            const summaryFacList = targetIds
-                              .map(id => (faculty || []).find(fac => fac.id === id))
-                              .filter(Boolean);
+                            const summaryFacList = faculty || [];
                             
                             return (
                               <>
