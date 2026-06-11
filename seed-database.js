@@ -26,6 +26,16 @@ import {
 // Read Firebase Config from firebase.js
 import { db } from "./src/firebase.js";
 
+// Safety check to prevent accidental overwrites on production
+if (db.app.options.projectId === "gncs-portal") {
+  console.error("\x1b[31m%s\x1b[0m", "======================================================================");
+  console.error("\x1b[31m%s\x1b[0m", "FATAL ERROR: You are trying to run the seeding script on the PRODUCTION database (gncs-portal)!");
+  console.error("\x1b[31m%s\x1b[0m", "To protect live data, this script has been blocked.");
+  console.error("\x1b[31m%s\x1b[0m", "If you really want to seed the production database, please modify seed-database.js to bypass this check.");
+  console.error("\x1b[31m%s\x1b[0m", "======================================================================");
+  process.exit(1);
+}
+
 async function seedCollection(colName, list) {
   console.log(`Seeding collection "${colName}" with ${list.length} documents...`);
   for (const item of list) {
