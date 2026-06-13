@@ -143,49 +143,17 @@ export default function Departments() {
               </div>
             </div>
 
-            {/* Department Syllabus & Activities */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-              {/* Syllabus Mock Downloads */}
-              <div className="space-y-3">
-                <h4 className="font-bold text-sm text-primary uppercase border-b border-outline-variant/40 pb-1.5">
-                  {t("syllabus")} | पाठ्यक्रम डाउनलोड
-                </h4>
-                <div className="space-y-2">
-                  <div className="p-3 bg-white rounded-xl border border-outline-variant/80 hover:bg-surface-container flex justify-between items-center text-xs">
-                    <span className="font-semibold text-on-surface">UG Part-1 (1st & 2nd Semester)</span>
-                    <a
-                      href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-red-600 hover:scale-105 transition-all flex items-center gap-1 font-bold"
-                    >
-                      <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
-                      PDF
-                    </a>
-                  </div>
-                  <div className="p-3 bg-white rounded-xl border border-outline-variant/80 hover:bg-surface-container flex justify-between items-center text-xs">
-                    <span className="font-semibold text-on-surface">UG Part-2 (3rd & 4th Semester)</span>
-                    <a
-                      href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-red-600 hover:scale-105 transition-all flex items-center gap-1 font-bold"
-                    >
-                      <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
-                      PDF
-                    </a>
-                  </div>
-                </div>
-              </div>
-
+            {/* Department Activities */}
+            <div className="pt-2">
               {/* Departmental Activities List */}
-              <div className="space-y-3">
-                <h4 className="font-bold text-sm text-primary uppercase border-b border-outline-variant/40 pb-1.5">
-                  {t("activities")} | विभागीय गतिविधियां
+              <div className="space-y-3 bg-surface-container-low p-5 rounded-2xl border border-outline-variant/50">
+                <h4 className="font-bold text-sm text-primary uppercase border-b border-outline-variant/40 pb-1.5 flex items-center gap-1.5">
+                  <span className="material-symbols-outlined text-base">celebration</span>
+                  {language === "hi" ? "विभागीय गतिविधियां" : "Departmental Activities"}
                 </h4>
                 <ul className="space-y-2.5">
                   {mockActivities[activeDeptId]?.map((act, idx) => (
-                    <li key={idx} className="text-xs text-on-surface-variant flex gap-2">
+                    <li key={idx} className="text-xs text-on-surface-variant flex gap-2 leading-relaxed">
                       <span className="text-secondary font-bold shrink-0">{act.date} :</span>
                       <span>{language === "hi" ? act.textHi : act.textEn}</span>
                     </li>
