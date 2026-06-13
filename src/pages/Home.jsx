@@ -14,11 +14,11 @@ export default function Home() {
     {
       image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA72eXokI1lfD95EVEcAR3osAynjp5wfvMvtugkG0bOK_1g7YRvPOwJ9wt9EJEZ3Y_BmjOJaIOxTaTTAvU5DXyuczs0S2DFGtNUoqki8h5n4vVrke8WF1PhFl1l-JCcRYdRvFwUK4JeXDTYSNJfu3QYoW78eZe6BHq7D86Cz2tSUTBb36y99fbjn7vNRs9HjRIxAKwB-ZVe43KBDGY5iP0Y3NY5TBsYHSzTW-XRE9yDpqIV4ABK9EMBoWzT1uHO4Fi6fYj4KIqe6lg",
       tag: language === "hi" ? "शासकीय नवीन महाविद्यालय सारागांव" : "Govt Naveen College Saragaon",
-      title: language === "hi" ? "शिक्षा और उज्जवल भविष्य की ओर बढ़ते कदम" : "Stepping Stones Towards Excellence & Education",
-      desc: language === "hi" ? "सत्र 2026-27 के लिए विभिन्न स्नातक एवं स्नातकोत्तर पाठ्यक्रमों में प्रवेश प्रारंभ।" : "Admissions open for various undergraduate and postgraduate courses for the session 2026-27."
+      title: t("welcomeTitle"),
+      desc: t("welcomeDesc")
     },
     {
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBPuEzyD9-MfQ_3vvX9oYKPAuZF2ztxx6KyqMbOw4g5Kp_tzqhaRgvwfnwaAn5xs_AnL9UFwhmBudsK-VwNPIX4bLLUdVDiEj0hHOYwGWavpYuBWCQiPthsYp-T84atWK-OgmbS_GrLmBTBFGksC9eHp-h1nN9lSakCYPqU5ZwEX3RRW6KJqidqoUmKkeZVoPPcWXgW10QHjMx8WSJ_j29eSxEvHSHqkfZhABTdGFnTzsq9J7LZyF_WehIO_og89pSMv7fkLLjKjR8",
+      image: "/physics_lab.png",
       tag: language === "hi" ? "आधुनिक प्रयोगशालाएं" : "Modern Laboratories",
       title: language === "hi" ? "अनुसंधान और व्यावहारिक ज्ञान का केंद्र" : "Hub of Innovation and Practical Knowledge",
       desc: language === "hi" ? "भौतिक विज्ञान, रसायन विज्ञान और जैविक प्रयोगशालाओं में आधुनिक उपकरणों द्वारा व्यावहारिक अनुभव।" : "Hands-on experience with state-of-the-art instruments in Physics, Chemistry, and Biology laboratories."
