@@ -6,6 +6,10 @@ export default function AdminDashboard() {
   const {
     currentUser,
     logout,
+    users,
+    addUser,
+    updateUserProfile,
+    deleteUser,
     notices,
     addNotice,
     updateNotice,
@@ -263,6 +267,15 @@ export default function AdminDashboard() {
   const [isAddingSubject, setIsAddingSubject] = useState(false);
   const [editingSubjectIndex, setEditingSubjectIndex] = useState(null);
   const [subjectInput, setSubjectInput] = useState("");
+
+  // User form states
+  const [userForm, setUserForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "Faculty",
+    department: "Arts"
+  });
 
   // Redirect if not logged in
   React.useEffect(() => {
@@ -582,6 +595,38 @@ export default function AdminDashboard() {
     setEditingEvent(null);
   };
 
+  const handleSaveUser = async (e) => {
+    e.preventDefault();
+    if (editingItem) {
+      const res = await updateUserProfile(editingItem.email, userForm);
+      if (res.success) {
+        closeForm();
+        alert("User profile updated successfully! / उपयोगकर्ता प्रोफ़ाइल सफलतापूर्वक अपडेट की गई!");
+      } else {
+        alert(res.message || "Failed to update user profile");
+      }
+    } else {
+      const res = await addUser(userForm);
+      if (res.success) {
+        closeForm();
+        alert("New user added successfully! / नया उपयोगकर्ता सफलतापूर्वक जोड़ा गया!");
+      } else {
+        alert(res.message || "Failed to add new user");
+      }
+    }
+  };
+
+  const handleDeleteUser = async (email) => {
+    if (window.confirm(`Are you sure you want to delete user with email: ${email}? / क्या आप वाकई इस उपयोगकर्ता को हटाना चाहते हैं?`)) {
+      const res = await deleteUser(email);
+      if (res.success) {
+        alert("User deleted successfully! / उपयोगकर्ता सफलतापूर्वक हटाया गया!");
+      } else {
+        alert(res.message || "Failed to delete user");
+      }
+    }
+  };
+
   const openAddResearchPub = () => {
     setResearchPublicationForm({ title: "", author: "", journal: "", year: "", issn: "", url: "" });
     setEditingPub(null);
@@ -714,6 +759,7 @@ export default function AdminDashboard() {
     setCommitteeForm({ titleEn: "", titleHi: "", convenerEn: "", membersEn: "" });
     setReqDocForm({ labelEn: "", labelHi: "" });
     setLibraryRuleForm({ ruleEn: "", ruleHi: "" });
+    setUserForm({ name: "", email: "", password: "", role: "Faculty", department: "Arts" });
   };
 
   const openEditForm = (item) => {
@@ -747,6 +793,14 @@ export default function AdminDashboard() {
         eventDate: item.eventDate || new Date().toISOString().split("T")[0],
         imageUrl: item.imageUrl || ""
       });
+    } else if (activeMenu === "users") {
+      setUserForm({
+        name: item.name || "",
+        email: item.email || "",
+        password: item.password || "",
+        role: item.role || "Faculty",
+        department: item.department || "Arts"
+      });
     }
   };
 
@@ -757,6 +811,7 @@ export default function AdminDashboard() {
 
   const sidebarLinks = [
     { key: "overview", label: "Dashboard Overview", icon: "dashboard" },
+    ...(role === "Principal" || role === "Super Admin" ? [{ key: "users", label: "User Management / यूज़र प्रबंधन", icon: "manage_accounts" }] : []),
     { key: "notices", label: "Manage Notices", icon: "campaign" },
     { key: "downloads", label: "Downloads & Syllabus", icon: "download" },
     { key: "faculty", label: "Faculty Directory", icon: "groups" },
@@ -862,7 +917,7 @@ export default function AdminDashboard() {
               </p>
             </div>
              {/* Action buttons (Add new) for appropriate modules */}
-            {["notices", "downloads", "faculty", "courses", "news", "janbhagidari", "officeStaff", "committees", "reqDocs", "library"].includes(activeMenu) &&
+            {["notices", "downloads", "faculty", "courses", "news", "janbhagidari", "officeStaff", "committees", "reqDocs", "library", "users"].includes(activeMenu) &&
               !isAdding &&
               !editingItem && (
                 <button
@@ -870,7 +925,7 @@ export default function AdminDashboard() {
                   className="bg-secondary hover:bg-secondary/95 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
                 >
                   <span className="material-symbols-outlined text-sm">add</span>
-                  Add {activeMenu === "janbhagidari" ? "Member" : activeMenu === "officeStaff" ? "Staff" : activeMenu === "committees" ? "Committee" : activeMenu === "reqDocs" ? "Document" : activeMenu === "library" ? "Rule" : activeMenu.slice(0, -1)}
+                  Add {activeMenu === "janbhagidari" ? "Member" : activeMenu === "officeStaff" ? "Staff" : activeMenu === "committees" ? "Committee" : activeMenu === "reqDocs" ? "Document" : activeMenu === "library" ? "Rule" : activeMenu === "users" ? "User / यूज़र" : activeMenu.slice(0, -1)}
                 </button>
               )}
             {activeMenu === "gallery" && !isAdding && (
@@ -1848,6 +1903,86 @@ export default function AdminDashboard() {
                   </div>
                 </form>
               )}
+
+              {/* User Management Form */}
+              {activeMenu === "users" && (
+                <form onSubmit={handleSaveUser} className="space-y-4 text-xs sm:text-sm">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Full Name / पूरा नाम *</label>
+                      <input
+                        type="text"
+                        required
+                        value={userForm.name}
+                        onChange={(e) => setUserForm({ ...userForm, name: e.target.value })}
+                        placeholder="e.g. Dr. Rajesh Kumar"
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Email Address / ईमेल *</label>
+                      <input
+                        type="email"
+                        required
+                        disabled={!!editingItem}
+                        value={userForm.email}
+                        onChange={(e) => setUserForm({ ...userForm, email: e.target.value })}
+                        placeholder="e.g. rajesh@saragaoncollege.in"
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none disabled:bg-slate-100"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">
+                        {editingItem ? "New Password (Leave unchanged or edit) / पासवर्ड" : "Default Password / डिफ़ॉल्ट पासवर्ड *"}
+                      </label>
+                      <input
+                        type="text"
+                        required={!editingItem}
+                        value={userForm.password}
+                        onChange={(e) => setUserForm({ ...userForm, password: e.target.value })}
+                        placeholder="e.g. DefaultPass@2026"
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Role / भूमिका *</label>
+                      <select
+                        value={userForm.role}
+                        onChange={(e) => setUserForm({ ...userForm, role: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      >
+                        <option value="Faculty">Faculty (शिक्षक)</option>
+                        <option value="Office Staff">Office Staff (कार्यालय कर्मचारी)</option>
+                        <option value="Principal">Principal (प्राचार्य)</option>
+                        <option value="Super Admin">Super Admin (सुपर एडमिन)</option>
+                      </select>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Department / विभाग *</label>
+                      <input
+                        type="text"
+                        required
+                        value={userForm.department}
+                        onChange={(e) => setUserForm({ ...userForm, department: e.target.value })}
+                        placeholder="e.g. Chemistry, Arts, IT Cell"
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-2 justify-end pt-4">
+                    <button
+                      type="button"
+                      onClick={closeForm}
+                      className="px-4 py-2 border border-outline rounded-lg font-bold"
+                    >
+                      Cancel
+                    </button>
+                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
+                      Save
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           )}
 
@@ -2465,6 +2600,69 @@ export default function AdminDashboard() {
                     <tr>
                       <td colSpan="3" className="px-5 py-8 text-center text-on-surface-variant italic">
                         No library rules added yet.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* User Management List */}
+          {activeMenu === "users" && !isAdding && !editingItem && (
+            <div className="border border-outline-variant rounded-2xl overflow-hidden shadow-sm animate-fadeIn">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                  <tr>
+                    <th className="px-5 py-3">Name / नाम</th>
+                    <th className="px-5 py-3">Email / ईमेल</th>
+                    <th className="px-5 py-3">Role / भूमिका</th>
+                    <th className="px-5 py-3">Department / विभाग</th>
+                    <th className="px-5 py-3 text-center">Actions / कार्य</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-outline-variant/60 bg-white">
+                  {users.map((u) => (
+                    <tr key={u.id} className="hover:bg-surface-container-low/40">
+                      <td className="px-5 py-3 font-semibold text-primary">{u.name}</td>
+                      <td className="px-5 py-3 text-on-surface-variant">{u.email}</td>
+                      <td className="px-5 py-3">
+                        <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                          u.role === "Principal" || u.role === "Super Admin"
+                            ? "bg-primary/10 text-primary"
+                            : u.role === "Faculty"
+                            ? "bg-secondary/10 text-secondary"
+                            : "bg-surface-variant text-on-surface-variant"
+                        }`}>
+                          {u.role}
+                        </span>
+                      </td>
+                      <td className="px-5 py-3 text-on-surface-variant">{u.department}</td>
+                      <td className="px-5 py-3 font-semibold text-center">
+                        <div className="flex gap-2 justify-center">
+                          <button
+                            onClick={() => openEditForm(u)}
+                            className="p-1 text-primary hover:bg-primary/5 rounded"
+                            title="Edit User / यूज़र संपादित करें"
+                          >
+                            <span className="material-symbols-outlined text-lg">edit</span>
+                          </button>
+                          <button
+                            disabled={u.email.toLowerCase() === currentUser.email.toLowerCase()}
+                            onClick={() => handleDeleteUser(u.email)}
+                            className="p-1 text-error hover:bg-error/5 rounded disabled:opacity-30 disabled:pointer-events-none"
+                            title="Delete User / यूज़र हटाएँ"
+                          >
+                            <span className="material-symbols-outlined text-lg">delete</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {users.length === 0 && (
+                    <tr>
+                      <td colSpan="5" className="px-5 py-8 text-center text-on-surface-variant italic">
+                        No users registered yet.
                       </td>
                     </tr>
                   )}

@@ -79,6 +79,7 @@ export const AppProvider = ({ children }) => {
   const [researchEvents, setResearchEvents] = useState([]);
   const [admissionHelpDesk, setAdmissionHelpDesk] = useState([]);
   const [labFacilities, setLabFacilities] = useState([]);
+  const [users, setUsers] = useState([]);
 
   // Initialize DB from Firestore
   useEffect(() => {
@@ -126,6 +127,7 @@ export const AppProvider = ({ children }) => {
         setResearchEvents(await fetchCollection("researchEvents"));
         setAdmissionHelpDesk(await fetchCollection("admissionHelpDesk"));
         setLabFacilities(await fetchCollection("labFacilities"));
+        setUsers(await fetchCollection("users"));
 
       } catch (error) {
         console.error("Error loading Firestore database:", error);
@@ -147,15 +149,10 @@ export const AppProvider = ({ children }) => {
             setCurrentUser(userData);
             localStorage.setItem("gncs_user", JSON.stringify(userData));
           } else {
-            // Fallback user if not found in Firestore
-            const fallbackUser = {
-              name: firebaseUser.displayName || firebaseUser.email.split("@")[0],
-              email: firebaseUser.email,
-              role: "Faculty",
-              department: "General"
-            };
-            setCurrentUser(fallbackUser);
-            localStorage.setItem("gncs_user", JSON.stringify(fallbackUser));
+            console.warn("User profile not found in Firestore. Signing out...");
+            await signOut(auth);
+            setCurrentUser(null);
+            localStorage.removeItem("gncs_user");
           }
         } catch (error) {
           console.error("Error fetching user profile:", error);
@@ -187,7 +184,11 @@ export const AppProvider = ({ children }) => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       // Fetch Firestore user doc to return in response
       const userDoc = await getDoc(doc(db, "users", email.toLowerCase()));
-      const userData = userDoc.exists() ? userDoc.data() : { email: userCredential.user.email };
+      if (!userDoc.exists()) {
+        await signOut(auth);
+        return { success: false, message: "Account not authorized / खाता अधिकृत नहीं है" };
+      }
+      const userData = userDoc.data();
       return { success: true, user: userData };
     } catch (authError) {
       console.log("Firebase login failed, checking self-healing registration:", authError.code);
@@ -243,6 +244,51 @@ export const AppProvider = ({ children }) => {
         message = "Invalid email address / अमान्य ईमेल पता";
       }
       return { success: false, message };
+    }
+  };
+
+  // CRUD for Users (Principal Control)
+  const addUser = async (user) => {
+    const emailLower = user.email.toLowerCase();
+    const newUser = {
+      ...user,
+      id: `user-${Date.now()}`,
+      status: "Active",
+      createdAt: new Date().toISOString().split("T")[0]
+    };
+    try {
+      await setDoc(doc(db, "users", emailLower), newUser);
+      setUsers((prev) => [...prev, newUser]);
+      return { success: true };
+    } catch (e) {
+      console.error("Error adding user:", e);
+      return { success: false, message: e.message };
+    }
+  };
+
+  const updateUserProfile = async (email, updatedFields) => {
+    const emailLower = email.toLowerCase();
+    try {
+      await setDoc(doc(db, "users", emailLower), updatedFields, { merge: true });
+      setUsers((prev) =>
+        prev.map((u) => (u.email.toLowerCase() === emailLower ? { ...u, ...updatedFields } : u))
+      );
+      return { success: true };
+    } catch (e) {
+      console.error("Error updating user:", e);
+      return { success: false, message: e.message };
+    }
+  };
+
+  const deleteUser = async (email) => {
+    const emailLower = email.toLowerCase();
+    try {
+      await deleteDoc(doc(db, "users", emailLower));
+      setUsers((prev) => prev.filter((u) => u.email.toLowerCase() !== emailLower));
+      return { success: true };
+    } catch (e) {
+      console.error("Error deleting user:", e);
+      return { success: false, message: e.message };
     }
   };
 
@@ -896,6 +942,10 @@ export const AppProvider = ({ children }) => {
         login,
         logout,
         sendResetEmail,
+        users,
+        addUser,
+        updateUserProfile,
+        deleteUser,
         notices,
         addNotice,
         updateNotice,
