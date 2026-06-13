@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import {
+  initialUsers,
   initialNotices,
   initialNewsEvents,
   initialDepartments,
@@ -44,6 +45,16 @@ async function seedCollection(colName, list) {
   }
 }
 
+async function seedUsers(list) {
+  console.log(`Seeding collection "users" with ${list.length} documents...`);
+  for (const item of list) {
+    if (item.email) {
+      const docId = item.email.toLowerCase();
+      await setDoc(doc(db, "users", docId), item);
+    }
+  }
+}
+
 async function seedSingleDocument(colName, docId, data) {
   console.log(`Seeding single document "${colName}/${docId}"...`);
   await setDoc(doc(db, colName, docId), data);
@@ -53,6 +64,7 @@ async function seedAll() {
   try {
     console.log("Starting database seeding process...");
 
+    await seedUsers(initialUsers);
     await seedCollection("notices", initialNotices);
     await seedCollection("newsEvents", initialNewsEvents);
     await seedCollection("departments", initialDepartments);
@@ -83,3 +95,4 @@ async function seedAll() {
 }
 
 seedAll();
+

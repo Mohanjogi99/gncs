@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 import {
   collection,
   getDocs,
@@ -9,6 +9,13 @@ import {
   deleteDoc,
   updateDoc
 } from "firebase/firestore";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword
+} from "firebase/auth";
 import {
   initialUsers,
   initialNotices,
@@ -128,6 +135,40 @@ export const AppProvider = ({ children }) => {
     initializeAppDatabase();
   }, []);
 
+  // Listen to Firebase Auth state change
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        try {
+          const email = firebaseUser.email.toLowerCase();
+          const userDoc = await getDoc(doc(db, "users", email));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            setCurrentUser(userData);
+            localStorage.setItem("gncs_user", JSON.stringify(userData));
+          } else {
+            // Fallback user if not found in Firestore
+            const fallbackUser = {
+              name: firebaseUser.displayName || firebaseUser.email.split("@")[0],
+              email: firebaseUser.email,
+              role: "Faculty",
+              department: "General"
+            };
+            setCurrentUser(fallbackUser);
+            localStorage.setItem("gncs_user", JSON.stringify(fallbackUser));
+          }
+        } catch (error) {
+          console.error("Error fetching user profile:", error);
+        }
+      } else {
+        setCurrentUser(null);
+        localStorage.removeItem("gncs_user");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const handleSetLanguage = (lang) => {
     setLanguage(lang);
     localStorage.setItem("gncs_language", lang);
@@ -139,24 +180,70 @@ export const AppProvider = ({ children }) => {
     return translations[language]?.[key] || translations["hi"]?.[key] || key;
   };
 
-  // Authentication Mock Methods
-  const login = (email, password) => {
-    const user = initialUsers.find((u) => {
-      const emailMatch = u.email.toLowerCase() === email.toLowerCase();
-      const expectedPassword = u.password || "password123";
-      return emailMatch && password === expectedPassword;
-    });
-    if (user) {
-      setCurrentUser(user);
-      localStorage.setItem("gncs_user", JSON.stringify(user));
-      return { success: true, user };
+  // Authentication Methods using Firebase Auth
+  const login = async (email, password) => {
+    try {
+      // 1. Attempt regular Firebase sign in
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      // Fetch Firestore user doc to return in response
+      const userDoc = await getDoc(doc(db, "users", email.toLowerCase()));
+      const userData = userDoc.exists() ? userDoc.data() : { email: userCredential.user.email };
+      return { success: true, user: userData };
+    } catch (authError) {
+      console.log("Firebase login failed, checking self-healing registration:", authError.code);
+      
+      // 2. Self-Healing Registration:
+      // If sign in fails, check if the email exists in Firestore "users" and
+      // the typed password matches the default password stored there.
+      try {
+        const userDoc = await getDoc(doc(db, "users", email.toLowerCase()));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          // Verify if user matches default password
+          if (userData.password && password === userData.password) {
+            console.log("Valid default credentials. Auto-registering user in Firebase Auth...");
+            // Create the user in Firebase Auth
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            return { success: true, user: userData };
+          }
+        }
+      } catch (dbError) {
+        console.error("Self-healing check failed:", dbError);
+      }
+      
+      // Return standard error message
+      let message = "Invalid email or password / गलत ईमेल या पासवर्ड";
+      if (authError.code === "auth/invalid-email") {
+        message = "Invalid email format / गलत ईमेल प्रारूप";
+      } else if (authError.code === "auth/user-disabled") {
+        message = "This user account has been disabled / यह उपयोगकर्ता खाता अक्षम कर दिया गया है";
+      }
+      return { success: false, message };
     }
-    return { success: false, message: "Invalid email or password" };
   };
 
-  const logout = () => {
-    setCurrentUser(null);
-    localStorage.removeItem("gncs_user");
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
+  const sendResetEmail = async (email) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      return { success: true };
+    } catch (error) {
+      console.error("Password reset error:", error);
+      let message = "Failed to send reset email / रीसेट ईमेल भेजने में विफल";
+      if (error.code === "auth/user-not-found" || error.code === "auth/invalid-credential") {
+        message = "No account found with this email / इस ईमेल के साथ कोई खाता नहीं मिला";
+      } else if (error.code === "auth/invalid-email") {
+        message = "Invalid email address / अमान्य ईमेल पता";
+      }
+      return { success: false, message };
+    }
   };
 
   // CRUD for Notices
@@ -808,6 +895,7 @@ export const AppProvider = ({ children }) => {
         currentUser,
         login,
         logout,
+        sendResetEmail,
         notices,
         addNotice,
         updateNotice,
