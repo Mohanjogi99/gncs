@@ -8,6 +8,8 @@ export default function Home() {
   const navigate = useNavigate();
   const sliderRef = useRef(null);
   const [selectedNews, setSelectedNews] = useState(null);
+  const physicsLabEvent = newsEvents.find(event => event.id === "news-2");
+  const treePlantationEvent = newsEvents.find(event => event.id === "news-1");
 
   // Hero Slider Curated Slides
   const slides = [
@@ -18,13 +20,13 @@ export default function Home() {
       desc: t("welcomeDesc")
     },
     {
-      image: "/physics_lab.png",
+      image: physicsLabEvent?.imageUrl || "/physics_lab.png",
       tag: language === "hi" ? "आधुनिक प्रयोगशालाएं" : "Modern Laboratories",
       title: language === "hi" ? "अनुसंधान और व्यावहारिक ज्ञान का केंद्र" : "Hub of Innovation and Practical Knowledge",
       desc: language === "hi" ? "भौतिक विज्ञान, रसायन विज्ञान और जैविक प्रयोगशालाओं में आधुनिक उपकरणों द्वारा व्यावहारिक अनुभव।" : "Hands-on experience with state-of-the-art instruments in Physics, Chemistry, and Biology laboratories."
     },
     {
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg",
+      image: treePlantationEvent?.imageUrl || "/tree_plantation.jpg",
       tag: language === "hi" ? "सांस्कृतिक एवं पाठ्येतर गतिविधियां" : "Cultural & Extra-Curricular Activities",
       title: language === "hi" ? "विद्यार्थियों का समग्र व बहुमुखी विकास" : "Holistic and Versatile Student Development",
       desc: language === "hi" ? "राष्ट्रीय सेवा योजना (NSS), क्रीड़ा एवं वार्षिक सांस्कृतिक समारोहों द्वारा व्यक्तित्व का सर्वांगीण विकास।" : "All-round development through NSS, sports meets, and vibrant annual cultural festivals."
