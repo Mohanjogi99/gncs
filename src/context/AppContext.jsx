@@ -203,9 +203,20 @@ export const AppProvider = ({ children }) => {
           // Verify if user matches default password
           if (userData.password && password === userData.password) {
             console.log("Valid default credentials. Auto-registering user in Firebase Auth...");
-            // Create the user in Firebase Auth
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            return { success: true, user: userData };
+            try {
+              // Create the user in Firebase Auth
+              const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+              return { success: true, user: userData };
+            } catch (regError) {
+              console.error("Firebase registration failed during self-healing:", regError);
+              if (regError.code === "auth/operation-not-allowed") {
+                return { 
+                  success: false, 
+                  message: "Firebase Error: Email/Password sign-in provider is disabled in Firebase Console. Please enable it under Authentication -> Sign-in method. / ईमेल/पासवर्ड लॉगिन सेवा अक्षम है। कृपया कंसोल में इसे सक्षम करें।" 
+                };
+              }
+              return { success: false, message: `Registration Error: ${regError.message} / पंजीकरण त्रुटि: ${regError.message}` };
+            }
           }
         }
       } catch (dbError) {
@@ -218,6 +229,8 @@ export const AppProvider = ({ children }) => {
         message = "Invalid email format / गलत ईमेल प्रारूप";
       } else if (authError.code === "auth/user-disabled") {
         message = "This user account has been disabled / यह उपयोगकर्ता खाता अक्षम कर दिया गया है";
+      } else if (authError.code === "auth/operation-not-allowed") {
+        message = "Firebase Error: Email/Password sign-in provider is disabled in Firebase Console. Please enable it. / ईमेल/पासवर्ड लॉगिन सेवा अक्षम है। कृपया कंसोल में इसे सक्षम करें।";
       }
       return { success: false, message };
     }
