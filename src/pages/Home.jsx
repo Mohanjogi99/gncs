@@ -4,7 +4,7 @@ import { AppContext } from "../context/AppContext";
 import NoticeTicker from "../components/NoticeTicker";
 
 export default function Home() {
-  const { notices, newsEvents, gallery, language, t } = useContext(AppContext);
+  const { notices, newsEvents, gallery, faculty, language, t } = useContext(AppContext);
   const navigate = useNavigate();
   const sliderRef = useRef(null);
   const [selectedNews, setSelectedNews] = useState(null);
