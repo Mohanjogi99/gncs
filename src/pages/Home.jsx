@@ -1,13 +1,52 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import NoticeTicker from "../components/NoticeTicker";
 
 export default function Home() {
-  const { notices, newsEvents, gallery, faculty, language, t } = useContext(AppContext);
+  const { notices, newsEvents, gallery, language, t } = useContext(AppContext);
   const navigate = useNavigate();
   const sliderRef = useRef(null);
   const [selectedNews, setSelectedNews] = useState(null);
+
+  // Hero Slider Curated Slides
+  const slides = [
+    {
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA72eXokI1lfD95EVEcAR3osAynjp5wfvMvtugkG0bOK_1g7YRvPOwJ9wt9EJEZ3Y_BmjOJaIOxTaTTAvU5DXyuczs0S2DFGtNUoqki8h5n4vVrke8WF1PhFl1l-JCcRYdRvFwUK4JeXDTYSNJfu3QYoW78eZe6BHq7D86Cz2tSUTBb36y99fbjn7vNRs9HjRIxAKwB-ZVe43KBDGY5iP0Y3NY5TBsYHSzTW-XRE9yDpqIV4ABK9EMBoWzT1uHO4Fi6fYj4KIqe6lg",
+      tag: language === "hi" ? "शासकीय नवीन महाविद्यालय सारागांव" : "Govt Naveen College Saragaon",
+      title: language === "hi" ? "शिक्षा और उज्जवल भविष्य की ओर बढ़ते कदम" : "Stepping Stones Towards Excellence & Education",
+      desc: language === "hi" ? "सत्र 2026-27 के लिए विभिन्न स्नातक एवं स्नातकोत्तर पाठ्यक्रमों में प्रवेश प्रारंभ।" : "Admissions open for various undergraduate and postgraduate courses for the session 2026-27."
+    },
+    {
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBPuEzyD9-MfQ_3vvX9oYKPAuZF2ztxx6KyqMbOw4g5Kp_tzqhaRgvwfnwaAn5xs_AnL9UFwhmBudsK-VwNPIX4bLLUdVDiEj0hHOYwGWavpYuBWCQiPthsYp-T84atWK-OgmbS_GrLmBTBFGksC9eHp-h1nN9lSakCYPqU5ZwEX3RRW6KJqidqoUmKkeZVoPPcWXgW10QHjMx8WSJ_j29eSxEvHSHqkfZhABTdGFnTzsq9J7LZyF_WehIO_og89pSMv7fkLLjKjR8",
+      tag: language === "hi" ? "आधुनिक प्रयोगशालाएं" : "Modern Laboratories",
+      title: language === "hi" ? "अनुसंधान और व्यावहारिक ज्ञान का केंद्र" : "Hub of Innovation and Practical Knowledge",
+      desc: language === "hi" ? "भौतिक विज्ञान, रसायन विज्ञान और जैविक प्रयोगशालाओं में आधुनिक उपकरणों द्वारा व्यावहारिक अनुभव।" : "Hands-on experience with state-of-the-art instruments in Physics, Chemistry, and Biology laboratories."
+    },
+    {
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBCjsfFQYXwVOIkT9Y6mDy2lPLApjrPlkUzrOz1rsxwUarhtCK2NFmHtORNU0JAG9nX_qGGsQ8qeY9zwr7mYSWrvDrBxu3dhjC3L_Ek3LYiwrYVuL_D1wS6KQNcC0rLp2gn9d02-kFi18BqYkvSsbn5YH2fzMijkawijEkmD_ge0V7DcG6mubOAOPwl9tjur0tW9oltYWyy7_MODLLh4441Knd2Bz9Ruf2U5I2lpnh354zbKX6anGS8mFub-s9iLTDWOQZB4kmP1Tg",
+      tag: language === "hi" ? "सांस्कृतिक एवं पाठ्येतर गतिविधियां" : "Cultural & Extra-Curricular Activities",
+      title: language === "hi" ? "विद्यार्थियों का समग्र व बहुमुखी विकास" : "Holistic and Versatile Student Development",
+      desc: language === "hi" ? "राष्ट्रीय सेवा योजना (NSS), क्रीड़ा एवं वार्षिक सांस्कृतिक समारोहों द्वारा व्यक्तित्व का सर्वांगीण विकास।" : "All-round development through NSS, sports meets, and vibrant annual cultural festivals."
+    }
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
 
   const scrollLeft = () => {
     if (sliderRef.current) {
@@ -44,40 +83,77 @@ export default function Home() {
       {/* Notice Board Ticker */}
       <NoticeTicker />
 
-      {/* Hero Banner Section */}
-      <section className="relative h-[380px] md:h-[480px] rounded-3xl overflow-hidden shadow-lg group">
-        <img
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuA72eXokI1lfD95EVEcAR3osAynjp5wfvMvtugkG0bOK_1g7YRvPOwJ9wt9EJEZ3Y_BmjOJaIOxTaTTAvU5DXyuczs0S2DFGtNUoqki8h5n4vVrke8WF1PhFl1l-JCcRYdRvFwUK4JeXDTYSNJfu3QYoW78eZe6BHq7D86Cz2tSUTBb36y99fbjn7vNRs9HjRIxAKwB-ZVe43KBDGY5iP0Y3NY5TBsYHSzTW-XRE9yDpqIV4ABK9EMBoWzT1uHO4Fi6fYj4KIqe6lg"
-          alt="Government Naveen College Saragaon Campus"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent flex flex-col justify-end p-6 sm:p-10">
-          <div className="max-w-2xl text-white">
-            <span className="inline-block px-3 py-1 bg-secondary text-white rounded-full text-xs font-bold mb-3">
-              ESTD: 2021 | Govt of Chhattisgarh
-            </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold font-hindi leading-tight mb-3">
-              {t("welcomeTitle")}
-            </h2>
-            <p className="text-sm sm:text-base text-white/90 leading-relaxed mb-6 font-medium max-w-xl">
-              {t("welcomeDesc")}
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => navigate("/admission")}
-                className="bg-secondary text-white px-5 sm:px-6 py-3 rounded-full text-xs sm:text-sm font-bold hover:bg-secondary/90 transition-all flex items-center gap-2 shadow-md hover:scale-[1.02]"
-              >
-                {t("applyNow")} | अभी आवेदन करें
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </button>
-              <button
-                onClick={() => navigate("/student-corner")}
-                className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 sm:px-6 py-3 rounded-full text-xs sm:text-sm font-bold transition-all flex items-center gap-2"
-              >
-                {t("viewNotices")} | सूचनाएं देखें
-              </button>
+      {/* Hero Banner Section (Slider) */}
+      <section className="relative h-[380px] md:h-[480px] rounded-3xl overflow-hidden shadow-lg group bg-slate-900">
+        {slides.map((slide, idx) => (
+          <div
+            key={idx}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              idx === currentSlide ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            }`}
+          >
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[6000ms] ease-out scale-100 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent flex flex-col justify-end p-6 sm:p-10">
+              <div className="max-w-2xl text-white">
+                <span className="inline-block px-3 py-1 bg-secondary text-white rounded-full text-xs font-bold mb-3 shadow-sm">
+                  {slide.tag}
+                </span>
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold font-hindi leading-tight mb-3">
+                  {slide.title}
+                </h2>
+                <p className="text-sm sm:text-base text-white/90 leading-relaxed mb-6 font-medium max-w-xl">
+                  {slide.desc}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    onClick={() => navigate("/admission")}
+                    className="bg-secondary hover:bg-secondary-container text-white px-5 sm:px-6 py-3 rounded-full text-xs sm:text-sm font-bold transition-all flex items-center gap-2 shadow-md hover:scale-[1.02]"
+                  >
+                    {t("applyNow")} | अभी आवेदन करें
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </button>
+                  <button
+                    onClick={() => navigate("/student-corner")}
+                    className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 sm:px-6 py-3 rounded-full text-xs sm:text-sm font-bold transition-all flex items-center gap-2"
+                  >
+                    {t("viewNotices")} | सूचनाएं देखें
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+        ))}
+
+        {/* Slider Controls */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 outline-none cursor-pointer"
+        >
+          <span className="material-symbols-outlined">chevron_left</span>
+        </button>
+
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 outline-none cursor-pointer"
+        >
+          <span className="material-symbols-outlined">chevron_right</span>
+        </button>
+
+        {/* Bullet Pagination Indicators */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          {slides.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentSlide(idx)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                idx === currentSlide ? "bg-secondary w-6" : "bg-white/50"
+              }`}
+            />
+          ))}
         </div>
       </section>
 
