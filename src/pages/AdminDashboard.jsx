@@ -1397,13 +1397,13 @@ export default function AdminDashboard() {
                           onChange={(e) => {
                             const file = e.target.files[0];
                             if (file) {
-                              triggerSimulatedUpload(() => {
-                                const reader = new FileReader();
-                                reader.onloadend = () => {
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                triggerSimulatedUpload(() => {
                                   setGalleryForm(prev => ({ ...prev, imageUrl: reader.result }));
-                                };
-                                reader.readAsDataURL(file);
-                              });
+                                });
+                              };
+                              reader.readAsDataURL(file);
                             }
                           }}
                           className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer"
@@ -1436,8 +1436,12 @@ export default function AdminDashboard() {
                     >
                       Cancel
                     </button>
-                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
-                      Save Photo
+                    <button
+                      type="submit"
+                      disabled={uploading}
+                      className="px-5 py-2 bg-primary text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {uploading ? "Uploading..." : "Save Photo"}
                     </button>
                   </div>
                 </form>
@@ -1531,13 +1535,13 @@ export default function AdminDashboard() {
                             onChange={(e) => {
                               const file = e.target.files[0];
                               if (file) {
-                                triggerSimulatedUpload(() => {
-                                  const reader = new FileReader();
-                                  reader.onloadend = () => {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                  triggerSimulatedUpload(() => {
                                     setNewsForm(prev => ({ ...prev, imageUrl: reader.result }));
-                                  };
-                                  reader.readAsDataURL(file);
-                                });
+                                  });
+                                };
+                                reader.readAsDataURL(file);
                               }
                             }}
                             className="w-full px-3 py-1.5 rounded-lg border border-outline-variant bg-white outline-none file:mr-2 file:py-0.5 file:px-2 file:rounded-full file:border-0 file:text-[11px] file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer text-xs"
@@ -1568,8 +1572,12 @@ export default function AdminDashboard() {
                     >
                       Cancel
                     </button>
-                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
-                      Save Event
+                    <button
+                      type="submit"
+                      disabled={uploading}
+                      className="px-5 py-2 bg-primary text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {uploading ? "Uploading..." : "Save Event"}
                     </button>
                   </div>
                 </form>
