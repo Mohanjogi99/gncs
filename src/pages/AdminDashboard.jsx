@@ -268,6 +268,28 @@ export default function AdminDashboard() {
   const [isAddingSubject, setIsAddingSubject] = useState(false);
   const [editingSubjectIndex, setEditingSubjectIndex] = useState(null);
   const [subjectInput, setSubjectInput] = useState("");
+  const [isAddingActivity, setIsAddingActivity] = useState(false);
+  const [editingActivityIndex, setEditingActivityIndex] = useState(null);
+  const [activityForm, setActivityForm] = useState({
+    date: new Date().toISOString().split("T")[0],
+    textEn: "",
+    textHi: ""
+  });
+
+  const defaultActivities = {
+    "dept-arts": [
+      { date: "2026-04-12", textEn: "Slogan writing competition on Child Rights by Sociology Dept", textHi: "समाजशास्त्र विभाग द्वारा बाल अधिकारों पर नारा लेखन प्रतियोगिता" },
+      { date: "2026-03-08", textEn: "Guest lecture on Modern Hindi Literature by Hindi Dept", textHi: "हिंदी विभाग द्वारा आधुनिक हिंदी साहित्य पर अतिथि व्याख्यान" }
+    ],
+    "dept-science": [
+      { date: "2026-02-28", textEn: "National Science Day Exhibition & Model Display", textHi: "राष्ट्रीय विज्ञान दिवस प्रदर्शनी एवं मॉडल प्रदर्शन" },
+      { date: "2026-01-18", textEn: "Field visit to Biodiversity park by Zoology students", textHi: "प्राणीशास्त्र के छात्रों द्वारा जैव विविधता पार्क का क्षेत्र दौरा" }
+    ],
+    "dept-commerce": [
+      { date: "2026-03-15", textEn: "Workshop on e-Filing of Income Tax Returns in India", textHi: "भारत में आयकर रिटर्न की ई-फाइलिंग पर कार्यशाला" },
+      { date: "2026-02-10", textEn: "Commerce quiz competition on union budget analysis", textHi: "केंद्रीय बजट विश्लेषण पर वाणिज्य प्रश्नोत्तरी प्रतियोगिता" }
+    ]
+  };
 
   // User form states
   const [userForm, setUserForm] = useState({
@@ -741,6 +763,60 @@ export default function AdminDashboard() {
       if (dept) {
         const updatedSubjects = dept.subjects.filter((_, idx) => idx !== index);
         updateDepartment(selectedDeptId, { subjects: updatedSubjects });
+      }
+    }
+  };
+
+  const handleAddActivity = (e) => {
+    e.preventDefault();
+    if (!activityForm.date || !activityForm.textEn.trim() || !activityForm.textHi.trim()) return;
+    const dept = departments.find((d) => d.id === selectedDeptId);
+    if (dept) {
+      const currentActivities = dept.activities || defaultActivities[selectedDeptId] || [];
+      const updatedActivities = [...currentActivities, {
+        date: activityForm.date,
+        textEn: activityForm.textEn.trim(),
+        textHi: activityForm.textHi.trim()
+      }];
+      updateDepartment(selectedDeptId, { activities: updatedActivities });
+      setActivityForm({
+        date: new Date().toISOString().split("T")[0],
+        textEn: "",
+        textHi: ""
+      });
+      setIsAddingActivity(false);
+    }
+  };
+
+  const handleUpdateActivity = (e) => {
+    e.preventDefault();
+    if (editingActivityIndex === null || !activityForm.date || !activityForm.textEn.trim() || !activityForm.textHi.trim()) return;
+    const dept = departments.find((d) => d.id === selectedDeptId);
+    if (dept) {
+      const currentActivities = dept.activities || defaultActivities[selectedDeptId] || [];
+      const updatedActivities = [...currentActivities];
+      updatedActivities[editingActivityIndex] = {
+        date: activityForm.date,
+        textEn: activityForm.textEn.trim(),
+        textHi: activityForm.textHi.trim()
+      };
+      updateDepartment(selectedDeptId, { activities: updatedActivities });
+      setActivityForm({
+        date: new Date().toISOString().split("T")[0],
+        textEn: "",
+        textHi: ""
+      });
+      setEditingActivityIndex(null);
+    }
+  };
+
+  const handleDeleteActivity = (index) => {
+    if (window.confirm("Are you sure you want to delete this activity?")) {
+      const dept = departments.find((d) => d.id === selectedDeptId);
+      if (dept) {
+        const currentActivities = dept.activities || defaultActivities[selectedDeptId] || [];
+        const updatedActivities = currentActivities.filter((_, idx) => idx !== index);
+        updateDepartment(selectedDeptId, { activities: updatedActivities });
       }
     }
   };
@@ -2749,6 +2825,13 @@ export default function AdminDashboard() {
                       setIsAddingSubject(false);
                       setEditingSubjectIndex(null);
                       setSubjectInput("");
+                      setIsAddingActivity(false);
+                      setEditingActivityIndex(null);
+                      setActivityForm({
+                        date: new Date().toISOString().split("T")[0],
+                        textEn: "",
+                        textHi: ""
+                      });
                     }}
                     className={`px-5 py-2.5 rounded-t-xl font-bold text-xs whitespace-nowrap transition-all ${
                       selectedDeptId === dept.id
@@ -2895,6 +2978,148 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Departmental Activities Section */}
+              <div className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/80 space-y-4">
+                <div className="flex justify-between items-center border-b border-outline-variant/60 pb-2">
+                  <h4 className="font-bold text-sm text-primary flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-secondary text-lg">celebration</span>
+                    Departmental Activities | विभागीय गतिविधियां ({ (departments.find((d) => d.id === selectedDeptId)?.activities || defaultActivities[selectedDeptId] || []).length })
+                  </h4>
+                  {!isAddingActivity && editingActivityIndex === null && (
+                    <button
+                      onClick={() => {
+                        setIsAddingActivity(true);
+                        setEditingActivityIndex(null);
+                        setActivityForm({
+                          date: new Date().toISOString().split("T")[0],
+                          textEn: "",
+                          textHi: ""
+                        });
+                      }}
+                      className="bg-secondary hover:bg-secondary/95 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all"
+                    >
+                      <span className="material-symbols-outlined text-sm">add</span>
+                      Add Activity
+                    </button>
+                  )}
+                </div>
+
+                {/* Add / Edit Activity Form */}
+                {(isAddingActivity || editingActivityIndex !== null) && (
+                  <form
+                    onSubmit={isAddingActivity ? handleAddActivity : handleUpdateActivity}
+                    className="p-4 bg-white border border-outline-variant rounded-xl space-y-3"
+                  >
+                    <div className="font-bold text-xs text-secondary border-b border-outline-variant/40 pb-1">
+                      {isAddingActivity ? "Add New Departmental Activity" : "Edit Departmental Activity"}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-xs">Date *</label>
+                        <input
+                          type="date"
+                          required
+                          value={activityForm.date}
+                          onChange={(e) => setActivityForm({ ...activityForm, date: e.target.value })}
+                          className="w-full px-3 py-1.5 text-xs rounded-lg border border-outline-variant bg-white outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-xs">Activity Description (English) *</label>
+                        <input
+                          type="text"
+                          required
+                          value={activityForm.textEn}
+                          onChange={(e) => setActivityForm({ ...activityForm, textEn: e.target.value })}
+                          className="w-full px-3 py-1.5 text-xs rounded-lg border border-outline-variant bg-white outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="font-bold text-xs">Activity Description (Hindi) *</label>
+                        <input
+                          type="text"
+                          required
+                          value={activityForm.textHi}
+                          onChange={(e) => setActivityForm({ ...activityForm, textHi: e.target.value })}
+                          className="w-full px-3 py-1.5 text-xs rounded-lg border border-outline-variant bg-white outline-none"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2 justify-end pt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsAddingActivity(false);
+                          setEditingActivityIndex(null);
+                        }}
+                        className="px-3 py-1.5 border border-outline text-xs rounded-lg font-bold"
+                      >
+                        Cancel
+                      </button>
+                      <button type="submit" className="px-4 py-1.5 bg-primary text-white text-xs rounded-lg font-bold">
+                        Save Activity
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                {/* Activities List */}
+                <div className="space-y-3">
+                  {(departments.find((d) => d.id === selectedDeptId)?.activities || defaultActivities[selectedDeptId] || []).length === 0 ? (
+                    <p className="text-xs text-on-surface-variant italic">No activities recorded for this department.</p>
+                  ) : (
+                    <div className="border border-outline-variant rounded-xl overflow-hidden shadow-sm bg-white">
+                      <table className="w-full text-left text-xs">
+                        <thead className="bg-surface-container border-b border-outline-variant font-bold text-on-surface-variant uppercase">
+                          <tr>
+                            <th className="px-4 py-2 w-28">Date</th>
+                            <th className="px-4 py-2">Activity Details (Bilingual)</th>
+                            <th className="px-4 py-2 text-center w-24">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-outline-variant/60">
+                          {(departments.find((d) => d.id === selectedDeptId)?.activities || defaultActivities[selectedDeptId] || []).map((act, idx) => (
+                            <tr key={idx} className="hover:bg-surface-container-low/40">
+                              <td className="px-4 py-3 font-semibold text-secondary whitespace-nowrap">{act.date}</td>
+                              <td className="px-4 py-3 space-y-1">
+                                <span className="font-semibold text-on-surface block">{act.textEn}</span>
+                                <span className="text-on-surface-variant block">{act.textHi}</span>
+                              </td>
+                              <td className="px-4 py-3">
+                                <div className="flex gap-2 justify-center">
+                                  <button
+                                    onClick={() => {
+                                      setEditingActivityIndex(idx);
+                                      setIsAddingActivity(false);
+                                      setActivityForm({
+                                        date: act.date,
+                                        textEn: act.textEn,
+                                        textHi: act.textHi
+                                      });
+                                    }}
+                                    className="p-1 hover:bg-primary/5 text-primary rounded"
+                                    title="Edit Activity"
+                                  >
+                                    <span className="material-symbols-outlined text-base">edit</span>
+                                  </button>
+                                  <button
+                                    onClick={() => handleDeleteActivity(idx)}
+                                    className="p-1 hover:bg-error/5 text-error rounded"
+                                    title="Delete Activity"
+                                  >
+                                    <span className="material-symbols-outlined text-base">delete</span>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

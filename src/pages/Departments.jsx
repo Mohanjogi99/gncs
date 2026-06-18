@@ -12,7 +12,7 @@ export default function Departments() {
   const activeDeptKey = activeDeptId === "dept-arts" ? "Arts" : activeDeptId === "dept-science" ? "Science" : "Commerce";
   const deptFaculty = faculty.filter((f) => f.department.toLowerCase() === activeDeptKey.toLowerCase());
 
-  const mockActivities = {
+  const defaultActivities = {
     "dept-arts": [
       { date: "2026-04-12", textEn: "Slogan writing competition on Child Rights by Sociology Dept", textHi: "समाजशास्त्र विभाग द्वारा बाल अधिकारों पर नारा लेखन प्रतियोगिता" },
       { date: "2026-03-08", textEn: "Guest lecture on Modern Hindi Literature by Hindi Dept", textHi: "हिंदी विभाग द्वारा आधुनिक हिंदी साहित्य पर अतिथि व्याख्यान" }
@@ -26,6 +26,8 @@ export default function Departments() {
       { date: "2026-02-10", textEn: "Commerce quiz competition on union budget analysis", textHi: "केंद्रीय बजट विश्लेषण पर वाणिज्य प्रश्नोत्तरी प्रतियोगिता" }
     ]
   };
+
+  const activeActivities = activeDept?.activities || defaultActivities[activeDeptId] || [];
 
   return (
     <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 space-y-8 flex-1">
@@ -152,7 +154,7 @@ export default function Departments() {
                   {language === "hi" ? "विभागीय गतिविधियां" : "Departmental Activities"}
                 </h4>
                 <ul className="space-y-2.5">
-                  {mockActivities[activeDeptId]?.map((act, idx) => (
+                  {activeActivities.map((act, idx) => (
                     <li key={idx} className="text-xs text-on-surface-variant flex gap-2 leading-relaxed">
                       <span className="text-secondary font-bold shrink-0">{act.date} :</span>
                       <span>{language === "hi" ? act.textHi : act.textEn}</span>
