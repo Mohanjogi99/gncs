@@ -99,7 +99,8 @@ export default function AdminDashboard() {
     titleEnglish: "",
     titleHindi: "",
     category: "Admission",
-    isImportant: false
+    isImportant: false,
+    fileUrl: ""
   });
 
   // Download form states
@@ -748,7 +749,7 @@ export default function AdminDashboard() {
     setIsAdding(true);
     setEditingItem(null);
     // Reset forms
-    setNoticeForm({ titleEnglish: "", titleHindi: "", category: "Admission", isImportant: false });
+    setNoticeForm({ titleEnglish: "", titleHindi: "", category: "Admission", isImportant: false, fileUrl: "" });
     setDownloadForm({ titleEnglish: "", titleHindi: "", category: "Admission Forms", fileUrl: "" });
     setFacultyForm({ name: "", designation: "Assistant Professor", department: "Arts", qualification: "", email: "", phone: "", bioEnglish: "", bioHindi: "", photoUrl: "", biodataUrl: "" });
     setCourseForm({ name: "", stream: "Arts", duration: "3 Years / 3 वर्ष", eligibility: "", seats: 60, fee: "₹2,500 per annum", level: "UG" });
@@ -767,7 +768,7 @@ export default function AdminDashboard() {
     setIsAdding(false);
     // Populate form based on active panel
     if (activeMenu === "notices") {
-      setNoticeForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, category: item.category, isImportant: item.isImportant });
+      setNoticeForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, category: item.category, isImportant: item.isImportant, fileUrl: item.fileUrl || "" });
     } else if (activeMenu === "downloads") {
       setDownloadForm({ titleEnglish: item.titleEnglish, titleHindi: item.titleHindi, category: item.category, fileUrl: item.fileUrl || "" });
     } else if (activeMenu === "faculty") {
@@ -1013,7 +1014,62 @@ export default function AdminDashboard() {
                       </label>
                     </div>
                   </div>
-                  <div className="flex gap-2 justify-end pt-4">
+
+                  <div className="space-y-1.5 border-t border-outline-variant/60 pt-4">
+                    <div className="flex justify-between items-center">
+                      <label className="font-bold">Notice PDF (अपलोड या URL - Optional)</label>
+                      {noticeForm.fileUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setNoticeForm(prev => ({ ...prev, fileUrl: "" }))}
+                          className="text-xs text-error hover:underline flex items-center gap-0.5"
+                        >
+                          <span className="material-symbols-outlined text-xs">delete</span>
+                          Remove PDF
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                      <div className="flex-1 w-full space-y-2">
+                        <input
+                          type="file"
+                          accept="application/pdf"
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                triggerSimulatedUpload(() => {
+                                  setNoticeForm(prev => ({ ...prev, fileUrl: reader.result }));
+                                });
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                          className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer"
+                        />
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-on-surface-variant font-bold">OR URL:</span>
+                          <input
+                            type="url"
+                            placeholder="https://example.com/notice.pdf"
+                            value={noticeForm.fileUrl || ""}
+                            onChange={(e) => setNoticeForm({ ...noticeForm, fileUrl: e.target.value })}
+                            className="w-full flex-1 px-3 py-1.5 rounded-lg border border-outline-variant bg-white outline-none text-xs"
+                          />
+                        </div>
+                      </div>
+                      <div className="w-16 h-16 rounded-xl shrink-0 border-2 border-primary/20 bg-surface-container-low flex items-center justify-center shadow-inner">
+                        {noticeForm.fileUrl ? (
+                          <span className="material-symbols-outlined text-secondary text-3xl">picture_as_pdf</span>
+                        ) : (
+                          <span className="material-symbols-outlined text-outline text-3xl font-light">description</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 justify-end pt-4 border-t border-outline-variant/60">
                     <button
                       type="button"
                       onClick={closeForm}
@@ -1021,8 +1077,12 @@ export default function AdminDashboard() {
                     >
                       Cancel
                     </button>
-                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
-                      Save
+                    <button
+                      type="submit"
+                      disabled={uploading}
+                      className="px-5 py-2 bg-primary text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {uploading ? "Uploading..." : "Save"}
                     </button>
                   </div>
                 </form>
@@ -2038,7 +2098,12 @@ export default function AdminDashboard() {
                   {notices.map((n) => (
                     <tr key={n.id} className="hover:bg-surface-container-low/40">
                       <td className="px-5 py-3 space-y-1">
-                        <span className="font-bold text-primary block">{n.titleEnglish}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-primary block">{n.titleEnglish}</span>
+                          {n.fileUrl && (
+                            <span className="material-symbols-outlined text-red-600 text-base" title="PDF Attached">picture_as_pdf</span>
+                          )}
+                        </div>
                         <span className="text-[11px] text-on-surface-variant block">{n.titleHindi}</span>
                       </td>
                       <td className="px-5 py-3 font-semibold text-primary">{n.category}</td>
