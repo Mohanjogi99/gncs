@@ -82,7 +82,11 @@ export default function AdminDashboard() {
     researchEvents,
     addResearchEvent,
     updateResearchEvent,
-    deleteResearchEvent
+    deleteResearchEvent,
+    heroSlides,
+    addHeroSlide,
+    updateHeroSlide,
+    deleteHeroSlide
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -93,6 +97,18 @@ export default function AdminDashboard() {
   const [isAdding, setIsAdding] = useState(false); // triggers add mode form
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
+
+  // Slider form states
+  const [sliderForm, setSliderForm] = useState({
+    image: "",
+    tagEn: "",
+    tagHi: "",
+    titleEn: "",
+    titleHi: "",
+    descEn: "",
+    descHi: "",
+    order: 1
+  });
 
   // Notice form states
   const [noticeForm, setNoticeForm] = useState({
@@ -438,6 +454,16 @@ export default function AdminDashboard() {
       updateGalleryItem(editingItem.id, galleryForm);
     } else {
       addGalleryItem(galleryForm);
+    }
+    closeForm();
+  };
+
+  const handleSaveSlider = (e) => {
+    e.preventDefault();
+    if (editingItem) {
+      updateHeroSlide(editingItem.id, sliderForm);
+    } else {
+      addHeroSlide(sliderForm);
     }
     closeForm();
   };
@@ -837,6 +863,16 @@ export default function AdminDashboard() {
     setReqDocForm({ labelEn: "", labelHi: "" });
     setLibraryRuleForm({ ruleEn: "", ruleHi: "" });
     setUserForm({ name: "", email: "", password: "", role: "Faculty", department: "Arts" });
+    setSliderForm({
+      image: "",
+      tagEn: "",
+      tagHi: "",
+      titleEn: "",
+      titleHi: "",
+      descEn: "",
+      descHi: "",
+      order: heroSlides?.length ? Math.max(...heroSlides.map(s => s.order || 0)) + 1 : 1
+    });
   };
 
   const openEditForm = (item) => {
@@ -878,6 +914,17 @@ export default function AdminDashboard() {
         role: item.role || "Faculty",
         department: item.department || "Arts"
       });
+    } else if (activeMenu === "slider") {
+      setSliderForm({
+        image: item.image || "",
+        tagEn: item.tagEn || "",
+        tagHi: item.tagHi || "",
+        titleEn: item.titleEn || "",
+        titleHi: item.titleHi || "",
+        descEn: item.descEn || "",
+        descHi: item.descHi || "",
+        order: item.order || 1
+      });
     }
   };
 
@@ -888,7 +935,10 @@ export default function AdminDashboard() {
 
   const sidebarLinks = [
     { key: "overview", label: "Dashboard Overview", icon: "dashboard" },
-    ...(role === "Principal" || role === "Super Admin" ? [{ key: "users", label: "User Management / यूज़र प्रबंधन", icon: "manage_accounts" }] : []),
+    ...(role === "Principal" || role === "Super Admin" ? [
+      { key: "users", label: "User Management / यूज़र प्रबंधन", icon: "manage_accounts" },
+      { key: "slider", label: "Manage Slider / स्लाइडर प्रबंधन", icon: "slideshow" }
+    ] : []),
     { key: "notices", label: "Manage Notices", icon: "campaign" },
     { key: "downloads", label: "Downloads & Syllabus", icon: "download" },
     { key: "faculty", label: "Faculty Directory", icon: "groups" },
@@ -994,7 +1044,7 @@ export default function AdminDashboard() {
               </p>
             </div>
              {/* Action buttons (Add new) for appropriate modules */}
-            {["notices", "downloads", "faculty", "courses", "news", "janbhagidari", "officeStaff", "committees", "reqDocs", "library", "users"].includes(activeMenu) &&
+            {["notices", "downloads", "faculty", "courses", "news", "janbhagidari", "officeStaff", "committees", "reqDocs", "library", "users", "slider"].includes(activeMenu) &&
               !isAdding &&
               !editingItem && (
                 <button
@@ -1002,7 +1052,7 @@ export default function AdminDashboard() {
                   className="bg-secondary hover:bg-secondary/95 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm"
                 >
                   <span className="material-symbols-outlined text-sm">add</span>
-                  Add {activeMenu === "janbhagidari" ? "Member" : activeMenu === "officeStaff" ? "Staff" : activeMenu === "committees" ? "Committee" : activeMenu === "reqDocs" ? "Document" : activeMenu === "library" ? "Rule" : activeMenu === "users" ? "User / यूज़र" : activeMenu.slice(0, -1)}
+                  Add {activeMenu === "slider" ? "Slide / स्लाइड" : activeMenu === "janbhagidari" ? "Member" : activeMenu === "officeStaff" ? "Staff" : activeMenu === "committees" ? "Committee" : activeMenu === "reqDocs" ? "Document" : activeMenu === "library" ? "Rule" : activeMenu === "users" ? "User / यूज़र" : activeMenu.slice(0, -1)}
                 </button>
               )}
             {activeMenu === "gallery" && !isAdding && (
@@ -1538,6 +1588,152 @@ export default function AdminDashboard() {
                     </button>
                     <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg font-bold">
                       Save
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Slider Form */}
+              {activeMenu === "slider" && (
+                <form onSubmit={handleSaveSlider} className="space-y-4 text-xs sm:text-sm">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Tag (English) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={sliderForm.tagEn}
+                        onChange={(e) => setSliderForm({ ...sliderForm, tagEn: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Tag (Hindi) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={sliderForm.tagHi}
+                        onChange={(e) => setSliderForm({ ...sliderForm, tagHi: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Title (English) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={sliderForm.titleEn}
+                        onChange={(e) => setSliderForm({ ...sliderForm, titleEn: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Title (Hindi) *</label>
+                      <input
+                        type="text"
+                        required
+                        value={sliderForm.titleHi}
+                        onChange={(e) => setSliderForm({ ...sliderForm, titleHi: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Description (English) *</label>
+                      <textarea
+                        required
+                        rows="3"
+                        value={sliderForm.descEn}
+                        onChange={(e) => setSliderForm({ ...sliderForm, descEn: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none resize-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Description (Hindi) *</label>
+                      <textarea
+                        required
+                        rows="3"
+                        value={sliderForm.descHi}
+                        onChange={(e) => setSliderForm({ ...sliderForm, descHi: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none resize-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="font-bold">Sort Order (number) *</label>
+                      <input
+                        type="number"
+                        required
+                        value={sliderForm.order}
+                        onChange={(e) => setSliderForm({ ...sliderForm, order: parseInt(e.target.value) || 1 })}
+                        className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-white outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="font-bold">Slider Image (फ़ोटो अपलोड या URL) *</label>
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                      <div className="flex-1 w-full space-y-2">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                triggerSimulatedUpload(() => {
+                                  setSliderForm(prev => ({ ...prev, image: reader.result }));
+                                });
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                          className="w-full px-4 py-2 rounded-lg border border-outline-variant bg-white outline-none file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer"
+                        />
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-on-surface-variant font-bold">OR URL:</span>
+                          <input
+                            type="url"
+                            placeholder="https://example.com/photo.jpg"
+                            value={sliderForm.image}
+                            onChange={(e) => setSliderForm({ ...sliderForm, image: e.target.value })}
+                            className="w-full flex-1 px-3 py-1.5 rounded-lg border border-outline-variant bg-white outline-none text-xs"
+                          />
+                        </div>
+                      </div>
+                      <div className="w-32 h-16 rounded-xl overflow-hidden shrink-0 border border-outline-variant bg-surface-container-low flex items-center justify-center shadow-inner">
+                        {sliderForm.image ? (
+                          <img src={sliderForm.image} alt="Preview" className="w-full h-full object-cover" />
+                        ) : (
+                          <span className="material-symbols-outlined text-outline text-2xl font-light">image</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 justify-end pt-4">
+                    <button
+                      type="button"
+                      onClick={closeForm}
+                      className="px-4 py-2 border border-outline rounded-lg font-bold"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={uploading}
+                      className="px-5 py-2 bg-primary text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {uploading ? "Uploading..." : "Save"}
                     </button>
                   </div>
                 </form>
@@ -2418,6 +2614,60 @@ export default function AdminDashboard() {
                   </div>
                 ))
               )}
+            </div>
+          )}
+
+          {/* Slider Management List */}
+          {activeMenu === "slider" && !isAdding && !editingItem && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {heroSlides.map((s) => (
+                <div
+                  key={s.id}
+                  className="bg-white rounded-2xl overflow-hidden border border-outline-variant flex hover:border-secondary transition-all animate-fadeIn"
+                >
+                  <div className="w-32 h-24 shrink-0 bg-surface-container-low border-r border-outline-variant/60">
+                    {s.image ? (
+                      <img src={s.image} alt={s.titleEn} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-surface-container">
+                        <span className="material-symbols-outlined text-outline">image</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-3 flex-1 flex flex-col justify-between overflow-hidden">
+                    <div className="space-y-1">
+                      <div className="flex justify-between items-center gap-1.5">
+                        <span className="text-[9px] bg-secondary/10 text-secondary font-bold px-2 py-0.5 rounded-full shrink-0">
+                          Order: {s.order}
+                        </span>
+                        <span className="text-[10px] text-outline font-semibold truncate flex-1 text-right">{s.tagEn}</span>
+                      </div>
+                      <h5 className="font-bold text-xs text-primary truncate" title={s.titleEn}>{s.titleEn}</h5>
+                      <p className="text-[10px] text-on-surface-variant line-clamp-2 leading-relaxed" title={s.descEn}>{s.descEn}</p>
+                    </div>
+                    <div className="flex justify-end gap-1.5 mt-2 border-t border-outline-variant/40 pt-1.5">
+                      <button
+                        onClick={() => openEditForm(s)}
+                        className="text-primary hover:bg-primary/5 p-1 rounded"
+                        title="Edit Slide"
+                      >
+                        <span className="material-symbols-outlined text-base">edit</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (window.confirm("Are you sure you want to delete this slide?")) {
+                            deleteHeroSlide(s.id);
+                          }
+                        }}
+                        className="text-error hover:bg-error/5 p-1 rounded"
+                        title="Delete Slide"
+                      >
+                        <span className="material-symbols-outlined text-base">delete</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 

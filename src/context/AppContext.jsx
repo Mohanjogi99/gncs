@@ -80,6 +80,7 @@ export const AppProvider = ({ children }) => {
   const [admissionHelpDesk, setAdmissionHelpDesk] = useState([]);
   const [labFacilities, setLabFacilities] = useState([]);
   const [users, setUsers] = useState([]);
+  const [heroSlides, setHeroSlides] = useState([]);
 
   // Initialize DB from Firestore
   useEffect(() => {
@@ -128,6 +129,54 @@ export const AppProvider = ({ children }) => {
         setAdmissionHelpDesk(await fetchCollection("admissionHelpDesk"));
         setLabFacilities(await fetchCollection("labFacilities"));
         setUsers(await fetchCollection("users"));
+
+        let loadedSlides = await fetchCollection("heroSlides");
+        if (loadedSlides.length === 0) {
+          const initialSlides = [
+            {
+              id: "slide-1",
+              image: "/slider1.png",
+              tagEn: "Govt Naveen College Saragaon",
+              tagHi: "शासकीय नवीन महाविद्यालय सारागांव",
+              titleEn: "Welcome to Govt Naveen College, Saragaon",
+              titleHi: "शासकीय नवीन महाविद्यालय, सारागांव में आपका स्वागत है",
+              descEn: "Striving for excellence in higher education and overall development of rural students.",
+              descHi: "उच्च शिक्षा में उत्कृष्टता और ग्रामीण विद्यार्थियों के समग्र विकास के लिए प्रयासरत।",
+              order: 1,
+              createdAt: new Date().toISOString()
+            },
+            {
+              id: "slide-2",
+              image: "/physics_lab.png",
+              tagEn: "Modern Laboratories",
+              tagHi: "आधुनिक प्रयोगशालाएं",
+              titleEn: "Hub of Innovation and Practical Knowledge",
+              titleHi: "अनुसंधान और व्यावहारिक ज्ञान का केंद्र",
+              descEn: "Hands-on experience with state-of-the-art instruments in Physics, Chemistry, and Biology laboratories.",
+              descHi: "भौतिक विज्ञान, रसायन विज्ञान और जैविक प्रयोगशालाओं में आधुनिक उपकरणों द्वारा व्यावहारिक अनुभव।",
+              order: 2,
+              createdAt: new Date().toISOString()
+            },
+            {
+              id: "slide-3",
+              image: "/tree_plantation.jpg",
+              tagEn: "Cultural & Extra-Curricular Activities",
+              tagHi: "सांस्कृतिक एवं पाठ्येतर गतिविधियां",
+              titleEn: "Holistic and Versatile Student Development",
+              titleHi: "विद्यार्थियों का समग्र व बहुमुखी विकास",
+              descEn: "All-round development through NSS, sports meets, and vibrant annual cultural festivals.",
+              descHi: "राष्ट्रीय सेवा योजना (NSS), क्रीड़ा एवं वार्षिक सांस्कृतिक समारोहों द्वारा व्यक्तित्व का सर्वांगीण विकास।",
+              order: 3,
+              createdAt: new Date().toISOString()
+            }
+          ];
+          console.log("Seeding default hero slides...");
+          for (const s of initialSlides) {
+            await setDoc(doc(db, "heroSlides", s.id), s);
+          }
+          loadedSlides = initialSlides;
+        }
+        setHeroSlides(loadedSlides.sort((a, b) => (a.order || 0) - (b.order || 0)));
 
       } catch (error) {
         console.error("Error loading Firestore database:", error);
@@ -945,6 +994,38 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const addHeroSlide = async (slide) => {
+    const newSlide = {
+      ...slide,
+      id: `slide-${Date.now()}`,
+      createdAt: new Date().toISOString()
+    };
+    try {
+      await setDoc(doc(db, "heroSlides", newSlide.id), newSlide);
+      setHeroSlides((prev) => [...prev, newSlide].sort((a, b) => (a.order || 0) - (b.order || 0)));
+    } catch (e) {
+      console.error("Error adding slide:", e);
+    }
+  };
+
+  const updateHeroSlide = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "heroSlides", id), updatedFields);
+      setHeroSlides((prev) => prev.map((s) => (s.id === id ? { ...s, ...updatedFields } : s)).sort((a, b) => (a.order || 0) - (b.order || 0)));
+    } catch (e) {
+      console.error("Error updating slide:", e);
+    }
+  };
+
+  const deleteHeroSlide = async (id) => {
+    try {
+      await deleteDoc(doc(db, "heroSlides", id));
+      setHeroSlides((prev) => prev.filter((s) => s.id !== id));
+    } catch (e) {
+      console.error("Error deleting slide:", e);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -1039,7 +1120,11 @@ export const AppProvider = ({ children }) => {
         researchEvents,
         addResearchEvent,
         updateResearchEvent,
-        deleteResearchEvent
+        deleteResearchEvent,
+        heroSlides,
+        addHeroSlide,
+        updateHeroSlide,
+        deleteHeroSlide
       }}
     >
       {children}

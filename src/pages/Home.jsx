@@ -4,15 +4,15 @@ import { AppContext } from "../context/AppContext";
 import NoticeTicker from "../components/NoticeTicker";
 
 export default function Home() {
-  const { notices, newsEvents, gallery, faculty, language, t } = useContext(AppContext);
+  const { notices, newsEvents, gallery, faculty, language, t, heroSlides } = useContext(AppContext);
   const navigate = useNavigate();
   const sliderRef = useRef(null);
   const [selectedNews, setSelectedNews] = useState(null);
   const physicsLabEvent = newsEvents.find(event => event.id === "news-2");
   const treePlantationEvent = newsEvents.find(event => event.id === "news-1");
 
-  // Hero Slider Curated Slides
-  const slides = [
+  // Default static slides if database is not loaded yet
+  const defaultSlides = [
     {
       image: "/slider1.png",
       tag: language === "hi" ? "शासकीय नवीन महाविद्यालय सारागांव" : "Govt Naveen College Saragaon",
@@ -32,6 +32,16 @@ export default function Home() {
       desc: language === "hi" ? "राष्ट्रीय सेवा योजना (NSS), क्रीड़ा एवं वार्षिक सांस्कृतिक समारोहों द्वारा व्यक्तित्व का सर्वांगीण विकास।" : "All-round development through NSS, sports meets, and vibrant annual cultural festivals."
     }
   ];
+
+  // Dynamic slides from database
+  const slides = heroSlides?.length > 0
+    ? [...heroSlides].sort((a, b) => (a.order || 0) - (b.order || 0)).map((slide) => ({
+        image: slide.image,
+        tag: language === "hi" ? slide.tagHi : slide.tagEn,
+        title: language === "hi" ? slide.titleHi : slide.titleEn,
+        desc: language === "hi" ? slide.descHi : slide.descEn
+      }))
+    : defaultSlides;
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
