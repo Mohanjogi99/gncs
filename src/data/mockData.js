@@ -233,9 +233,9 @@ export const initialFaculty = [
   {
     id: "fac-1",
     name: "Prof. B.K. Patel",
-    designation: "Principal",
+    designation: "Assistant Professor",
     department: "Administration",
-    qualification: "M.Sc., Ph.D.",
+    qualification: "M.A. (English)",
     email: "govtcollegesaragaon@gmail.com",
     phone: "9893907415",
     photoUrl: "/principal.jpg",

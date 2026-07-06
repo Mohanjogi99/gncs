@@ -34,7 +34,7 @@ export default function Administration() {
               </p>
             </div>
             <div className="text-xs sm:text-sm text-on-surface-variant leading-relaxed space-y-2">
-              <p className="font-semibold text-primary">Qualification: M.Sc., Assistant Professor</p>
+              <p className="font-semibold text-primary">Qualification: M.A. (English), Assistant Professor</p>
               <p>
                 {language === "hi"
                   ? "प्रो. बी. के. पटेल को उच्च शिक्षा प्रशासन और अध्यापन का वृहद अनुभव प्राप्त है। उन्होंने छत्तीसगढ़ शासन के विभिन्न प्रतिष्ठित महाविद्यालयों में प्रशासनिक पदों पर कार्य किया है।"
