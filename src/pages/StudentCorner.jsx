@@ -11,7 +11,11 @@ export default function StudentCorner() {
     labFacilities,
     addLabExperiment,
     updateLabExperiment,
-    deleteLabExperiment
+    deleteLabExperiment,
+    activitiesClubs,
+    addActivityClub,
+    updateActivityClub,
+    deleteActivityClub
   } = useContext(AppContext);
   const [filterCategory, setFilterCategory] = useState("All");
   const [activeLabTab, setActiveLabTab] = useState("physics");
@@ -24,6 +28,19 @@ export default function StudentCorner() {
     nameHindi: "",
     resourcesEnglish: "",
     resourcesHindi: ""
+  });
+
+  // Modal states for activities & clubs
+  const [showActivityModal, setShowActivityModal] = useState(false);
+  const [editingActivity, setEditingActivity] = useState(null);
+  const [activityForm, setActivityForm] = useState({
+    nameEn: "",
+    nameHi: "",
+    descEn: "",
+    descHi: "",
+    icon: "volunteer_activism",
+    iconColor: "text-secondary",
+    order: 1
   });
 
   const isPrincipal = currentUser && (currentUser.role === "Principal" || currentUser.role === "Super Admin");
@@ -77,6 +94,66 @@ export default function StudentCorner() {
       addLabExperiment(activeLabTab, data);
     }
     setShowLabModal(false);
+  };
+
+  const openAddActivityModal = () => {
+    setEditingActivity(null);
+    setActivityForm({
+      nameEn: "",
+      nameHi: "",
+      descEn: "",
+      descHi: "",
+      icon: "volunteer_activism",
+      iconColor: "text-secondary",
+      order: activitiesClubs.length + 1
+    });
+    setShowActivityModal(true);
+  };
+
+  const openEditActivityModal = (act) => {
+    setEditingActivity(act);
+    setActivityForm({
+      nameEn: act.nameEn || "",
+      nameHi: act.nameHi || "",
+      descEn: act.descEn || "",
+      descHi: act.descHi || "",
+      icon: act.icon || "volunteer_activism",
+      iconColor: act.iconColor || "text-secondary",
+      order: act.order || 1
+    });
+    setShowActivityModal(true);
+  };
+
+  const handleDeleteActivityClick = (id) => {
+    const confirmMsg = language === "hi"
+      ? "क्या आप वाकई इस गतिविधि/क्लब को हटाना चाहते हैं?"
+      : "Are you sure you want to delete this activity/club?";
+    if (window.confirm(confirmMsg)) {
+      deleteActivityClub(id);
+    }
+  };
+
+  const handleActivityFormSubmit = (e) => {
+    e.preventDefault();
+    if (!activityForm.nameEn || !activityForm.descEn) {
+      alert("Name (English) and Description (English) are required!");
+      return;
+    }
+    const data = {
+      nameEn: activityForm.nameEn,
+      nameHi: activityForm.nameHi || activityForm.nameEn,
+      descEn: activityForm.descEn,
+      descHi: activityForm.descHi || activityForm.descEn,
+      icon: activityForm.icon || "volunteer_activism",
+      iconColor: activityForm.iconColor || "text-secondary",
+      order: Number(activityForm.order) || 1
+    };
+    if (editingActivity) {
+      updateActivityClub(editingActivity.id, data);
+    } else {
+      addActivityClub(data);
+    }
+    setShowActivityModal(false);
   };
 
   // Get active student corner categories
@@ -267,50 +344,62 @@ export default function StudentCorner() {
 
           {/* NSS, RRC & Cultural Activities */}
           <div className="bg-white p-6 rounded-3xl border border-outline-variant/60 shadow-sm space-y-4">
-            <h3 className="text-base sm:text-lg font-bold text-primary border-b border-outline-variant pb-2 flex items-center gap-2">
-              <span className="material-symbols-outlined text-secondary">volunteer_activism</span>
-              {language === "hi" ? "गतिविधियाँ एवं क्लब" : "Activities & Clubs"}
-            </h3>
+            <div className="flex justify-between items-center border-b border-outline-variant pb-2">
+              <h3 className="text-base sm:text-lg font-bold text-primary flex items-center gap-2">
+                <span className="material-symbols-outlined text-secondary">volunteer_activism</span>
+                {language === "hi" ? "गतिविधियाँ एवं क्लब" : "Activities & Clubs"}
+              </h3>
+              {isPrincipal && (
+                <button
+                  onClick={openAddActivityModal}
+                  className="bg-secondary hover:bg-secondary/95 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 transition-all shadow-sm cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-sm font-bold">add</span>
+                  {language === "hi" ? "जोड़ें" : "Add"}
+                </button>
+              )}
+            </div>
             
-            <div className="space-y-4">
-              {/* NSS */}
-              <div className="space-y-1">
-                <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary">
-                  <span className="material-symbols-outlined text-secondary text-base">volunteer_activism</span>
-                  <span>{language === "hi" ? "राष्ट्रीय सेवा योजना (NSS)" : "National Service Scheme (NSS)"}</span>
-                </div>
-                <p className="text-[11px] sm:text-xs text-on-surface-variant leading-relaxed">
-                  {language === "hi"
-                    ? "वृक्षारोपण, स्वास्थ्य शिविर, स्वच्छता और साक्षरता रैलियों का आयोजन करने वाली सक्रिय इकाई। संपर्क: समन्वयक डॉ. कमलेश चंद्र।"
-                    : "Active unit conducting tree plantation, health camps, cleanliness drives, and social awareness. Contact: Dr. Kamlesh Chandra."}
+            <div className="space-y-4 divide-y divide-outline-variant/40">
+              {activitiesClubs.length === 0 ? (
+                <p className="text-xs text-on-surface-variant italic py-2">
+                  {language === "hi" ? "कोई गतिविधि/क्लब नहीं मिला।" : "No activities/clubs found."}
                 </p>
-              </div>
-
-              {/* Red Ribbon Club */}
-              <div className="space-y-1 pt-3 border-t border-outline-variant/40">
-                <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary">
-                  <span className="material-symbols-outlined text-red-500 text-base">favorite</span>
-                  <span>{language === "hi" ? "रेड रिबन क्लब (RRC)" : "Red Ribbon Club (RRC)"}</span>
-                </div>
-                <p className="text-[11px] sm:text-xs text-on-surface-variant leading-relaxed">
-                  {language === "hi"
-                    ? "युवाओं में स्वैच्छिक रक्तदान, एचआईवी/एड्स जागरूकता और स्वास्थ्य शिक्षा को बढ़ावा देने के लिए संगोष्ठियों एवं शिविरों का आयोजन करता है।"
-                    : "Organizes seminars and campaigns to promote voluntary blood donation, HIV/AIDS awareness, and health education among youth."}
-                </p>
-              </div>
-
-              {/* Cultural Units */}
-              <div className="space-y-1 pt-3 border-t border-outline-variant/40">
-                <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary">
-                  <span className="material-symbols-outlined text-secondary text-base">theater_comedy</span>
-                  <span>{language === "hi" ? "सांस्कृतिक इकाई" : "Cultural Unit"}</span>
-                </div>
-                <p className="text-[11px] sm:text-xs text-on-surface-variant leading-relaxed">
-                  {language === "hi"
-                    ? "वार्षिक उत्सव, युवा उत्सव, वाद-विवाद, नाटक और पारंपरिक नृत्य व संगीत कार्यक्रमों के माध्यम से छात्र प्रतिभाओं को मंच प्रदान करता है।"
-                    : "Showcases student talents through annual functions, youth festivals, debate competitions, drama, and traditional music and dance events."}
-                </p>
-              </div>
+              ) : (
+                activitiesClubs.map((act, index) => (
+                  <div key={act.id} className={`space-y-1 ${index > 0 ? "pt-3" : ""}`}>
+                    <div className="flex justify-between items-start gap-2">
+                      <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-primary">
+                        <span className={`material-symbols-outlined text-base ${act.iconColor || "text-secondary"}`}>
+                          {act.icon || "volunteer_activism"}
+                        </span>
+                        <span>{language === "hi" ? act.nameHi : act.nameEn}</span>
+                      </div>
+                      {isPrincipal && (
+                        <div className="flex gap-1 shrink-0">
+                          <button
+                            onClick={() => openEditActivityModal(act)}
+                            className="bg-primary/10 hover:bg-primary/20 text-primary p-1 rounded transition-all text-xs flex items-center justify-center cursor-pointer"
+                            title={language === "hi" ? "संपादित करें" : "Edit"}
+                          >
+                            <span className="material-symbols-outlined text-sm">edit</span>
+                          </button>
+                          <button
+                            onClick={() => handleDeleteActivityClick(act.id)}
+                            className="bg-red-50 hover:bg-red-100 text-red-600 p-1 rounded transition-all text-xs flex items-center justify-center cursor-pointer"
+                            title={language === "hi" ? "हटाएं" : "Delete"}
+                          >
+                            <span className="material-symbols-outlined text-sm">delete</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-[11px] sm:text-xs text-on-surface-variant leading-relaxed">
+                      {language === "hi" ? act.descHi : act.descEn}
+                    </p>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -511,6 +600,159 @@ export default function StudentCorner() {
                 <button
                   type="button"
                   onClick={() => setShowLabModal(false)}
+                  className="px-5 py-2.5 border border-outline text-on-surface hover:bg-surface-container rounded-xl font-bold transition-all cursor-pointer"
+                >
+                  {language === "hi" ? "रद्द करें" : "Cancel"}
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary rounded-xl font-bold transition-all shadow cursor-pointer"
+                >
+                  {language === "hi" ? "सहेजें" : "Save"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal for Add / Edit Activity / Club */}
+      {showActivityModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-lg rounded-3xl border border-outline-variant shadow-2xl p-6 sm:p-8 space-y-6 relative animate-in fade-in zoom-in-95 duration-200 animate-duration-150">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center border-b border-outline-variant pb-4">
+              <h3 className="text-lg font-bold text-primary flex items-center gap-2">
+                <span className="material-symbols-outlined text-secondary">
+                  {editingActivity ? "edit_note" : "add_circle"}
+                </span>
+                {editingActivity
+                  ? (language === "hi" ? "गतिविधि/क्लब संपादित करें" : "Edit Activity/Club")
+                  : (language === "hi" ? "गतिविधि/क्लब जोड़ें" : "Add Activity/Club")}
+              </h3>
+              <button
+                onClick={() => setShowActivityModal(false)}
+                className="text-on-surface-variant hover:text-primary transition-all p-1 hover:bg-surface-container rounded-full cursor-pointer"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+
+            {/* Modal Body / Form */}
+            <form onSubmit={handleActivityFormSubmit} className="space-y-4 text-xs sm:text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="font-bold text-on-surface">
+                    {language === "hi" ? "गतिविधि का नाम (अंग्रेजी) *" : "Activity Name (English) *"}
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={activityForm.nameEn}
+                    onChange={(e) => setActivityForm({ ...activityForm, nameEn: e.target.value })}
+                    placeholder="e.g. National Service Scheme (NSS)"
+                    className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="font-bold text-on-surface">
+                    {language === "hi" ? "गतिविधि का नाम (हिंदी)" : "Activity Name (Hindi)"}
+                  </label>
+                  <input
+                    type="text"
+                    value={activityForm.nameHi}
+                    onChange={(e) => setActivityForm({ ...activityForm, nameHi: e.target.value })}
+                    placeholder="जैसे: राष्ट्रीय सेवा योजना (NSS)"
+                    className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all font-hindi"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="font-bold text-on-surface">
+                  {language === "hi" ? "विवरण (अंग्रेजी) *" : "Description (English) *"}
+                </label>
+                <textarea
+                  required
+                  rows="3"
+                  value={activityForm.descEn}
+                  onChange={(e) => setActivityForm({ ...activityForm, descEn: e.target.value })}
+                  placeholder="Describe the activity, objectives, contact info..."
+                  className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all resize-none"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="font-bold text-on-surface">
+                  {language === "hi" ? "विवरण (हिंदी)" : "Description (Hindi)"}
+                </label>
+                <textarea
+                  rows="3"
+                  value={activityForm.descHi}
+                  onChange={(e) => setActivityForm({ ...activityForm, descHi: e.target.value })}
+                  placeholder="गतिविधि के बारे में विवरण लिखें..."
+                  className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all resize-none font-hindi"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="space-y-1.5">
+                  <label className="font-bold text-on-surface">
+                    {language === "hi" ? "आइकॉन (Material Symbol)" : "Icon (Material Symbol)"}
+                  </label>
+                  <input
+                    type="text"
+                    value={activityForm.icon}
+                    onChange={(e) => setActivityForm({ ...activityForm, icon: e.target.value })}
+                    placeholder="e.g. favorite"
+                    className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="font-bold text-on-surface">
+                    {language === "hi" ? "आइकॉन का रंग" : "Icon Color"}
+                  </label>
+                  <select
+                    value={activityForm.iconColor}
+                    onChange={(e) => setActivityForm({ ...activityForm, iconColor: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all"
+                  >
+                    <option value="text-secondary">Theme Secondary (Green)</option>
+                    <option value="text-primary">Theme Primary (Teal)</option>
+                    <option value="text-red-500">Red</option>
+                    <option value="text-blue-500">Blue</option>
+                    <option value="text-green-500">Green</option>
+                    <option value="text-amber-500">Amber</option>
+                    <option value="text-purple-500">Purple</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="font-bold text-on-surface">
+                    {language === "hi" ? "प्रदर्शन क्रम (Order) *" : "Display Order *"}
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    min="1"
+                    value={activityForm.order}
+                    onChange={(e) => setActivityForm({ ...activityForm, order: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface outline-none focus:ring-2 focus:ring-primary transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="text-[10px] text-on-surface-variant leading-normal">
+                💡 Icons: volunteer_activism (NSS), favorite (RRC), theater_comedy (Cultural), sports_soccer (Sports), groups (Clubs), school (Academic).
+              </div>
+
+              {/* Modal Footer / Actions */}
+              <div className="flex gap-3 justify-end pt-4 border-t border-outline-variant/60 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setShowActivityModal(false)}
                   className="px-5 py-2.5 border border-outline text-on-surface hover:bg-surface-container rounded-xl font-bold transition-all cursor-pointer"
                 >
                   {language === "hi" ? "रद्द करें" : "Cancel"}

@@ -953,3 +953,39 @@ export const translations = {
     profile: "संस्थागत विवरण"
   }
 };
+
+export const initialActivitiesClubs = [
+  {
+    id: "act-nss",
+    nameEn: "National Service Scheme (NSS)",
+    nameHi: "राष्ट्रीय सेवा योजना (NSS)",
+    descEn: "Active unit conducting tree plantation, health camps, cleanliness drives, and social awareness. Contact: Dr. Kamlesh Chandra.",
+    descHi: "वृक्षारोपण, स्वास्थ्य शिविर, स्वच्छता और साक्षरता रैलियों का आयोजन करने वाली सक्रिय इकाई। संपर्क: समन्वयक डॉ. कमलेश चंद्र।",
+    icon: "volunteer_activism",
+    iconColor: "text-secondary",
+    order: 1,
+    createdAt: "2026-07-07T00:00:00.000Z"
+  },
+  {
+    id: "act-rrc",
+    nameEn: "Red Ribbon Club (RRC)",
+    nameHi: "रेड रिबन क्लब (RRC)",
+    descEn: "Organizes seminars and campaigns to promote voluntary blood donation, HIV/AIDS awareness, and health education among youth.",
+    descHi: "युवाओं में स्वैच्छिक रक्तदान, एचआईवी/एड्स जागरूकता और स्वास्थ्य शिक्षा को बढ़ावा देने के लिए संगोष्ठियों एवं शिविरों का आयोजन करता है।",
+    icon: "favorite",
+    iconColor: "text-red-500",
+    order: 2,
+    createdAt: "2026-07-07T00:00:00.000Z"
+  },
+  {
+    id: "act-cultural",
+    nameEn: "Cultural Unit",
+    nameHi: "सांस्कृतिक इकाई",
+    descEn: "Showcases student talents through annual functions, youth festivals, debate competitions, drama, and traditional music and dance events.",
+    descHi: "वार्षिक उत्सव, युवा उत्सव, वाद-विवाद, नाटक और पारंपरिक नृत्य व संगीत कार्यक्रमों के माध्यम से छात्र प्रतिभाओं को मंच प्रदान करता है।",
+    icon: "theater_comedy",
+    iconColor: "text-secondary",
+    order: 3,
+    createdAt: "2026-07-07T00:00:00.000Z"
+  }
+];

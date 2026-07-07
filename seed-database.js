@@ -21,7 +21,8 @@ import {
   initialResearchPublications,
   initialResearchProjects,
   initialResearchEvents,
-  initialHelpDesk
+  initialHelpDesk,
+  initialActivitiesClubs
 } from "./src/data/mockData.js";
 
 // Read Firebase Config from firebase.js
@@ -83,6 +84,7 @@ async function seedAll() {
     await seedCollection("researchProjects", initialResearchProjects);
     await seedCollection("researchEvents", initialResearchEvents);
     await seedCollection("admissionHelpDesk", initialHelpDesk);
+    await seedCollection("activitiesClubs", initialActivitiesClubs);
 
     // Seed single document details
     await seedSingleDocument("iqacDetails", "details", initialIqacDetails);

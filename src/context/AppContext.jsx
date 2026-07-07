@@ -39,7 +39,8 @@ import {
   initialResearchPublications,
   initialResearchProjects,
   initialResearchEvents,
-  initialHelpDesk
+  initialHelpDesk,
+  initialActivitiesClubs
 } from "../data/mockData";
 
 export const AppContext = createContext();
@@ -79,6 +80,7 @@ export const AppProvider = ({ children }) => {
   const [researchEvents, setResearchEvents] = useState([]);
   const [admissionHelpDesk, setAdmissionHelpDesk] = useState([]);
   const [labFacilities, setLabFacilities] = useState([]);
+  const [activitiesClubs, setActivitiesClubs] = useState([]);
   const [users, setUsers] = useState([]);
   const [heroSlides, setHeroSlides] = useState([]);
 
@@ -129,6 +131,16 @@ export const AppProvider = ({ children }) => {
         setAdmissionHelpDesk(await fetchCollection("admissionHelpDesk"));
         setLabFacilities(await fetchCollection("labFacilities"));
         setUsers(await fetchCollection("users"));
+
+        let loadedActivities = await fetchCollection("activitiesClubs");
+        if (loadedActivities.length === 0) {
+          console.log("Seeding default activities & clubs...");
+          for (const act of initialActivitiesClubs) {
+            await setDoc(doc(db, "activitiesClubs", act.id), act);
+          }
+          loadedActivities = initialActivitiesClubs;
+        }
+        setActivitiesClubs(loadedActivities.sort((a, b) => (a.order || 0) - (b.order || 0)));
 
         let loadedSlides = await fetchCollection("heroSlides");
         if (loadedSlides.length === 0) {
@@ -896,6 +908,37 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // Activities & Clubs CRUD
+  const addActivityClub = async (activity) => {
+    const newActivity = { id: `act-${Date.now()}`, ...activity, createdAt: new Date().toISOString() };
+    try {
+      await setDoc(doc(db, "activitiesClubs", newActivity.id), newActivity);
+      setActivitiesClubs((prev) => [...prev, newActivity].sort((a, b) => (a.order || 0) - (b.order || 0)));
+    } catch (e) {
+      console.error("Error adding activity/club:", e);
+    }
+  };
+
+  const updateActivityClub = async (id, updatedFields) => {
+    try {
+      await updateDoc(doc(db, "activitiesClubs", id), updatedFields);
+      setActivitiesClubs((prev) =>
+        prev.map((act) => (act.id === id ? { ...act, ...updatedFields } : act)).sort((a, b) => (a.order || 0) - (b.order || 0))
+      );
+    } catch (e) {
+      console.error("Error updating activity/club:", e);
+    }
+  };
+
+  const deleteActivityClub = async (id) => {
+    try {
+      await deleteDoc(doc(db, "activitiesClubs", id));
+      setActivitiesClubs((prev) => prev.filter((act) => act.id !== id));
+    } catch (e) {
+      console.error("Error deleting activity/club:", e);
+    }
+  };
+
   // Research Committee CRUD
   const updateResearchCommittee = async (updatedFields) => {
     try {
@@ -1107,6 +1150,10 @@ export const AppProvider = ({ children }) => {
         addLabExperiment,
         updateLabExperiment,
         deleteLabExperiment,
+        activitiesClubs,
+        addActivityClub,
+        updateActivityClub,
+        deleteActivityClub,
         researchCommittee,
         updateResearchCommittee,
         researchPublications,
