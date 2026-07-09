@@ -285,13 +285,15 @@ export const AppProvider = ({ children }) => {
       }
       
       // Return standard error message
-      let message = "Invalid email or password / गलत ईमेल या पासवर्ड";
+      let message = `Login Error: ${authError.code || "unknown"} / गलत ईमेल या पासवर्ड`;
       if (authError.code === "auth/invalid-email") {
         message = "Invalid email format / गलत ईमेल प्रारूप";
       } else if (authError.code === "auth/user-disabled") {
         message = "This user account has been disabled / यह उपयोगकर्ता खाता अक्षम कर दिया गया है";
       } else if (authError.code === "auth/operation-not-allowed") {
         message = "Firebase Error: Email/Password sign-in provider is disabled in Firebase Console. Please enable it. / ईमेल/पासवर्ड लॉगिन सेवा अक्षम है। कृपया कंसोल में इसे सक्षम करें।";
+      } else if (authError.code === "auth/invalid-credential" || authError.code === "auth/wrong-password") {
+        message = "Invalid email or password / गलत ईमेल या पासवर्ड";
       }
       return { success: false, message };
     }
