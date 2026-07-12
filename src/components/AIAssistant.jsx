@@ -17,7 +17,7 @@ export default function AIAssistant() {
   const messagesEndRef = useRef(null);
 
   // Read Gemini API Key from environment variable or placeholder
-  const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
+  const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyDOxi5aX8m12XNOhRT4GnC5XbF9p4dEqIc";
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
