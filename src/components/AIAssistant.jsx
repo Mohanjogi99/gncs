@@ -17,9 +17,9 @@ export default function AIAssistant() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Read OpenRouter API Key dynamically from Firestore settings or env
-  const API_KEY = chatbotSettings?.apiKey || import.meta.env.VITE_OPENROUTER_API_KEY || "";
-  const MODEL_NAME = "mistralai/mistral-7b-instruct:free";
+  // Read Gemini API Key from environment
+  const API_KEY = chatbotSettings?.apiKey || import.meta.env.VITE_GEMINI_API_KEY || "";
+  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
@@ -113,27 +113,29 @@ Useful Links (Give these links directly when students ask for results/admit card
     setLoading(true);
 
     try {
-      // Build conversation history for OpenRouter
-      const apiMessages = [
-        { role: "system", content: getSystemInstruction() },
+      // Build conversation history for Gemini API
+      const contents = [
         ...messages.map(m => ({
-          role: m.role === "user" ? "user" : "assistant",
-          content: m.text
+          role: m.role === "user" ? "user" : "model",
+          parts: [{ text: m.text }]
         })),
-        { role: "user", content: textToSend }
+        { role: "user", parts: [{ text: textToSend }] }
       ];
 
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      const response = await fetch(`${GEMINI_URL}?key=${API_KEY}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${API_KEY}`,
-          "HTTP-Referer": "https://gncs.ink",
-          "X-Title": "GNCS Student Support Assistant"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: MODEL_NAME,
-          messages: apiMessages
+          system_instruction: {
+            parts: [{ text: getSystemInstruction() }]
+          },
+          contents,
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 512
+          }
         })
       });
 
@@ -144,9 +146,9 @@ Useful Links (Give these links directly when students ask for results/admit card
       }
 
       const data = await response.json();
-      const aiText = data.choices?.[0]?.message?.content;
+      const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text;
       if (!aiText) {
-        throw new Error("No response content received from OpenRouter.");
+        throw new Error("No response content received from Gemini.");
       }
 
       setMessages(prev => [...prev, { role: "model", text: aiText }]);
@@ -163,6 +165,7 @@ Useful Links (Give these links directly when students ask for results/admit card
       setLoading(false);
     }
   };
+
 
   return (
     <div className="fixed bottom-6 right-6 z-50 font-sans">
