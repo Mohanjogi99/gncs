@@ -5,6 +5,7 @@ import { AppProvider } from "./context/AppContext";
 // Common Layout Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import AIAssistant from "./components/AIAssistant";
 
 // Public Pages
 import Home from "./pages/Home";
@@ -53,6 +54,7 @@ function AppContent() {
         </Routes>
       </main>
       <Footer />
+      <AIAssistant />
     </Router>
   );
 }
