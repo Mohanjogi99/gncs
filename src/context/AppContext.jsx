@@ -83,6 +83,7 @@ export const AppProvider = ({ children }) => {
   const [activitiesClubs, setActivitiesClubs] = useState([]);
   const [users, setUsers] = useState([]);
   const [heroSlides, setHeroSlides] = useState([]);
+  const [chatbotSettings, setChatbotSettings] = useState({ apiKey: "" });
 
   // Initialize DB from Firestore
   useEffect(() => {
@@ -190,6 +191,10 @@ export const AppProvider = ({ children }) => {
         }
         setHeroSlides(loadedSlides.sort((a, b) => (a.order || 0) - (b.order || 0)));
 
+        const chatbotDoc = await getDoc(doc(db, "settings", "chatbot"));
+        if (chatbotDoc.exists()) {
+          setChatbotSettings(chatbotDoc.data());
+        }
       } catch (error) {
         console.error("Error loading Firestore database:", error);
       }
@@ -1173,7 +1178,8 @@ export const AppProvider = ({ children }) => {
         heroSlides,
         addHeroSlide,
         updateHeroSlide,
-        deleteHeroSlide
+        deleteHeroSlide,
+        chatbotSettings
       }}
     >
       {children}

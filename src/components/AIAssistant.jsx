@@ -7,7 +7,8 @@ export default function AIAssistant() {
     notices,
     newsEvents,
     departments,
-    language
+    language,
+    chatbotSettings
   } = useContext(AppContext);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -16,8 +17,9 @@ export default function AIAssistant() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Read Gemini API Key from environment variable or placeholder
-  const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyDOxi5aX8m12XNOhRT4GnC5XbF9p4dEqIc";
+  // Read OpenRouter API Key dynamically from Firestore settings or env
+  const API_KEY = chatbotSettings?.apiKey || import.meta.env.VITE_OPENROUTER_API_KEY || "";
+  const MODEL_NAME = "google/gemma-2-9b-it:free";
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
@@ -49,7 +51,7 @@ export default function AIAssistant() {
         { label: "Recent Notices", query: "What are the latest college notices?" }
       ];
 
-  // Construct dynamic knowledge base context for Gemini
+  // Construct dynamic knowledge base context
   const getSystemInstruction = () => {
     const coursesStr = (courses || []).map(c => `- ${c.nameEn} (${c.nameHi}): Duration: ${c.duration || "3 Years"}, Seats: ${c.seats || "Check website"}`).join("\n");
     const deptsStr = (departments || []).map(d => `- ${d.nameEn} (${d.nameHi})`).join("\n");
@@ -91,11 +93,10 @@ Useful Links (Give these links directly when students ask for results/admit card
   const handleSendMessage = async (textToSend = input) => {
     if (!textToSend.trim()) return;
 
-    // Check if API Key is configured
     if (!API_KEY) {
       const warningMessage = language === "hi"
-        ? "चैटबॉट काम नहीं कर रहा है क्योंकि जेमिनी एपीआई की (Gemini API Key) कॉन्फ़िगर नहीं की गई है। कृपया एडमिन से संपर्क करें।"
-        : "The chatbot is offline because the Gemini API Key is not configured. Please contact the administrator.";
+        ? "चैटबॉट काम नहीं कर रहा है क्योंकि API Key कॉन्फ़िगर नहीं की गई है।"
+        : "The chatbot is offline because the API Key is not configured.";
       
       setMessages(prev => [
         ...prev,
@@ -112,38 +113,48 @@ Useful Links (Give these links directly when students ask for results/admit card
     setLoading(true);
 
     try {
-      // Build conversation history formatted for Gemini
-      const apiHistory = messages.map(m => ({
-        role: m.role === "user" ? "user" : "model",
-        parts: [{ text: m.text }]
-      }));
-      apiHistory.push({ role: "user", parts: [{ text: textToSend }] });
+      // Build conversation history for OpenRouter
+      const apiMessages = [
+        { role: "system", content: getSystemInstruction() },
+        ...messages.map(m => ({
+          role: m.role === "user" ? "user" : "assistant",
+          content: m.text
+        })),
+        { role: "user", content: textToSend }
+      ];
 
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            contents: apiHistory,
-            systemInstruction: {
-              parts: [{ text: getSystemInstruction() }]
-            }
-          })
-        }
-      );
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${API_KEY}`,
+          "HTTP-Referer": "https://gncs.ink",
+          "X-Title": "GNCS Student Support Assistant"
+        },
+        body: JSON.stringify({
+          model: MODEL_NAME,
+          messages: apiMessages
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const errMsg = errorData.error?.message || `HTTP ${response.status}`;
+        throw new Error(errMsg);
+      }
 
       const data = await response.json();
-      const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't process that request. / क्षमा करें, मैं इस प्रश्न का उत्तर देने में असमर्थ हूँ।";
+      const aiText = data.choices?.[0]?.message?.content;
+      if (!aiText) {
+        throw new Error("No response content received from OpenRouter.");
+      }
 
       setMessages(prev => [...prev, { role: "model", text: aiText }]);
     } catch (error) {
       console.error("AI Assistant Error:", error);
       setMessages(prev => [
         ...prev,
-        { role: "model", text: language === "hi" ? "कनेक्शन त्रुटि। कृपया पुनः प्रयास करें।" : "Connection error. Please try again." }
+        { role: "model", text: `Error: ${error.message || "Connection failed"} / कनेक्शन त्रुटि।` }
       ]);
     } finally {
       setLoading(false);
@@ -156,9 +167,9 @@ Useful Links (Give these links directly when students ask for results/admit card
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 bg-gradient-to-r from-primary to-secondary text-white rounded-full flex items-center justify-center shadow-xl hover:scale-105 transition-all cursor-pointer relative group"
+          className="w-14 h-14 bg-white border border-outline-variant text-white rounded-full flex items-center justify-center shadow-xl hover:scale-105 transition-all cursor-pointer relative group p-0.5"
         >
-          <span className="material-symbols-outlined text-2xl group-hover:rotate-12 transition-all">smart_toy</span>
+          <img src="/ai-assistant-logo.png" alt="AI Assistant" className="w-12 h-12 object-contain rounded-full" />
           {/* Pulsing notification badge */}
           <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full border-2 border-white animate-ping"></span>
           <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full border-2 border-white"></span>
@@ -170,9 +181,9 @@ Useful Links (Give these links directly when students ask for results/admit card
         <div className="bg-white/95 backdrop-blur-md w-[350px] sm:w-[380px] h-[500px] rounded-3xl border border-outline-variant shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
           
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary to-secondary text-white px-5 py-4 flex items-center justify-between shadow">
+          <div className="bg-gradient-to-r from-primary to-secondary text-white px-5 py-3.5 flex items-center justify-between shadow">
             <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-3xl">smart_toy</span>
+              <img src="/ai-assistant-logo.png" alt="Logo" className="w-10 h-10 object-contain bg-white rounded-full p-0.5" />
               <div>
                 <h4 className="font-bold text-sm leading-tight">
                   {language === "hi" ? "छात्र सहायता AI" : "Student Support AI"}
