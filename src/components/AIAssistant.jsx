@@ -19,7 +19,7 @@ export default function AIAssistant() {
 
   // Read OpenRouter API Key dynamically from Firestore settings or env
   const API_KEY = chatbotSettings?.apiKey || import.meta.env.VITE_OPENROUTER_API_KEY || "";
-  const MODEL_NAME = "google/gemma-2-9b-it:free";
+  const MODEL_NAME = "mistralai/mistral-7b-instruct:free";
 
   // Auto-scroll to bottom of messages
   useEffect(() => {
@@ -152,9 +152,12 @@ Useful Links (Give these links directly when students ask for results/admit card
       setMessages(prev => [...prev, { role: "model", text: aiText }]);
     } catch (error) {
       console.error("AI Assistant Error:", error);
+      const errText = language === "hi"
+        ? `माफ़ करें, कुछ तकनीकी समस्या आई। कृपया दोबारा कोशिश करें। (${error.message || "Connection failed"})`
+        : `Sorry, something went wrong. Please try again. (${error.message || "Connection failed"})`;
       setMessages(prev => [
         ...prev,
-        { role: "model", text: `Error: ${error.message || "Connection failed"} / कनेक्शन त्रुटि।` }
+        { role: "model", text: errText }
       ]);
     } finally {
       setLoading(false);
